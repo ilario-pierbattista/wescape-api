@@ -7,12 +7,13 @@ application:
 db:
     image: mysql
     ports:
-        - 3306:3306
+        - wescape.dev:3306:3306
     environment:
         MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: symfony
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
+        MYSQL_DATABASE: wescape
+        # This cause an attemp of recreating root user
+        # MYSQL_USER: root
+        # MYSQL_PASSWORD: pass
 php:
     # build: php-fpm
     image: ilariopierbattista/wescape-api:php-fpm
