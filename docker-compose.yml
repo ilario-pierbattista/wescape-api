@@ -14,7 +14,8 @@ db:
         MYSQL_USER: root
         MYSQL_PASSWORD: root
 php:
-    build: php-fpm
+    # build: php-fpm
+    image: ilariopierbattista/wescape-api:php-fpm
     ports:
         - 9000:9000
     volumes_from:
@@ -22,7 +23,8 @@ php:
     links:
         - db
 nginx:
-    build: nginx
+    # build: nginx
+    image: ilariopierbattista/wescape-api:nginx
     ports:
         - 80:80
     links:

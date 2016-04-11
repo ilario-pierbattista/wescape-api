@@ -1,7 +1,4 @@
-# FROM debian:jessie
-
-# Custom Build
-FROM wescape-api:nginx
+FROM debian:jessie
 
 MAINTAINER Vincent Composieux <vincent.composieux@gmail.com>
 
