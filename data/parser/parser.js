@@ -76,8 +76,8 @@ Parser.prototype.get_edges = function(nodes) {
             };
             var node1 = $this._find_node(nodes, edge.node1);
             var node2 = $this._find_node(nodes, edge.node2);
-            var distance = $this._distance(node1, node2);
-            edge["lunghezza"] = distance;
+            edge["lunghezza"] = $this._distance(node1, node2);
+            edge["larghezza"] = $this._trunk_width(node1, node2);
             return edge;
         } else {
             return null;
@@ -114,6 +114,17 @@ Parser.prototype._distance = function(begin, end) {
     var y2 = end.coordinates.meters.y;
     var distance = Math.sqrt( Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2) );
     return Math.round(distance * 100) / 100;
+}
+
+/**
+ * Calcolo della larghezza del tronco
+ * @param  {object} begin Nodo d'inizio
+ * @param  {object} end   Nodo di fine
+ * @return {number}       Larghezza media del tronco
+ */
+Parser.prototype._trunk_width = function(begin, end) {
+    var width = (begin.larghezza + end.larghezza) / 2;
+    return Math.round(width * 100) / 100;
 }
 
 /**
@@ -197,7 +208,7 @@ Parser.prototype.clear = function() {
     files.map(function(f) {
         var path = $this.dest + f;
         fs.unlink(path);
-    })
+    });
 }
 
 // Esposizione del modulo

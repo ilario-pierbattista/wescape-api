@@ -8,4 +8,4 @@ gulp.task('parse', function() {
 
 gulp.task('clear', function() {
     parser.clear();
-})
+});
