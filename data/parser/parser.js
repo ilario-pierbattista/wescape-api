@@ -30,11 +30,12 @@ Parser.prototype.get_sheet_data = function(sheet_name) {
 * @return {Array} Array di nodi
 */
 Parser.prototype.get_nodes = function() {
+    var $this = this;
     var data_nodes = this.get_sheet_data(NODES_SHEET);
     // Formattazione dei nodi @TODO parsare anche gli altri parametri
     var nodes = data_nodes.map(function(row) {
         if(typeof row[1] == "number" && typeof row[2] == "number") {
-            return {
+            var node = {
                 "coordinates": {
                     "meters": {
                         "x": row[1],
@@ -44,8 +45,10 @@ Parser.prototype.get_nodes = function() {
                 "quota": row[3],
                 "larghezza": row[4],
                 "codice": row[5],
-                "desc": row[6]
+                "desc": row[6],
             };
+            node["type"] = $this._get_node_type_description(node);
+            return node;
         } else {
             return null;
         }
@@ -83,6 +86,19 @@ Parser.prototype.get_edges = function(nodes) {
     return edges.filter(function(value) {
         return value != null;
     })
+}
+
+/**
+ * Descrive i nodi
+ * @param  {object} node Oggetto nodo da descrivere
+ * @return {object}      Oggetto descrizione del nodo
+ */
+Parser.prototype._get_node_type_description = function(node) {
+    return {
+        aula: /.*R.*/.test(node.codice),
+        uscita: /.*U.*/.test(node.codice),
+        uscita_emergenza: /.*EM.*/.test(node.codice)
+    };
 }
 
 /**
@@ -169,6 +185,19 @@ Parser.prototype.parse = function() {
     this.save(edges, this.dest + "edges.json");
     var stairs = this.get_stairs();
     this.save(stairs, this.dest + "stairs.json");
+}
+
+/**
+ * Pulisce la cartella con i risultati del parsing
+ * @return {undefined}
+ */
+Parser.prototype.clear = function() {
+    var files = fs.readdirSync(this.dest);
+    var $this = this;
+    files.map(function(f) {
+        var path = $this.dest + f;
+        fs.unlink(path);
+    })
 }
 
 // Esposizione del modulo

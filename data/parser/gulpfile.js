@@ -5,3 +5,7 @@ var parser = require("./parser.js");
 gulp.task('parse', function() {
     parser.parse();
 });
+
+gulp.task('clear', function() {
+    parser.clear();
+})
