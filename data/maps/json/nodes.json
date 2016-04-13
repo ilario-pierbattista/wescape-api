@@ -1,0 +1,782 @@
+[
+	{
+		"coordinates": {
+			"meters": {
+				"x": 71,
+				"y": 465
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145DICEA",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 87,
+				"y": 465
+			}
+		},
+		"quota": "145",
+		"larghezza": 3,
+		"codice": "145S1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 90,
+				"y": 480
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145RG1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 100,
+				"y": 465
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145R3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 119,
+				"y": 465
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145R1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 133,
+				"y": 480
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145RG2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 133,
+				"y": 465
+			}
+		},
+		"quota": "145",
+		"larghezza": 3,
+		"codice": "145WC1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 133,
+				"y": 471
+			}
+		},
+		"quota": "145",
+		"larghezza": 3,
+		"codice": "145S2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 145,
+				"y": 471
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145S3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 91,
+				"y": 484
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145A5",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 143,
+				"y": 473
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145A3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 87,
+				"y": 482
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145U1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 90,
+				"y": 487
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145UA5",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 130,
+				"y": 454
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145U3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 133,
+				"y": 482
+			}
+		},
+		"quota": "145",
+		"larghezza": 3,
+		"codice": "145U2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 135,
+				"y": 454
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145RAM",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 109,
+				"y": 482
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.2,
+		"codice": "145EMG1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 63,
+				"y": 465
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145EMA7",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 85,
+				"y": 454
+			}
+		},
+		"quota": "145",
+		"larghezza": 3,
+		"codice": "145EM1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 112,
+				"y": 482
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.2,
+		"codice": "145EMG2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 145,
+				"y": 475
+			}
+		},
+		"quota": "145",
+		"larghezza": 1.8,
+		"codice": "145EMA3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 87,
+				"y": 465
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150G1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 87,
+				"y": 456
+			}
+		},
+		"quota": "150",
+		"larghezza": 3,
+		"codice": "150STRADE",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 90,
+				"y": 472
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150DICEA",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 69,
+				"y": 464
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150DICEA1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 135,
+				"y": 470
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150R2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 135,
+				"y": 456
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150WC1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 151,
+				"y": 485
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150RL",
+		"desc": "aulastudio"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 154,
+				"y": 474
+			}
+		},
+		"quota": "150",
+		"larghezza": 3,
+		"codice": "150S1",
+		"desc": "wc2+aula pc+csal"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 157,
+				"y": 485
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150R1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 129,
+				"y": 465
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150G2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 110,
+				"y": 465
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150G1G2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 92,
+				"y": 484
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150A5",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 144,
+				"y": 474
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150A3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 63,
+				"y": 464
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150A7",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 152,
+				"y": 456
+			}
+		},
+		"quota": "150",
+		"larghezza": 3,
+		"codice": "150RAM",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 100,
+				"y": 456
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150EMA7",
+		"desc": "non usata"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 100,
+				"y": 453
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.2,
+		"codice": "150EM1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 150,
+				"y": 500
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150EMRL",
+		"desc": "uscita aula studio"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 147,
+				"y": 500
+			}
+		},
+		"quota": "150",
+		"larghezza": 3,
+		"codice": "150EMR1",
+		"desc": "uscita aula150/1"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 163,
+				"y": 445
+			}
+		},
+		"quota": "150",
+		"larghezza": 1.8,
+		"codice": "150BIB",
+		"desc": "biblioteca (posizione fittizia)"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 91,
+				"y": 467
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155R567",
+		"desc": "155/5-6 + 155/7"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 100,
+				"y": 467
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155R4",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 107,
+				"y": 467
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155R4D3",
+		"desc": "155/4+155/d3"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 117,
+				"y": 467
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155R23D2",
+		"desc": "155/2-3+155/d2"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 125,
+				"y": 467
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155RD1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 133,
+				"y": 467
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155WC1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 136,
+				"y": 456
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155EM1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 147,
+				"y": 456
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155S1",
+		"desc": "presso l'affaccio, lato finestre"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 149,
+				"y": 472
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155WC2",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 154,
+				"y": 456
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155EM3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 159,
+				"y": 472
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155CESMI",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 159,
+				"y": 456
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155ACQ",
+		"desc": "aula \"acquario\" cesmi"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 160,
+				"y": 450
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155EM4",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 140,
+				"y": 471
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155ECDL",
+		"desc": "aula ECDL+155/10"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 86,
+				"y": 465
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155DICEA",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 158,
+				"y": 482
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155BAR",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 160,
+				"y": 445
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155UP",
+		"desc": "uscita principale lato bancomat"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 91,
+				"y": 484
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155A5",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 144,
+				"y": 474
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155A3",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 62,
+				"y": 465
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155A7",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 156,
+				"y": 452
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155EM3",
+		"desc": "non usato"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 154,
+				"y": 454
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.8,
+		"codice": "155EM2",
+		"desc": "non usato"
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 100,
+				"y": 454
+			}
+		},
+		"quota": "155",
+		"larghezza": 1.2,
+		"codice": "155EM1",
+		"desc": ""
+	},
+	{
+		"coordinates": {
+			"meters": {
+				"x": 136,
+				"y": 454
+			}
+		},
+		"quota": "155",
+		"larghezza": 3,
+		"codice": "155U1",
+		"desc": ""
+	}
+]

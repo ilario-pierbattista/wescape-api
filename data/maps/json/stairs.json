@@ -1,0 +1,44 @@
+[
+	{
+		"node1": "145A5",
+		"node2": "150A5",
+		"codice": "A5",
+		"lunghezza": 25,
+		"larghezza": 1.8
+	},
+	{
+		"node1": "150A5",
+		"node2": "155A5",
+		"codice": "A5",
+		"lunghezza": 25,
+		"larghezza": 1.8
+	},
+	{
+		"node1": "145A3",
+		"node2": "150A3",
+		"codice": "A3",
+		"lunghezza": 25,
+		"larghezza": 1.8
+	},
+	{
+		"node1": "150A3",
+		"node2": "155A3",
+		"codice": "A3",
+		"lunghezza": 25,
+		"larghezza": 1.8
+	},
+	{
+		"node1": "145EMA7",
+		"node2": "150A7",
+		"codice": "A7",
+		"lunghezza": 25,
+		"larghezza": 1.8
+	},
+	{
+		"node1": "150A7",
+		"node2": "155A7",
+		"codice": "A7",
+		"lunghezza": 25,
+		"larghezza": 1.8
+	}
+]

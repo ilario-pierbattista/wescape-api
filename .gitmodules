@@ -1,3 +1,0 @@
-[submodule "data/parser/xlrd"]
-	path = data/parser/xlrd
-	url = https://github.com/python-excel/xlrd

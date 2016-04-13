@@ -1,0 +1,322 @@
+[
+	{
+		"node1": "145A3",
+		"node2": "145EMA3",
+		"lunghezza": 2.83
+	},
+	{
+		"node1": "145A5",
+		"node2": "145UA5",
+		"lunghezza": 3.16
+	},
+	{
+		"node1": "145DICEA",
+		"node2": "145S1",
+		"lunghezza": 16
+	},
+	{
+		"node1": "145EMA7",
+		"node2": "145DICEA",
+		"lunghezza": 8
+	},
+	{
+		"node1": "145EMG1",
+		"node2": "150G1G2",
+		"lunghezza": 17.03
+	},
+	{
+		"node1": "145EMG2",
+		"node2": "145RG2",
+		"lunghezza": 21.1
+	},
+	{
+		"node1": "145R1",
+		"node2": "145WC1",
+		"lunghezza": 14
+	},
+	{
+		"node1": "145R3",
+		"node2": "145R1",
+		"lunghezza": 19
+	},
+	{
+		"node1": "145RG1",
+		"node2": "145EMG1",
+		"lunghezza": 19.1
+	},
+	{
+		"node1": "145RG1",
+		"node2": "145A5",
+		"lunghezza": 4.12
+	},
+	{
+		"node1": "145RG1",
+		"node2": "145U1",
+		"lunghezza": 3.61
+	},
+	{
+		"node1": "145RG2",
+		"node2": "145U2",
+		"lunghezza": 2
+	},
+	{
+		"node1": "145S1",
+		"node2": "145RG1",
+		"lunghezza": 15.3
+	},
+	{
+		"node1": "145S1",
+		"node2": "145EM1",
+		"lunghezza": 11.18
+	},
+	{
+		"node1": "145S1",
+		"node2": "145R3",
+		"lunghezza": 13
+	},
+	{
+		"node1": "145S2",
+		"node2": "145S3",
+		"lunghezza": 12
+	},
+	{
+		"node1": "145S2",
+		"node2": "145RG2",
+		"lunghezza": 9
+	},
+	{
+		"node1": "145S3",
+		"node2": "145A3",
+		"lunghezza": 2.83
+	},
+	{
+		"node1": "145WC1",
+		"node2": "145RAM",
+		"lunghezza": 11.18
+	},
+	{
+		"node1": "145WC1",
+		"node2": "145U3",
+		"lunghezza": 11.4
+	},
+	{
+		"node1": "145WC1",
+		"node2": "145S2",
+		"lunghezza": 6
+	},
+	{
+		"node1": "150A3",
+		"node2": "150R2",
+		"lunghezza": 9.85
+	},
+	{
+		"node1": "150A7",
+		"node2": "150DICEA1",
+		"lunghezza": 6
+	},
+	{
+		"node1": "150DICEA",
+		"node2": "150A5",
+		"lunghezza": 12.17
+	},
+	{
+		"node1": "150DICEA1",
+		"node2": "150G1",
+		"lunghezza": 18.03
+	},
+	{
+		"node1": "150EMA7",
+		"node2": "150WC1",
+		"lunghezza": 35
+	},
+	{
+		"node1": "150G1",
+		"node2": "150DICEA",
+		"lunghezza": 7.62
+	},
+	{
+		"node1": "150G1",
+		"node2": "150STRADE",
+		"lunghezza": 9
+	},
+	{
+		"node1": "150G1G2",
+		"node2": "150G2",
+		"lunghezza": 19
+	},
+	{
+		"node1": "150G1G2",
+		"node2": "145EMG2",
+		"lunghezza": 17.12
+	},
+	{
+		"node1": "150G1G2",
+		"node2": "150G1",
+		"lunghezza": 23
+	},
+	{
+		"node1": "150R1",
+		"node2": "150RL",
+		"lunghezza": 6
+	},
+	{
+		"node1": "150R1",
+		"node2": "150EMRL",
+		"lunghezza": 16.55
+	},
+	{
+		"node1": "150R2",
+		"node2": "150WC1",
+		"lunghezza": 14
+	},
+	{
+		"node1": "150R2",
+		"node2": "150G2",
+		"lunghezza": 7.81
+	},
+	{
+		"node1": "150RAM",
+		"node2": "150BIB",
+		"lunghezza": 15.56
+	},
+	{
+		"node1": "150RAM",
+		"node2": "150S1",
+		"lunghezza": 18.11
+	},
+	{
+		"node1": "150RL",
+		"node2": "150EMR1",
+		"lunghezza": 15.52
+	},
+	{
+		"node1": "150S1",
+		"node2": "150R1",
+		"lunghezza": 11.4
+	},
+	{
+		"node1": "150S1",
+		"node2": "150A3",
+		"lunghezza": 10
+	},
+	{
+		"node1": "150STRADE",
+		"node2": "150EMA7",
+		"lunghezza": 13
+	},
+	{
+		"node1": "150WC1",
+		"node2": "150RAM",
+		"lunghezza": 17
+	},
+	{
+		"node1": "155A7",
+		"node2": "155DICEA",
+		"lunghezza": 24
+	},
+	{
+		"node1": "155ACQ",
+		"node2": "155EM4",
+		"lunghezza": 6.08
+	},
+	{
+		"node1": "155ACQ",
+		"node2": "155CESMI",
+		"lunghezza": 16
+	},
+	{
+		"node1": "155CESMI",
+		"node2": "155WC2",
+		"lunghezza": 10
+	},
+	{
+		"node1": "155CESMI",
+		"node2": "155BAR",
+		"lunghezza": 10.05
+	},
+	{
+		"node1": "155DICEA",
+		"node2": "155R567",
+		"lunghezza": 5.39
+	},
+	{
+		"node1": "155ECDL",
+		"node2": "155WC2",
+		"lunghezza": 9.06
+	},
+	{
+		"node1": "155EM1",
+		"node2": "155S1",
+		"lunghezza": 11
+	},
+	{
+		"node1": "155EM3",
+		"node2": "155ACQ",
+		"lunghezza": 5
+	},
+	{
+		"node1": "155EM4",
+		"node2": "155UP",
+		"lunghezza": 5
+	},
+	{
+		"node1": "155R23D2",
+		"node2": "155RD1",
+		"lunghezza": 8
+	},
+	{
+		"node1": "155R4",
+		"node2": "155EM1",
+		"lunghezza": 37.64
+	},
+	{
+		"node1": "155R4",
+		"node2": "155R4D3",
+		"lunghezza": 7
+	},
+	{
+		"node1": "155R4D3",
+		"node2": "155R23D2",
+		"lunghezza": 10
+	},
+	{
+		"node1": "155R567",
+		"node2": "155A5",
+		"lunghezza": 17
+	},
+	{
+		"node1": "155R567",
+		"node2": "155R4",
+		"lunghezza": 9
+	},
+	{
+		"node1": "155RD1",
+		"node2": "155WC1",
+		"lunghezza": 8
+	},
+	{
+		"node1": "155S1",
+		"node2": "155WC2",
+		"lunghezza": 16.12
+	},
+	{
+		"node1": "155S1",
+		"node2": "155EM3",
+		"lunghezza": 7
+	},
+	{
+		"node1": "155WC1",
+		"node2": "155ECDL",
+		"lunghezza": 8.06
+	},
+	{
+		"node1": "155WC1",
+		"node2": "155EM1",
+		"lunghezza": 11.4
+	},
+	{
+		"node1": "155WC2",
+		"node2": "155A3",
+		"lunghezza": 5.39
+	}
+]
