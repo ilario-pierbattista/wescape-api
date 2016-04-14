@@ -1,8 +1,15 @@
 Wescape RESTful service
 =======================
 
-# Risoluzione Problemi
-Consultare la wiki.
+# Installazione
+Consultare la relativa [sezione](https://github.com/ilario-pierbattista/wescape-api/wiki/Installazione) della wiki.
+
+# Servizi esposti
+ * **wescape.dev:80** Servizio rest.
+ * **wescape.dev:81** Applicazione _Kibana_ per la lettura dei log.
+ * **wescape.db.service:3306** Server MySQL per la gestione del database.
+
+Per un report dettagliato, è sufficiente eseguire `docker ps -a`: saranno elencati i container ed i relativi mapping di rete con l'host.
 
 docker-symfony
 ==============
