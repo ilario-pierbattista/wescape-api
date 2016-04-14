@@ -1,0 +1,4 @@
+services:
+#    api.example:
+#        class: Wescape\ApiBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

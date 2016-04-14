@@ -1,8 +1,11 @@
+Wescape RESTful service
+=======================
+
+# Risoluzione Problemi
+Consultare la wiki.
+
 docker-symfony
 ==============
-
-[![Build Status](https://secure.travis-ci.org/eko/docker-symfony.png?branch=master)](http://travis-ci.org/eko/docker-symfony)
-
 
 Just a litle Docker POC in order to have a complete stack for running Symfony into Docker containers using docker-compose tool.
 

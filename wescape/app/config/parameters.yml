@@ -1,12 +1,12 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
+    database_host: wescape.db.service      # Qui bisogna usare l'alias fornito in docker-compose.yml
     database_port: 3306
     database_name: wescape
     database_user: root
     database_password: root
     mailer_transport: smtp
-    mailer_host: 127.0.0.1
+    mailer_host: localhost
     mailer_user: null
     mailer_password: null
     secret: 1ddc0749c8e998ad48b92ce472e1d14918d2b905

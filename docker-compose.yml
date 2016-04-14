@@ -22,7 +22,7 @@ php:
     volumes_from:
         - application
     links:
-        - db
+        - db:wescape.db.service
 nginx:
     # build: nginx
     image: ilariopierbattista/wescape-api:nginx
