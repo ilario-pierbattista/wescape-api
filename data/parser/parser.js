@@ -7,6 +7,14 @@ const NODES_SHEET = "elenco nodi";
 const EDGES_SHEET = "vie di piano";
 const STAIRS_SHEET = "scale";
 
+// Costanti per la traduzione delle coordinate
+const CENTER_METER_X = 95;
+const CENTER_METER_Y = 487;
+const CENTER_PIXEL_X = 326;
+const CENTER_PIXEL_Y = 180;
+var PIXEL_PER_METER_X = 142 / 18; // Larghezza della 155/d3 e 155/d2
+var PIXEL_PER_METER_Y = 223 / 29; // Lunghezza della 155/7 e 155/5-6
+
 function Parser(src, dest) {
     this.src = src;
     this.dest = dest;
@@ -42,12 +50,13 @@ Parser.prototype.get_nodes = function() {
                         "y": row[2]
                     }
                 },
-                "quota": row[3],
+                "quota": parseInt(row[3]),
                 "larghezza": row[4],
                 "codice": row[5],
                 "desc": row[6],
             };
             node["type"] = $this._get_node_type_description(node);
+            node.coordinates["pixel"] = $this._get_node_pixel_coordinates(node);
             return node;
         } else {
             return null;
@@ -89,16 +98,37 @@ Parser.prototype.get_edges = function(nodes) {
 }
 
 /**
- * Descrive i nodi
- * @param  {object} node Oggetto nodo da descrivere
- * @return {object}      Oggetto descrizione del nodo
- */
+* Descrive i nodi
+* @param  {object} node Oggetto nodo da descrivere
+* @return {object}      Oggetto descrizione del nodo
+*/
 Parser.prototype._get_node_type_description = function(node) {
     return {
         aula: /.*R.*/.test(node.codice),
         uscita: /.*U.*/.test(node.codice),
         uscita_emergenza: /.*EM.*/.test(node.codice)
     };
+}
+
+/**
+* Converte le coordinate da pixel a metri
+* @param  {object} node Oggetto nodo
+* @return {object}      Nuove coordinate in pixel
+*/
+Parser.prototype._get_node_pixel_coordinates = function(node) {
+    var xm = node.coordinates.meters.x;
+    var ym = node.coordinates.meters.y;
+    var delta_xm = xm - CENTER_METER_X;
+    var delta_ym = -(ym - CENTER_METER_Y);
+    var delta_xp = delta_xm * PIXEL_PER_METER_X;
+    var delta_yp = delta_ym * PIXEL_PER_METER_Y;
+    var xp = CENTER_PIXEL_X + delta_xp;
+    var yp = CENTER_PIXEL_Y + delta_yp;
+
+    return {
+        x: Math.round(xp),
+        y: Math.round(yp)
+    }
 }
 
 /**
@@ -117,11 +147,11 @@ Parser.prototype._distance = function(begin, end) {
 }
 
 /**
- * Calcolo della larghezza del tronco
- * @param  {object} begin Nodo d'inizio
- * @param  {object} end   Nodo di fine
- * @return {number}       Larghezza media del tronco
- */
+* Calcolo della larghezza del tronco
+* @param  {object} begin Nodo d'inizio
+* @param  {object} end   Nodo di fine
+* @return {number}       Larghezza media del tronco
+*/
 Parser.prototype._trunk_width = function(begin, end) {
     var width = (begin.larghezza + end.larghezza) / 2;
     return Math.round(width * 100) / 100;
@@ -199,9 +229,9 @@ Parser.prototype.parse = function() {
 }
 
 /**
- * Pulisce la cartella con i risultati del parsing
- * @return {undefined}
- */
+* Pulisce la cartella con i risultati del parsing
+* @return {undefined}
+*/
 Parser.prototype.clear = function() {
     var files = fs.readdirSync(this.dest);
     var $this = this;
