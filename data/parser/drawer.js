@@ -45,6 +45,10 @@ Drawer.prototype.drawNodes = function() {
     return this;
 }
 
+/**
+ * Disegna gli archi sulla mappa
+ * @return {object} Istanza corrente di Drawer
+ */
 Drawer.prototype.drawEdges = function() {
     var $this = this;
 
@@ -86,6 +90,11 @@ Drawer.prototype._draw_node = function(node) {
     return this;
 }
 
+/**
+ * Disegna un arco
+ * @param  {object} edge Oggetto arco
+ * @return {object}      Istanza corrente di Drawer
+ */
 Drawer.prototype._draw_edge = function(edge) {
     var node1 = parser._find_node(this.data.nodes, edge.node1);
     var node2 = parser._find_node(this.data.nodes, edge.node2);
