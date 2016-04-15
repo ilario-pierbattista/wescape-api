@@ -1,7 +1,11 @@
 api:
-    resource: "@ApiBundle/Controller/"
-    type:     annotation
+    resource: "@ApiBundle/Resources/config/routes.yml"
+    type:     rest
     prefix:   /api
+    # Il versionamento delle API è hardcoded per il momento
+    # Il FOSRestBundle supporterà il versioning dalla versione 2.0,
+    # aggiornare quando uscirà dalla beta
+    # prefix: /api/{version}
 
 app:
     resource: "@AppBundle/Controller/"

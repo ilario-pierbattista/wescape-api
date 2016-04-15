@@ -59,14 +59,12 @@ class Node
      */
     private $width;
 
-
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -77,8 +75,7 @@ class Node
      *
      * @return Node
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -89,8 +86,7 @@ class Node
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -101,8 +97,7 @@ class Node
      *
      * @return Node
      */
-    public function setX($x)
-    {
+    public function setX($x) {
         $this->x = $x;
 
         return $this;
@@ -113,8 +108,7 @@ class Node
      *
      * @return integer
      */
-    public function getX()
-    {
+    public function getX() {
         return $this->x;
     }
 
@@ -125,8 +119,7 @@ class Node
      *
      * @return Node
      */
-    public function setY($y)
-    {
+    public function setY($y) {
         $this->y = $y;
 
         return $this;
@@ -137,8 +130,7 @@ class Node
      *
      * @return integer
      */
-    public function getY()
-    {
+    public function getY() {
         return $this->y;
     }
 
@@ -149,8 +141,7 @@ class Node
      *
      * @return Node
      */
-    public function setFloor($floor)
-    {
+    public function setFloor($floor) {
         $this->floor = $floor;
 
         return $this;
@@ -161,8 +152,7 @@ class Node
      *
      * @return string
      */
-    public function getFloor()
-    {
+    public function getFloor() {
         return $this->floor;
     }
 
@@ -173,8 +163,7 @@ class Node
      *
      * @return Node
      */
-    public function setWidth($width)
-    {
+    public function setWidth($width) {
         $this->width = $width;
 
         return $this;
@@ -185,8 +174,7 @@ class Node
      *
      * @return integer
      */
-    public function getWidth()
-    {
+    public function getWidth() {
         return $this->width;
     }
 }

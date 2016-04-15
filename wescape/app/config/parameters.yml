@@ -1,6 +1,6 @@
 # This file is auto-generated during the composer install
 parameters:
-    database_host: wescape.db.service      # Qui bisogna usare l'alias fornito in docker-compose.yml
+    database_host: wescape.db.service
     database_port: 3306
     database_name: wescape
     database_user: root

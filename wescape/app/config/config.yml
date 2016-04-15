@@ -70,3 +70,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# FOSRestBundle configuration
+fos_rest:
+  view:
+    formats:
+      json: true
+    # Questa voce non sarà supportata prima della versione 2.0 del bundle
+    # versioning: true

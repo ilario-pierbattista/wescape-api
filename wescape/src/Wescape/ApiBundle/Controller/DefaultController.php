@@ -10,8 +10,7 @@ class DefaultController extends Controller
     /**
      * @Route("/")
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         return $this->render('ApiBundle:Default:index.html.twig');
     }
 }

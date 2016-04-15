@@ -1,0 +1,6 @@
+acme_blog_Page:
+    type: rest
+    prefix: /v1
+    resource: Wescape\ApiBundle\Controller\DefaultRestController
+    name_prefix:  api_1_ # naming collision
+    defaults: {_format: json} # Format default
