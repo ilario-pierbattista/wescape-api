@@ -8,53 +8,45 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Node
  *
  * @package Wescape\CoreBundle\Entity
- *
  * @ORM\Entity
  * @ORM\Table(name="node")
  */
 class Node
 {
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     *
      * @var integer Id numerico
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=30, unique=true)
-     *
      * @var string Nome del nodo
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
-     *
      * @var integer Coordinata x rispetto all'immagine della mappa
      */
     private $x;
 
     /**
      * @ORM\Column(type="integer")
-     *
      * @var integer Coordinata y rispetto all'immagine della mappa
      */
     private $y;
 
     /**
      * @ORM\Column(type="string", columnDefinition="enum('145', '150', '155')")
-     *
      * @var integer Piano
      */
     private $floor;
 
     /**
      * @ORM\Column(type="integer")
-     *
      * @var integer Larghezza del nodo in metri
      */
     private $width;
