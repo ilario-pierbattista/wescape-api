@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Wescape\CoreBundle\CoreBundle(),
             new Wescape\ApiBundle\ApiBundle(),
+            new Wescape\BackendBundle\BackendBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
