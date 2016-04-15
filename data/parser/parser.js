@@ -1,8 +1,9 @@
 var xlsx = require('node-xlsx');
 var fs = require('fs');
+var path = require('path');
 
-const DATAPATH = __dirname + "/../maps/data.xlsx";
-const DESTPATH = __dirname + "/../maps/json/"
+const DATAPATH = path.normalize(__dirname + "/../maps/data.xlsx");
+const DESTPATH = path.normalize(__dirname + "/../maps/json/");
 const NODES_SHEET = "elenco nodi";
 const EDGES_SHEET = "vie di piano";
 const STAIRS_SHEET = "scale";

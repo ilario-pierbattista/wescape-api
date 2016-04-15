@@ -1,16 +1,18 @@
-var data_src = {
-    "nodes": "../maps/json/nodes.json",
-    "edges": "../maps/json/edges.json"
-};
-const IMG_SRC_PATH = "../maps/";
-const IMG_DEST_PATH = "../maps/graph/";
-const NODES_COLOR = "#E53A40";
-const EDGES_COLOR = "#30A9DE";
-const TEXT_COLOR = "#000000";
-
 var fs = require('fs');
 var gm = require('gm').subClass({imageMagick: true});
 var parser = require('./parser.js');
+var path = require('path');
+
+var data_src = {
+    "nodes": path.normalize(__dirname + "/../maps/json/nodes.json"),
+    "edges": path.normalize(__dirname + "/../maps/json/edges.json")
+};
+const IMG_SRC_PATH = path.normalize(__dirname + "/../maps/");
+const IMG_DEST_PATH = path.normalize(__dirname + "/../maps/graph/");
+
+const NODES_COLOR = "#E53A40";
+const EDGES_COLOR = "#30A9DE";
+const TEXT_COLOR = "#000000";
 
 /**
  * Costruttore

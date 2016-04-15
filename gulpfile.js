@@ -1,7 +1,7 @@
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins");
-var parser = require("./parser.js");
-var drawer = require("./drawer.js");
+var parser = require("./data/parser/parser.js");
+var drawer = require("./data/parser/drawer.js");
 
 gulp.task('parse', function() {
     parser.parse();
