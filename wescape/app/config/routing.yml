@@ -2,6 +2,7 @@ api:
     resource: "@ApiBundle/Resources/config/routes.yml"
     type:     rest
     prefix:   /api
+    defaults: {_format: json} # Format default
     # Il versionamento delle API è hardcoded per il momento
     # Il FOSRestBundle supporterà il versioning dalla versione 2.0,
     # aggiornare quando uscirà dalla beta
