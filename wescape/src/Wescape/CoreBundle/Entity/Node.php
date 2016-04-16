@@ -46,7 +46,7 @@ class Node
     private $floor;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", scale=2)
      * @var integer Larghezza del nodo in metri
      */
     private $width;

@@ -16,7 +16,7 @@ const TEXT_COLOR = "#000000";
 
 /**
  * Costruttore
- * @param {string} dataSrc Paths dei file con i dati
+ * @param {object} dataSrc Paths dei file con i dati
  * @param {string} imgSrc  Cartella delle immagini delle mappe
  * @param {string} imgDest Cartella di destinazione delle immagini
  */
@@ -28,7 +28,7 @@ function Drawer(dataSrc, imgSrc, imgDest) {
     var $this = this;
 
     this.data = {};
-    Object.keys(this.dataSrc).map(function(label, index) {
+    Object.keys(this.dataSrc).map(function(label) {
         $this.data[label] = $this._readJson(data_src[label]);
     });
 }
@@ -45,7 +45,7 @@ Drawer.prototype.drawNodes = function() {
     });
 
     return this;
-}
+};
 
 /**
  * Disegna gli archi sulla mappa
@@ -59,7 +59,7 @@ Drawer.prototype.drawEdges = function() {
     });
 
     return this;
-}
+};
 
 /**
  * Legge un oggetto serializzato in json da un file
@@ -73,12 +73,12 @@ Drawer.prototype._readJson = function(path) {
     } catch (e) {
         console.log(e);
     }
-}
+};
 
 /**
  * Disegna sull'immagine il pallino con il codice del nodo
- * @param  {obejct} node Oggetto nodo
- * @return {obejct}      Istanza corrente di Drawer
+ * @param  {object} node Oggetto nodo
+ * @return {object}      Istanza corrente di Drawer
  */
 Drawer.prototype._draw_node = function(node) {
     var imageGm = this._open_image(node.quota + ".jpg");
@@ -90,7 +90,7 @@ Drawer.prototype._draw_node = function(node) {
     .stroke(TEXT_COLOR).fill(TEXT_COLOR)
     .drawText(x-10, y-6, node.codice);
     return this;
-}
+};
 
 /**
  * Disegna un arco
@@ -109,7 +109,7 @@ Drawer.prototype._draw_edge = function(edge) {
     imageGm.stroke(EDGES_COLOR).fill(EDGES_COLOR)
     .drawLine(x1, y1, x2, y2);
     return this;
-}
+};
 
 /**
  * Apre un'immagine
@@ -121,7 +121,7 @@ Drawer.prototype._open_image = function(filename) {
         this.openedImages[filename] = gm(this.imgSrc + filename);
     }
     return this.openedImages[filename];
-}
+};
 
 /**
  * Salva tutte le immagini aperte
@@ -136,7 +136,7 @@ Drawer.prototype.write = function() {
         fs.mkdirSync(this.imgDest);
     }
 
-    Object.keys(this.openedImages).map(function(filename, index) {
+    Object.keys(this.openedImages).map(function(filename) {
         $this.openedImages[filename].write($this.imgDest + filename, function(err) {
             if(err) {
                 console.log(err);
@@ -145,7 +145,7 @@ Drawer.prototype.write = function() {
         delete $this.openedImages[filename];
     });
     return this;
-}
+};
 
 // Esposizione del modulo
 module.exports = new Drawer(data_src, IMG_SRC_PATH, IMG_DEST_PATH);

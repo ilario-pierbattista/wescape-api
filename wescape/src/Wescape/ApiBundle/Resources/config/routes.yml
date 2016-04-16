@@ -1,12 +1,11 @@
 wescape_api_Node:
   type: rest
-  prefix: /v1/node
-  resource: Wescape\ApiBundle\Controller\NodeController
-  name_prefix: api_1_node_
+  prefix: /v1
+  resource: Wescape\ApiBundle\Controller\NodeRESTController
+  name_prefix: api_1_
 
 wescape_api_Edge:
   type: rest
-  prefix: /v1/edge
-  resource: Wescape\ApiBundle\Controller\EdgeController
-  name_prefix: api_1_edge_
-
+  prefix: /v1
+  resource: Wescape\ApiBundle\Controller\EdgeRESTController
+  name_prefix: api_1_

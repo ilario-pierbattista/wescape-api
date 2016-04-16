@@ -9,6 +9,9 @@
     "gulp": "^3.9.1",
     "gulp-load-plugins": "^1.2.0",
     "node-xlsx": "^0.6.0",
+    "restler": "^3.4.0",
+    "semaphore": "^1.0.5",
+    "strformat": "0.0.7",
     "through2": "^2.0.1"
   },
   "devDependencies": {},

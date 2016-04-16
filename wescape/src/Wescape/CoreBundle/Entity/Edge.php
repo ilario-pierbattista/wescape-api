@@ -39,13 +39,13 @@ class Edge
     private $end;
 
     /**
-     * @ORM\Column(type="decimal", precision=2)
+     * @ORM\Column(type="decimal", scale=2)
      * @var double Lunghezza del tronco in metri
      */
     private $length;
 
     /**
-     * @ORM\Column(type="decimal", precision=2)
+     * @ORM\Column(type="decimal", scale=2)
      * @var double Larghezza media del tronco in metri
      */
     private $width;
@@ -58,26 +58,26 @@ class Edge
     private $stairs = false;
 
     /**
-     * @ORM\Column(type="decimal", precision=4)
+     * @ORM\Column(type="decimal", scale=4)
      * @var double Propensione allo sviluppo di incendi
      */
     private $v;
 
     /**
-     * @ORM\Column(type="decimal", precision=4)
+     * @ORM\Column(type="decimal", scale=4)
      * @var double Reazioni a catena tossicologiche
      */
     private $i;
 
     /**
-     * @ORM\Column(type="decimal", precision=4)
+     * @ORM\Column(type="decimal", scale=4)
      * @var double Superficie calpestabile disponibile ad una persona lungo il tratto
      * di evaquazione
      */
     private $los;
 
     /**
-     * @ORM\Column(type="decimal", precision=4)
+     * @ORM\Column(type="decimal", scale=4)
      * @var double Parametro di presenza di fumo
      */
     private $c;

@@ -32,7 +32,7 @@ Parser.prototype.get_sheet_data = function(sheet_name) {
         return value.name == sheet_name;
     });
     return obj[0].data;
-}
+};
 
 /**
 * Estrazione della lista di nodi dal foglio excel
@@ -54,7 +54,7 @@ Parser.prototype.get_nodes = function() {
                 "quota": parseInt(row[3]),
                 "larghezza": row[4],
                 "codice": row[5],
-                "desc": row[6],
+                "desc": row[6]
             };
             node["type"] = $this._get_node_type_description(node);
             node.coordinates["pixel"] = $this._get_node_pixel_coordinates(node);
@@ -66,9 +66,9 @@ Parser.prototype.get_nodes = function() {
     // Eliminazione delle voci nulle
     nodes = nodes.filter(function(value) {
         return value != null;
-    })
+    });
     return nodes;
-}
+};
 
 /**
 * Estrazione della lista degli archi dal foglio excel
@@ -96,7 +96,7 @@ Parser.prototype.get_edges = function(nodes) {
     return edges.filter(function(value) {
         return value != null;
     })
-}
+};
 
 /**
 * Descrive i nodi
@@ -109,7 +109,7 @@ Parser.prototype._get_node_type_description = function(node) {
         uscita: /.*U.*/.test(node.codice),
         uscita_emergenza: /.*EM.*/.test(node.codice)
     };
-}
+};
 
 /**
 * Converte le coordinate da pixel a metri
@@ -130,7 +130,7 @@ Parser.prototype._get_node_pixel_coordinates = function(node) {
         x: Math.round(xp),
         y: Math.round(yp)
     }
-}
+};
 
 /**
 * Calcolo della distanza euclidea
@@ -145,7 +145,7 @@ Parser.prototype._distance = function(begin, end) {
     var y2 = end.coordinates.meters.y;
     var distance = Math.sqrt( Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2) );
     return Math.round(distance * 100) / 100;
-}
+};
 
 /**
 * Calcolo della larghezza del tronco
@@ -156,7 +156,7 @@ Parser.prototype._distance = function(begin, end) {
 Parser.prototype._trunk_width = function(begin, end) {
     var width = (begin.larghezza + end.larghezza) / 2;
     return Math.round(width * 100) / 100;
-}
+};
 
 /**
 * Ricerca di un nodo in base al codice dalla lista dei nodi
@@ -173,7 +173,7 @@ Parser.prototype._find_node = function(nodes, codice) {
     } else {
         return null;
     }
-}
+};
 
 /**
 * Estrazione della lista delle scale
@@ -197,11 +197,11 @@ Parser.prototype.get_stairs = function() {
     return stairs.filter(function(v) {
         return v != null;
     })
-}
+};
 
 /**
 * Salvataggio di un oggetto serializzandolo in un file
-* @param  {obejct} obj      Oggetto da salvare
+* @param  {object} obj      Oggetto da salvare
 * @param  {String} filename Path del file di destinazione
 * @return {undefined}
 */
@@ -214,7 +214,7 @@ Parser.prototype.save = function(obj, filename) {
     // Pretty print del json
     var content = JSON.stringify(obj, null, '\t');
     fs.writeFileSync(filename, content);
-}
+};
 
 /**
 * Ciclo principale di parsing
@@ -227,7 +227,7 @@ Parser.prototype.parse = function() {
     this.save(edges, this.dest + "edges.json");
     var stairs = this.get_stairs();
     this.save(stairs, this.dest + "stairs.json");
-}
+};
 
 /**
 * Pulisce la cartella con i risultati del parsing
@@ -240,7 +240,7 @@ Parser.prototype.clear = function() {
         var path = $this.dest + f;
         fs.unlink(path);
     });
-}
+};
 
 // Esposizione del modulo
 module.exports = new Parser(DATAPATH, DESTPATH);
