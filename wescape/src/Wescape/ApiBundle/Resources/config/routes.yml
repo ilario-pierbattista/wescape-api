@@ -1,5 +1,12 @@
-acme_blog_Page:
-    type: rest
-    prefix: /v1
-    resource: Wescape\ApiBundle\Controller\DefaultRestController
-    name_prefix:  api_1_ # naming collision
+wescape_api_Node:
+  type: rest
+  prefix: /v1/node
+  resource: Wescape\ApiBundle\Controller\NodeController
+  name_prefix: api_1_node_
+
+wescape_api_Edge:
+  type: rest
+  prefix: /v1/edge
+  resource: Wescape\ApiBundle\Controller\EdgeController
+  name_prefix: api_1_edge_
+

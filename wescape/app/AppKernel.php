@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new \JMS\SerializerBundle\JMSSerializerBundle(),
             new \FOS\RestBundle\FOSRestBundle(),
             new \Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new \Voryx\RESTGeneratorBundle\VoryxRESTGeneratorBundle(),
+            new \Nelmio\CorsBundle\NelmioCorsBundle(),
             new AppBundle\AppBundle(),
             new Wescape\CoreBundle\CoreBundle(),
             new Wescape\ApiBundle\ApiBundle(),

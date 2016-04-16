@@ -1,3 +1,8 @@
+core_node_api:
+    resource: "@CoreBundle/Controller/NodeRESTController.php"
+    type:   rest
+    prefix:   /api
+
 backend:
     resource: "@BackendBundle/Controller/"
     type:     annotation
