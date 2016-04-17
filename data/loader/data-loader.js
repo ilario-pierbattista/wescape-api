@@ -4,6 +4,7 @@ var env = require('../env.js');
 var mutex = require('semaphore')(1);
 var callSem = require('semaphore')(5);  // Massimo 5 in contemporanea
 var strformat = require('strformat');
+var Progress = require('progress');
 
 function DataLoader() {
     var $this = this;
@@ -21,10 +22,15 @@ function DataLoader() {
     }
 }
 
+/**
+ * Upload
+ * @returns {DataLoader}
+ */
 DataLoader.prototype.loadData = function () {
     var $this = this;
     // Caricamento dei nodi
     mutex.take(function () {
+        $this.loadProgress = new Progress("uploading :bar :current/:total", {total: $this.data.nodes.length});
         $this.data.nodes.map(function (node) {
             callSem.take($this.postNodeFunction(node));
         });
@@ -34,9 +40,15 @@ DataLoader.prototype.loadData = function () {
     mutex.take(function () {
         console.log("Done");
         mutex.leave();
-    })
+    });
+
+    return this;
 };
 
+/**
+ * Rimozione dei nodi presenti
+ * @returns {DataLoader}
+ */
 DataLoader.prototype.clearData = function () {
     var $this = this;
     var savedNodes = null;
@@ -56,13 +68,16 @@ DataLoader.prototype.clearData = function () {
     // Rimozione dei nodi presenti nel database
     mutex.take(function () {
         if (!(typeof savedNodes == "string" && !savedNodes.trim())) {
+            $this.clearProgress = new Progress("clearing :bar :current/:total", {total:savedNodes.length});
             savedNodes.map(function (node) {
                 callSem.take($this.deleteNodeFunction(node));
             });
         } else {
             mutex.leave();
         }
-    })
+    });
+
+    return this;
 };
 
 /**
@@ -74,7 +89,6 @@ DataLoader.prototype.postNodeFunction = function (node) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_node(node);
-
         rest.postJson($this.endpoints.post_node, jsonData)
             .on("complete", function (result) {
                 if (result instanceof Error) {
@@ -87,7 +101,8 @@ DataLoader.prototype.postNodeFunction = function (node) {
                 }
 
                 callSem.leave();
-                if (callSem.current == 0) {
+                $this.loadProgress.tick();
+                if($this.loadProgress.complete) {
                     mutex.leave();
                 }
             });
@@ -110,9 +125,10 @@ DataLoader.prototype.deleteNodeFunction = function (node) {
                 } else {
                     // console.log(strformat("Deleted node with id {id}", {id: node.id}));
                 }
+                $this.clearProgress.tick();
                 callSem.leave();
 
-                if (callSem.current == 0) {
+                if($this.clearProgress.complete) {
                     mutex.leave();
                 }
             });
