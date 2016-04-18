@@ -2,8 +2,17 @@
 # http://symfony.com/doc/current/book/security.html
 security:
 
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        fos_user_bundle:
+            id: fos_user.user_provider.username
         in_memory:
             memory: ~
 
@@ -14,6 +23,7 @@ security:
             security: false
 
         main:
+            # Leggere: https://stackoverflow.com/questions/22366975/fosuserbundle-rest-api-call-how-to-use-custom-formtype/22394282#22394282
             anonymous: ~
             # activate different ways to authenticate
 

@@ -1,5 +1,5 @@
 imports:
-    # framework, twig, doctrine, swiftmailer
+    # framework, twig, doctrine, swiftmailer, fos_user
     - { resource: general.yml }
     - { resource: security.yml }
     - { resource: services.yml }
