@@ -28,32 +28,32 @@ class EdgeRESTController extends VoryxController
 {
     /**
      * Get a Edge entity
-     *
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
-     *
      */
-    public function getAction(Edge $entity)
-    {
+    public function getAction(Edge $entity) {
         return $entity;
     }
+
     /**
      * Get all Edge entities.
-     *
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param ParamFetcherInterface $paramFetcher
      *
      * @return Response
-     *
-     * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing notes.")
-     * @QueryParam(name="limit", requirements="\d+", default="20", description="How many notes to return.")
-     * @QueryParam(name="order_by", nullable=true, array=true, description="Order by fields. Must be an array ie. &order_by[name]=ASC&order_by[description]=DESC")
-     * @QueryParam(name="filters", nullable=true, array=true, description="Filter by fields. Must be an array ie. &filters[id]=3")
+     * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset
+     *                            from which to start listing notes.")
+     * @QueryParam(name="limit", requirements="\d+", default="0", description="How many
+     *                           notes to return.")
+     * @QueryParam(name="order_by", nullable=true, array=true, description="Order by
+     *                              fields. Must be an array ie.
+     *                              &order_by[name]=ASC&order_by[description]=DESC")
+     * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
+     *                             fields. Must be an array ie. &filters[id]=3")
      */
-    public function cgetAction(ParamFetcherInterface $paramFetcher)
-    {
+    public function cgetAction(ParamFetcherInterface $paramFetcher) {
         try {
             $offset = $paramFetcher->get('offset');
             $limit = $paramFetcher->get('limit');
@@ -61,6 +61,7 @@ class EdgeRESTController extends VoryxController
             $filters = !is_null($paramFetcher->get('filters')) ? $paramFetcher->get('filters') : array();
 
             $em = $this->getDoctrine()->getManager();
+            $limit = $limit == 0 ? null : $limit;
             $entities = $em->getRepository('CoreBundle:Edge')->findBy($filters, $order_by, $limit, $offset);
             if ($entities) {
                 return $entities;
@@ -71,27 +72,24 @@ class EdgeRESTController extends VoryxController
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * Create a Edge entity.
-     *
      * @View(statusCode=201, serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
      *
      * @return Response
-     *
      * @ApiDoc(
      *     resource=true,
      *     description="Insertion of an edge"
      * )
-     *
      */
-    public function postAction(Request $request)
-    {
+    public function postAction(Request $request) {
         $entity = new Edge();
         $form = $this->createForm(EdgeType::class, $entity, array("method" =>
             $request->getMethod
-        ()));
+            ()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
@@ -105,24 +103,23 @@ class EdgeRESTController extends VoryxController
 
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
+
     /**
      * Update a Edge entity.
-     *
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param $entity
+     * @param         $entity
      *
      * @return Response
      */
-    public function putAction(Request $request, Edge $entity)
-    {
+    public function putAction(Request $request, Edge $entity) {
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
             $form = $this->createForm(EdgeType::class, $entity, array("method" =>
                 $request->getMethod
-            ()));
+                ()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
             if ($form->isValid()) {
@@ -136,32 +133,30 @@ class EdgeRESTController extends VoryxController
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * Partial Update to a Edge entity.
-     *
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param $entity
+     * @param         $entity
      *
      * @return Response
      */
-    public function patchAction(Request $request, Edge $entity)
-    {
+    public function patchAction(Request $request, Edge $entity) {
         return $this->putAction($request, $entity);
     }
+
     /**
      * Delete a Edge entity.
-     *
      * @View(statusCode=204)
      *
      * @param Request $request
-     * @param $entity
+     * @param         $entity
      *
      * @return Response
      */
-    public function deleteAction(Request $request, Edge $entity)
-    {
+    public function deleteAction(Request $request, Edge $entity) {
         try {
             $em = $this->getDoctrine()->getManager();
             $em->remove($entity);

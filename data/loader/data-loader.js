@@ -43,13 +43,22 @@ DataLoader.prototype.loadData = function () {
         });
     });
 
-    // Caricamento dei lati @TODO implementare
+    // Caricamento dei lati
     mutex.take(function () {
         $this.loadProgress = new Progress("uploading edges :bar :current/:total",
             {total: $this.data.edges.length});
         $this.data.edges.map(function (edge) {
             callSem.take($this.postEdgeFunction(edge));
         });
+    });
+
+    // Caricamento delle scale
+    mutex.take(function () {
+        $this.loadProgress = new Progress("uploading stairs :bar :current/:total",
+            {total: $this.data.stairs.length});
+        $this.data.stairs.map(function (stair) {
+            callSem.take($this.postStairsFunction(stair));
+        })
     });
 
     return this;
@@ -62,6 +71,35 @@ DataLoader.prototype.loadData = function () {
 DataLoader.prototype.clearData = function () {
     var $this = this;
     var savedNodes = null;
+    var savedEdges = null;
+
+    // Lettura degli archi presenti nel database
+    mutex.take(function () {
+        rest.get($this.endpoints.get_edges)
+            .on("complete", function (data) {
+                $this.handleServerResult(data, {
+                    "success": function (data) {
+                        savedEdges = data;
+                    },
+                    "complete": function () {
+                        mutex.leave();
+                    }
+                })
+            })
+    });
+
+    // Rimozione degli archi presenti nel database
+    mutex.take(function () {
+        if (!(typeof savedEdges == "string" && !savedEdges.trim())) {
+            $this.clearProgress = new Progress("clearing edges :bar :current/:total",
+                {total: savedEdges.length});
+            savedEdges.map(function (edge) {
+                callSem.take($this.deleteEdgeFunction(edge));
+            });
+        } else {
+            mutex.leave();
+        }
+    });
 
     // Lettura dei nodi presenti nel database
     mutex.take(function () {
@@ -81,7 +119,8 @@ DataLoader.prototype.clearData = function () {
     // Rimozione dei nodi presenti nel database
     mutex.take(function () {
         if (!(typeof savedNodes == "string" && !savedNodes.trim())) {
-            $this.clearProgress = new Progress("clearing :bar :current/:total", {total: savedNodes.length});
+            $this.clearProgress = new Progress("clearing nodes :bar :current/:total",
+                {total: savedNodes.length});
             savedNodes.map(function (node) {
                 callSem.take($this.deleteNodeFunction(node));
             });
@@ -123,6 +162,11 @@ DataLoader.prototype.postNodeFunction = function (node) {
     };
 };
 
+/**
+ * Inserisce i lati
+ * @param edge
+ * @returns {Function}
+ */
 DataLoader.prototype.postEdgeFunction = function (edge) {
     var $this = this;
     return function () {
@@ -135,6 +179,31 @@ DataLoader.prototype.postEdgeFunction = function (edge) {
                             $this.dbmirror.edges = [];
                         }
                         $this.dbmirror.edges.push(data);
+                    },
+                    complete: function () {
+                        callSem.leave();
+                        $this.loadProgress.tick();
+                        if ($this.loadProgress.complete) {
+                            mutex.leave();
+                        }
+                    }
+                })
+            })
+    }
+};
+
+DataLoader.prototype.postStairsFunction = function (stair) {
+    var $this = this;
+    return function () {
+        var jsonData = $this.transform_stairs(stair);
+        rest.postJson($this.endpoints.post_edge, jsonData)
+            .on("complete", function (result) {
+                $this.handleServerResult(result, {
+                    success: function (data) {
+                        if (!$this.dbmirror.hasOwnProperty("stairs")) {
+                            $this.dbmirror.stairs = [];
+                        }
+                        $this.dbmirror.stairs.push(data);
                     },
                     complete: function () {
                         callSem.leave();
@@ -170,6 +239,29 @@ DataLoader.prototype.deleteNodeFunction = function (node) {
                 })
             });
     };
+};
+
+/**
+ * Metodo per la creazione della funzione di elminazione degli archi
+ * @param edge
+ * @returns {Function}
+ */
+DataLoader.prototype.deleteEdgeFunction = function (edge) {
+    var $this = this;
+    return function () {
+        rest.del(strformat($this.endpoints.delete_edge, {id: edge.id}))
+            .on("complete", function (result) {
+                $this.handleServerResult(result, {
+                    "complete": function () {
+                        $this.clearProgress.tick();
+                        callSem.leave();
+                        if ($this.clearProgress.complete) {
+                            mutex.leave();
+                        }
+                    }
+                })
+            });
+    }
 };
 
 /**
@@ -230,6 +322,11 @@ DataLoader.prototype.transform_node = function (node) {
     };
 };
 
+/**
+ * Trasforma un oggetto Edge locale in un oggetto per l'inserimento nel db
+ * @param edge
+ * @returns {{begin: (*|String|string), end: (*|String|string), width: *, length: *, stairs: boolean, v: number, i: number, los: number, c: number}}
+ */
 DataLoader.prototype.transform_edge = function (edge) {
     var beginNode = this.search_node(this.dbmirror.nodes, {
         "name": edge.node1.codice,
@@ -255,9 +352,41 @@ DataLoader.prototype.transform_edge = function (edge) {
     }
 };
 
+/**
+ * Trasforma un oggetto strais locale in uno pronto per il database
+ * @param stairs
+ * @returns {{begin: (*|String|string), end: (*|String|string), width: *, length: *, stairs: boolean, v: number, i: number, los: number, c: number}}
+ */
+DataLoader.prototype.transform_stairs = function (stairs) {
+    var beginNode = this.search_node(this.dbmirror.nodes, {
+        "name": stairs.node1
+    });
+    var endNode = this.search_node(this.dbmirror.nodes, {
+        "name": stairs.node2
+    });
+
+    return {
+        "begin": beginNode.id,
+        "end": endNode.id,
+        "width": stairs.larghezza,
+        "length": stairs.lunghezza,
+        "stairs": true,
+        "v": 0.,
+        "i": 0.,
+        "los": 0.,
+        "c": 0.
+    }
+};
+
+/**
+ * Ricerca un nodo
+ * @param nodes
+ * @param params
+ * @returns {*}
+ */
 DataLoader.prototype.search_node = function (nodes, params) {
     var founds = nodes.searchObject(params);
-    if(founds.length > 0) {
+    if (founds.length > 0) {
         return founds[0];
     } else {
         return null;
