@@ -3,7 +3,7 @@ imports:
     - { resource: general.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    # fos_rest, nelmio_cors
+    # fos_rest, nelmio_cors, nelmio_api_doc
     - { resource: restful.yml }
     - { resource: "@CoreBundle/Resources/config/services.yml" }
     - { resource: "@ApiBundle/Resources/config/services.yml" }

@@ -14,6 +14,7 @@ fos_rest:
     # Questa voce non sarà supportata prima della versione 2.0 del bundle
     # versioning: true
 
+nelmio_api_doc: ~
 
 nelmio_cors:
   defaults:

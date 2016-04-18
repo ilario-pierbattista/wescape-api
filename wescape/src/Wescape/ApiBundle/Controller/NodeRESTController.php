@@ -2,26 +2,24 @@
 
 namespace Wescape\ApiBundle\Controller;
 
-use Wescape\CoreBundle\Entity\Node;
-use Wescape\CoreBundle\Form\NodeType;
-
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
+use Wescape\CoreBundle\Entity\Node;
+use Wescape\CoreBundle\Form\NodeType;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Node controller.
  * @RouteResource("Node")
+ *
+ * @TODO Completare la documentazione
  */
 class NodeRESTController extends VoryxController
 {
@@ -30,6 +28,12 @@ class NodeRESTController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
+     *
+     * @ApiDoc(
+     *     resource=true,
+     *     description="It retrieves node's informations identified by node's id"
+     * )
+     *
      */
     public function getAction(Node $entity) {
         return $entity;
@@ -51,6 +55,11 @@ class NodeRESTController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
+     *
+     * @ApiDoc(
+     *     resource=true,
+     *     description="Retrieves the complete list of nodes"
+     * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
         try {
@@ -82,7 +91,7 @@ class NodeRESTController extends VoryxController
      */
     public function postAction(Request $request) {
         $entity = new Node();
-        $form = $this->createForm(NodeType::class, $entity, array("method" =>
+        $form = $this->createForm(get_class(new NodeType()), $entity, array("method" =>
             $request->getMethod()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
@@ -111,7 +120,7 @@ class NodeRESTController extends VoryxController
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(NodeType::class, $entity, array("method" =>
+            $form = $this->createForm(get_class(new NodeType()), $entity, array("method" =>
                 $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);

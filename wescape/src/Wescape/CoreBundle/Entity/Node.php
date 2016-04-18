@@ -22,7 +22,7 @@ class Node
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=30, unique=true)
+     * @ORM\Column(type="string", length=30)
      * @var string Nome del nodo
      */
     private $name;
