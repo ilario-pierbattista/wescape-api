@@ -1,6 +1,7 @@
 var xlsx = require('node-xlsx');
 var fs = require('fs');
 var path = require('path');
+require("../array-extension");
 
 const DATAPATH = path.normalize(__dirname + "/../maps/data.xlsx");
 const DESTPATH = path.normalize(__dirname + "/../maps/json/");
@@ -181,26 +182,7 @@ Parser.prototype._trunk_width = function (begin, end) {
  * @return {object}        Nodo trovato
  */
 Parser.prototype._find_node = function (nodes, filterParams) {
-    // Funzione per il match ricorsivo dei parametri forniti con i dati in input
-    var recursiveMatchFunc = function (data, params) {
-        var match = true;
-        if (typeof params == "object" && typeof data == "object") {
-            Object.keys(params).map(function (label) {
-                if (data.hasOwnProperty(label)) {
-                    match = match && recursiveMatchFunc(data[label], params[label]);
-                } else {
-                    match = false;
-                }
-            });
-        } else {
-            return data == params;
-        }
-        return match;
-    };
-
-    var founds = nodes.filter(function (v) {
-        return recursiveMatchFunc(v, filterParams);
-    });
+    var founds = nodes.searchObject(filterParams);
 
     if (founds.length > 0) {
         return founds[0];

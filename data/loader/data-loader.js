@@ -5,10 +5,12 @@ var mutex = require('semaphore')(1);
 var callSem = require('semaphore')(5);  // Massimo 5 in contemporanea
 var strformat = require('strformat');
 var Progress = require('progress');
+require("../array-extension");
 
 function DataLoader() {
     var $this = this;
     this.data = {};
+    this.dbmirror = {};
 
     Object.keys(env.parsed_data_paths).map(function (label) {
         $this.data[label] = require(env.parsed_data_paths[label]);
@@ -18,7 +20,11 @@ function DataLoader() {
         "get_node": this.build_url("api/v1/nodes/{id}.json"),
         "get_nodes": this.build_url("api/v1/nodes.json"),
         "post_node": this.build_url("api/v1/nodes.json"),
-        "delete_node": this.build_url("api/v1/nodes/{id}.json")
+        "delete_node": this.build_url("api/v1/nodes/{id}.json"),
+        "get_edge": this.build_url("api/v1/edges/{id}.json"),
+        "get_edges": this.build_url("api/v1/edges.json"),
+        "post_edge": this.build_url("api/v1/edges.json"),
+        "delete_edge": this.build_url("api/v1/edges/{id}.json")
     }
 }
 
@@ -30,7 +36,8 @@ DataLoader.prototype.loadData = function () {
     var $this = this;
     // Caricamento dei nodi
     mutex.take(function () {
-        $this.loadProgress = new Progress("uploading :bar :current/:total", {total: $this.data.nodes.length});
+        $this.loadProgress = new Progress("uploading nodes :bar :current/:total",
+            {total: $this.data.nodes.length});
         $this.data.nodes.map(function (node) {
             callSem.take($this.postNodeFunction(node));
         });
@@ -38,8 +45,11 @@ DataLoader.prototype.loadData = function () {
 
     // Caricamento dei lati @TODO implementare
     mutex.take(function () {
-        console.log("Done");
-        mutex.leave();
+        $this.loadProgress = new Progress("uploading edges :bar :current/:total",
+            {total: $this.data.edges.length});
+        $this.data.edges.map(function (edge) {
+            callSem.take($this.postEdgeFunction(edge));
+        });
     });
 
     return this;
@@ -57,18 +67,21 @@ DataLoader.prototype.clearData = function () {
     mutex.take(function () {
         rest.get($this.endpoints.get_nodes)
             .on("complete", function (data) {
-                if (data instanceof Error) {
-                    console.log("Error");
-                }
-                savedNodes = data;
-                mutex.leave();
+                $this.handleServerResult(data, {
+                    "success": function (data) {
+                        savedNodes = data;
+                    },
+                    "complete": function () {
+                        mutex.leave();
+                    }
+                });
             });
     });
 
     // Rimozione dei nodi presenti nel database
     mutex.take(function () {
         if (!(typeof savedNodes == "string" && !savedNodes.trim())) {
-            $this.clearProgress = new Progress("clearing :bar :current/:total", {total:savedNodes.length});
+            $this.clearProgress = new Progress("clearing :bar :current/:total", {total: savedNodes.length});
             savedNodes.map(function (node) {
                 callSem.take($this.deleteNodeFunction(node));
             });
@@ -91,22 +104,48 @@ DataLoader.prototype.postNodeFunction = function (node) {
         var jsonData = $this.transform_node(node);
         rest.postJson($this.endpoints.post_node, jsonData)
             .on("complete", function (result) {
-                if (result instanceof Error) {
-                    console.log(result);
-                } else {
-                    if(result.hasOwnProperty('error')) {
-                        console.log(strformat("Errore {code}", {code: result.error.code}));
-                        console.log(result.error.exception);
+                $this.handleServerResult(result, {
+                    "success": function (data) {
+                        if (!$this.dbmirror.hasOwnProperty("nodes")) {
+                            $this.dbmirror.nodes = [];
+                        }
+                        $this.dbmirror.nodes.push(data);
+                    },
+                    "complete": function () {
+                        callSem.leave();
+                        $this.loadProgress.tick();
+                        if ($this.loadProgress.complete) {
+                            mutex.leave();
+                        }
                     }
-                }
-
-                callSem.leave();
-                $this.loadProgress.tick();
-                if($this.loadProgress.complete) {
-                    mutex.leave();
-                }
+                });
             });
     };
+};
+
+DataLoader.prototype.postEdgeFunction = function (edge) {
+    var $this = this;
+    return function () {
+        var jsonData = $this.transform_edge(edge);
+        rest.postJson($this.endpoints.post_edge, jsonData)
+            .on("complete", function (result) {
+                $this.handleServerResult(result, {
+                    success: function (data) {
+                        if (!$this.dbmirror.hasOwnProperty("edges")) {
+                            $this.dbmirror.edges = [];
+                        }
+                        $this.dbmirror.edges.push(data);
+                    },
+                    complete: function () {
+                        callSem.leave();
+                        $this.loadProgress.tick();
+                        if ($this.loadProgress.complete) {
+                            mutex.leave();
+                        }
+                    }
+                })
+            })
+    }
 };
 
 /**
@@ -120,19 +159,58 @@ DataLoader.prototype.deleteNodeFunction = function (node) {
     return function () {
         rest.del(strformat($this.endpoints.delete_node, {id: node.id}))
             .on("complete", function (result) {
-                if (result instanceof Error) {
-                    console.log(result);
-                } else {
-                    // console.log(strformat("Deleted node with id {id}", {id: node.id}));
-                }
-                $this.clearProgress.tick();
-                callSem.leave();
-
-                if($this.clearProgress.complete) {
-                    mutex.leave();
-                }
+                $this.handleServerResult(result, {
+                    "complete": function () {
+                        $this.clearProgress.tick();
+                        callSem.leave();
+                        if ($this.clearProgress.complete) {
+                            mutex.leave();
+                        }
+                    }
+                })
             });
     };
+};
+
+/**
+ * Handler dei risultati del server
+ * @param result Risposta del server
+ * @param callbacks Callbacks da eseguire
+ */
+DataLoader.prototype.handleServerResult = function (result, callbacks) {
+    // Registrazione delle callback standard
+    var handlers = {
+        "connection_error": function (error) {
+            console.log(error);
+        },
+        "success": function (data) {
+        },
+        "error": function (error) {
+            console.log(strformat("Errore {code}", {code: error.error.code}));
+            console.log(error.error["exception"]);
+        },
+        "complete": function (result) {
+        }
+    };
+
+    // Registrazione delle callback custom
+    Object.keys(handlers).map(function (label) {
+        if (callbacks.hasOwnProperty(label) && typeof callbacks[label] == "function") {
+            handlers[label] = callbacks[label];
+        }
+    });
+
+    // Esecuzione delle callback
+    if (result instanceof Error) {
+        handlers.connection_error(result);
+    } else {
+        if (result.hasOwnProperty('error')) {
+            handlers.error(result);
+        } else {
+            handlers.success(result);
+        }
+    }
+    handlers.complete(result);
 };
 
 /**
@@ -145,9 +223,45 @@ DataLoader.prototype.transform_node = function (node) {
         name: node.codice,
         x: node.coordinates.pixel.x,
         y: node.coordinates.pixel.y,
+        meter_x: node.coordinates.meters.x,
+        meter_y: node.coordinates.meters.y,
         floor: node.quota,
         width: node.larghezza
     };
+};
+
+DataLoader.prototype.transform_edge = function (edge) {
+    var beginNode = this.search_node(this.dbmirror.nodes, {
+        "name": edge.node1.codice,
+        "meter_x": edge.node1.coordinates.meters.x,
+        "meter_y": edge.node1.coordinates.meters.y
+    });
+    var endNode = this.search_node(this.dbmirror.nodes, {
+        "name": edge.node2.codice,
+        "meter_x": edge.node2.coordinates.meters.x,
+        "meter_y": edge.node2.coordinates.meters.y
+    });
+
+    return {
+        "begin": beginNode.id,
+        "end": endNode.id,
+        "width": edge.larghezza,
+        "length": edge.lunghezza,
+        "stairs": false,
+        "v": 0.,
+        "i": 0.,
+        "los": 0.,
+        "c": 0.
+    }
+};
+
+DataLoader.prototype.search_node = function (nodes, params) {
+    var founds = nodes.searchObject(params);
+    if(founds.length > 0) {
+        return founds[0];
+    } else {
+        return null;
+    }
 };
 
 /**

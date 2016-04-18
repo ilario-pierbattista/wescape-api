@@ -103,7 +103,7 @@ class NodeRESTController extends VoryxController
 
             return $entity;
         }
-
+        
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
 

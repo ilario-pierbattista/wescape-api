@@ -20,6 +20,8 @@ class NodeType extends AbstractType
             ->add('y')
             ->add('floor')
             ->add('width')
+            ->add('meter_x')
+            ->add('meter_y')
         ;
     }
     

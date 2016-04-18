@@ -2,6 +2,7 @@
 
 namespace Wescape\ApiBundle\Controller;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Wescape\CoreBundle\Entity\Edge;
 use Wescape\CoreBundle\Form\EdgeType;
 
@@ -78,6 +79,11 @@ class EdgeRESTController extends VoryxController
      * @param Request $request
      *
      * @return Response
+     *
+     * @ApiDoc(
+     *     resource=true,
+     *     description="Insertion of an edge"
+     * )
      *
      */
     public function postAction(Request $request)

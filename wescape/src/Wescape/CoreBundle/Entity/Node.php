@@ -52,6 +52,18 @@ class Node
     private $width;
 
     /**
+     * @ORM\Column(type="integer")
+     * @var integer Coordinata x in metri
+     */
+    private $meter_x;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @var integer Coordinata y in metri
+     */
+    private $meter_y;
+
+    /**
      * Get id
      *
      * @return integer
@@ -168,5 +180,53 @@ class Node
      */
     public function getWidth() {
         return $this->width;
+    }
+
+    /**
+     * Set meterX
+     *
+     * @param integer $meterX
+     *
+     * @return Node
+     */
+    public function setMeterX($meterX)
+    {
+        $this->meter_x = $meterX;
+
+        return $this;
+    }
+
+    /**
+     * Get meterX
+     *
+     * @return integer
+     */
+    public function getMeterX()
+    {
+        return $this->meter_x;
+    }
+
+    /**
+     * Set meterY
+     *
+     * @param integer $meterY
+     *
+     * @return Node
+     */
+    public function setMeterY($meterY)
+    {
+        $this->meter_y = $meterY;
+
+        return $this;
+    }
+
+    /**
+     * Get meterY
+     *
+     * @return integer
+     */
+    public function getMeterY()
+    {
+        return $this->meter_y;
     }
 }
