@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @package Wescape\StaticBundle\Controller
  *
- *          @NamePrefix("static_map_")
+ * @NamePrefix("static_map_")
  */
 class MapController extends Controller
 {
