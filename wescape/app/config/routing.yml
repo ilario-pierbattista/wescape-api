@@ -1,3 +1,8 @@
+static:
+    resource: "@StaticBundle/Controller/"
+    type:     annotation
+    prefix:   /static
+
 backend:
     resource: "@BackendBundle/Controller/"
     type:     annotation
