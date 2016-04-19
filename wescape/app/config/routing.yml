@@ -3,11 +3,6 @@ static:
     type:     annotation
     prefix:   /static
 
-backend:
-    resource: "@BackendBundle/Controller/"
-    type:     annotation
-    prefix:   /backend
-
 api:
     resource: "@ApiBundle/Resources/config/routes.yml"
     type:     rest
