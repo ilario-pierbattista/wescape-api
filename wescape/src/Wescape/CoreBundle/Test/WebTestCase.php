@@ -28,7 +28,7 @@ class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
     protected function executeCommand($command, array $options = []) {
         $options["--env"] = "test";
         $options["--quiet"] = "true";
-        $options['command'] = $command;
+        $options["command"] = $command;
 
         $kernel = $this->getContainer()->get("kernel");
         $application = new Application($kernel);
