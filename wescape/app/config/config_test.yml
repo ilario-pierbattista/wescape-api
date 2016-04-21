@@ -8,9 +8,17 @@ framework:
     profiler:
         collect: false
 
+doctrine:
+  dbal:
+    dbname: "%database_testing_name%"
+    port: "%database_testing_port%"
+    password: "%database_testing_password%"
+
 web_profiler:
     toolbar: false
     intercept_redirects: false
 
 swiftmailer:
     disable_delivery: true
+
+liip_functional_test: ~

@@ -21,7 +21,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  *
  * @TODO Completare la documentazione
  */
-class NodeRESTController extends VoryxController
+class NodeController extends VoryxController
 {
     /**
      * Get a Node entity

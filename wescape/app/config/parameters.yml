@@ -5,6 +5,9 @@ parameters:
     database_name: wescape
     database_user: root
     database_password: root
+    database_testing_name: wescape_test
+    database_testing_password: root_test
+    database_testing_port: 13306
     mailer_transport: smtp
     mailer_host: localhost
     mailer_user: null

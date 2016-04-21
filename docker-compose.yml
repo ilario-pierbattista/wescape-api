@@ -4,6 +4,7 @@ application:
         - ./wescape:/var/www/symfony
         - ./logs/symfony:/var/www/symfony/app/logs
     tty: true
+
 db:
     image: mysql
     ports:
@@ -11,9 +12,15 @@ db:
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: wescape
-        # This cause an attemp of recreating root user
-        # MYSQL_USER: root
-        # MYSQL_PASSWORD: pass
+
+testing_db:
+    image: mysql
+    ports:
+        - 13306:3306
+    environment:
+        MYSQL_ROOT_PASSWORD: root_test
+        MYSQL_DATABASE: wescape_test
+
 php:
     # build: php-fpm
     image: ilariopierbattista/wescape-api:php-fpm
@@ -23,6 +30,8 @@ php:
         - application
     links:
         - db:wescape.db.service
+        - testing_db:wescape.db.service
+
 nginx:
     # build: nginx
     image: ilariopierbattista/wescape-api:nginx
@@ -34,6 +43,7 @@ nginx:
         - application
     volumes:
         - ./logs/nginx/:/var/log/nginx
+
 elk:
     image: willdurand/elk
     ports:
