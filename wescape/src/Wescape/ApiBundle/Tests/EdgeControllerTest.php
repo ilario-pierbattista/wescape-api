@@ -32,10 +32,14 @@ class EdgeControllerTest extends WebTestCase
     }
 
     public function testGetAction() {
-        $this->client->request("GET", "api/v1/edges/1.json");
-        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $this->client->request("GET", "/api/v1/edges/1.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
-        $this->client->request("GET", "api/v1/edges/2.json");
+        $this->authenticateUser($this->client);
+
+        $this->client->request("GET", "/api/v1/edges/1.json");
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $this->client->request("GET", "/api/v1/edges/2.json");
         $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);
     }
 
@@ -51,13 +55,16 @@ class EdgeControllerTest extends WebTestCase
             "length" => 10
         ];
 
-        $this->client->request("POST", "api/v1/edges.json", $edge);
+        $this->client->request("POST", "/api/v1/edges.json", $edge);
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+
+        $this->client->request("POST", "/api/v1/edges.json", $edge);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
         $this->assertStatusCode(Response::HTTP_CREATED, $this->client);
-
         $edge["begin"] = $this->getNodeInJson($edge["begin"]);
         $edge["end"] = $this->getNodeInJson($edge["end"]);
-
         $this->assertArraySubset($edge, $responseData);
     }
 
@@ -77,21 +84,28 @@ class EdgeControllerTest extends WebTestCase
             "length" => 15
         ];
 
-        $this->client->request("PUT",  "api/v1/edges/1.json", $edge);
+        $this->client->request("PUT",  "/api/v1/edges/1.json", $edge);
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+
+        $this->client->request("PUT",  "/api/v1/edges/1.json", $edge);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
-
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-
         $edge["begin"] = $this->getNodeInJson($edge["begin"]);
         $edge["end"] = $this->getNodeInJson($edge["end"]);
-
         $this->assertArraySubset($edge, $responseData);
     }
 
     public function testDeleteAction() {
-        $this->client->request("DELETE",  "api/v1/edges/1.json");
+        $this->client->request("DELETE",  "/api/v1/edges/1.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+        
+        $this->client->request("DELETE",  "/api/v1/edges/1.json");
         $this->assertStatusCode(Response::HTTP_NO_CONTENT, $this->client);
-        $this->client->request("DELETE",  "api/v1/edges/1.json");
+        $this->client->request("DELETE",  "/api/v1/edges/1.json");
         $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);
     }
 

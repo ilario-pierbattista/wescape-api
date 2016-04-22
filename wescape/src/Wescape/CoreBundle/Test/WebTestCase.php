@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ilario
- * Date: 21/04/16
- * Time: 13.00
- */
 
 namespace Wescape\CoreBundle\Test;
 
 
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
 {
@@ -21,28 +15,36 @@ class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
     }
 
     /**
-     * @param       $command
-     * @param array $options
+     * Autentica il client usato per i test come un utente normale
      *
-     * @return string
-     * @throws \Exception
-     * 
-     * @deprecated 
+     * @param Client $client
      */
-    protected function executeCommand($command, array $options = []) {
-        $options["--env"] = "test";
-        // $options["--quiet"] = "true";
-        $options["command"] = $command;
+    protected function authenticateUser(Client $client) {
+        $session = $client->getContainer()->get('session');
 
-        $kernel = $this->getContainer()->get("kernel");
-        $application = new Application($kernel);
-        $application->setAutoExit(false);
+        $firewall = 'api';
+        $token = new UsernamePasswordToken('test_user', null, $firewall, array('ROLE_USER'));
+        $session->set('_security_' . $firewall, serialize($token));
+        $session->save();
 
-        $input = new ArrayInput($options);
-        $output = new BufferedOutput();
-        $application->run($input, $output);
-        $content = $output->fetch();
+        $cookie = new Cookie($session->getName(), $session->getId());
+        $client->getCookieJar()->set($cookie);
+    }
 
-        return $content;
+    /**
+     * Autentica il client usato per i test come admin
+     *
+     * @param Client $client
+     */
+    protected function authenticateAdmin(Client $client) {
+        $session = $client->getContainer()->get('session');
+
+        $firewall = 'api';
+        $token = new UsernamePasswordToken('admin', null, $firewall, array('ROLE_ADMIN'));
+        $session->set('_security_' . $firewall, serialize($token));
+        $session->save();
+
+        $cookie = new Cookie($session->getName(), $session->getId());
+        $client->getCookieJar()->set($cookie);
     }
 }

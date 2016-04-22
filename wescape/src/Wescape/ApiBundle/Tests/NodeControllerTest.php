@@ -3,6 +3,7 @@
 namespace Wescape\ApiBundle;
 
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wescape\ApiBundle\DataFixtures\ORM\LoadNodeData;
 use Wescape\CoreBundle\Test\WebTestCase;
@@ -26,13 +27,16 @@ class NodeControllerTest extends WebTestCase
     }
 
     public function testGetAction() {
-        // Test di una richiesta con successo
-        $this->client->request("GET", "api/v1/nodes/1.json");
+        $this->client->request("GET", "/api/v1/nodes/1.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+
+        $this->client->request("GET", "/api/v1/nodes/1.json");
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertEquals(self::$expected[1], $this->client->getResponse()->getContent());
 
-        // Test di una richiesta che sicuramente fallirà
-        $this->client->request("GET", "api/v1/nodes/1000.json");
+        $this->client->request("GET", "/api/v1/nodes/1000.json");
         $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);
     }
 
@@ -47,7 +51,12 @@ class NodeControllerTest extends WebTestCase
             'meter_y' => 20
         ];
 
-        $this->client->request("POST", "api/v1/nodes.json", $node);
+        $this->client->request("POST", "/api/v1/nodes.json", $node);
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+
+        $this->client->request("POST", "/api/v1/nodes.json", $node);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
         $this->assertStatusCode(Response::HTTP_CREATED, $this->client);
         $this->assertArraySubset($node, $responseData);
@@ -65,7 +74,12 @@ class NodeControllerTest extends WebTestCase
             'meter_y' => 20
         ];
 
-        $this->client->request("PUT", "api/v1/nodes/1.json", $node);
+        $this->client->request("PUT", "/api/v1/nodes/1.json", $node);
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+
+        $this->client->request("PUT", "/api/v1/nodes/1.json", $node);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $this->assertArraySubset($node, $responseData);
@@ -73,7 +87,12 @@ class NodeControllerTest extends WebTestCase
     }
 
     public function testDeleteAction() {
-        $this->client->request("DELETE", "api/v1/nodes/1.json");
+        $this->client->request("DELETE", "/api/v1/nodes/1.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->authenticateUser($this->client);
+
+        $this->client->request("DELETE", "/api/v1/nodes/1.json");
         $this->assertStatusCode(Response::HTTP_NO_CONTENT, $this->client);
         $this->client->request("GET", "api/v1/nodes/1.json");
         $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);

@@ -38,11 +38,11 @@ security:
       # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     api:
-      pattern: ^/api
+      pattern: ^/api/v1
       security: true
       http_basic:
         realm: 'Secured Area'
         provider: in_memory
 
   access_control:
-    - { path: ^/api, roles: ROLE_USER }
+    - { path: ^/api/v1, roles: ROLE_USER }
