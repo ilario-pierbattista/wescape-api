@@ -20,10 +20,10 @@ class NodeControllerTest extends WebTestCase
 
     protected function setUp() {
         parent::setUp();
+        $this->wipeDatabase();
         $this->loadFixtures([LoadNodeData::class]);
         $this->client = self::createClient();
     }
-
 
     public function testGetAction() {
         // Test di una richiesta con successo

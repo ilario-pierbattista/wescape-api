@@ -15,19 +15,23 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
 {
-    protected function setUp() {
-        parent::setUp();
-
-        $content = $this->executeCommand("doctrine:schema:drop", ['--force' => "true"]);
-        echo($content);
-        $content = $this->executeCommand("doctrine:schema:create");
-        echo($content);
+    protected function wipeDatabase() {
+        $this->runCommand("doctrine:schema:drop", ["--force" => "true", "--env" => "test"]);
+        $this->runCommand("doctrine:schema:create", ["--env" => "test"]);
     }
 
-
+    /**
+     * @param       $command
+     * @param array $options
+     *
+     * @return string
+     * @throws \Exception
+     * 
+     * @deprecated 
+     */
     protected function executeCommand($command, array $options = []) {
         $options["--env"] = "test";
-        $options["--quiet"] = "true";
+        // $options["--quiet"] = "true";
         $options["command"] = $command;
 
         $kernel = $this->getContainer()->get("kernel");
@@ -38,7 +42,7 @@ class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
         $output = new BufferedOutput();
         $application->run($input, $output);
         $content = $output->fetch();
-        
+
         return $content;
     }
 }

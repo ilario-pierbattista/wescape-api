@@ -8,12 +8,12 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\Node;
 use Wescape\CoreBundle\Form\NodeType;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Node controller.

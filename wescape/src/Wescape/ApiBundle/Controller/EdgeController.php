@@ -2,29 +2,24 @@
 
 namespace Wescape\ApiBundle\Controller;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Wescape\CoreBundle\Entity\Edge;
-use Wescape\CoreBundle\Form\EdgeType;
-
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
+use Wescape\CoreBundle\Entity\Edge;
+use Wescape\CoreBundle\Form\EdgeType;
 
 /**
  * Edge controller.
  * @RouteResource("Edge")
  */
-class EdgeRESTController extends VoryxController
+class EdgeController extends VoryxController
 {
     /**
      * Get a Edge entity
