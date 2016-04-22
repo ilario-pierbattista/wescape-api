@@ -8,6 +8,12 @@ sudo: required
 env:
   DOCKER_COMPOSE_VERSION: 1.4.2
 
+language: php
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+
 services:
   - docker
 
@@ -21,3 +27,5 @@ before_install:
 script:
   - docker-compose up -d
   - docker-compose ps
+  - phpunit
+
