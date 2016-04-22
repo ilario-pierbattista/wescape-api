@@ -2,33 +2,47 @@
 # http://symfony.com/doc/current/book/security.html
 security:
 
-    encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+  encoders:
+    Symfony\Component\Security\Core\User\User: plaintext
+    FOS\UserBundle\Model\UserInterface: bcrypt
 
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+  role_hierarchy:
+    ROLE_ADMIN: ROLE_USER
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
-    providers:
-        fos_user_bundle:
-            id: fos_user.user_provider.username
-        in_memory:
-            memory: ~
+  # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+  providers:
+    fos_user_bundle:
+      id: fos_user.user_provider.username
+    in_memory:
+      memory:
+        users:
+          admin: { password: admin, roles: ROLE_ADMIN }
+          test_user: { password: test, roles: ROLE_USER }
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+  firewalls:
+    # disables authentication for assets and the profiler, adapt it according to your needs
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
 
-        main:
-            # Leggere: https://stackoverflow.com/questions/22366975/fosuserbundle-rest-api-call-how-to-use-custom-formtype/22394282#22394282
-            anonymous: ~
-            # activate different ways to authenticate
+    # main:
+      # Leggere: https://stackoverflow.com/questions/22366975/fosuserbundle-rest-api-call-how-to-use-custom-formtype/22394282#22394282
+      # anonymous: ~
+      # activate different ways to authenticate
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+      # http_basic: ~
+      # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+      # form_login: ~
+      # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    api:
+      pattern: ^/
+      security: true
+      http_basic:
+        realm: 'Secured Area'
+        provider: in_memory
+
+  access_control:
+    - { path: ^/api, roles: ROLE_USER }
