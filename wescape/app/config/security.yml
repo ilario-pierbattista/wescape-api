@@ -38,7 +38,7 @@ security:
       # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
 
     api:
-      pattern: ^/
+      pattern: ^/api
       security: true
       http_basic:
         realm: 'Secured Area'

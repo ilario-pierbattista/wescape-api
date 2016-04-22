@@ -18,8 +18,6 @@ use Wescape\CoreBundle\Form\NodeType;
 /**
  * Node controller.
  * @RouteResource("Node")
- *
- * @TODO Completare la documentazione
  */
 class NodeController extends VoryxController
 {
@@ -30,8 +28,7 @@ class NodeController extends VoryxController
      * @return Response
      *
      * @ApiDoc(
-     *     resource=true,
-     *     description="It retrieves node's informations identified by node's id"
+     *     resource=true
      * )
      *
      */
@@ -57,8 +54,7 @@ class NodeController extends VoryxController
      *                             fields. Must be an array ie. &filters[id]=3")
      *
      * @ApiDoc(
-     *     resource=true,
-     *     description="Retrieves the complete list of nodes"
+     *     resource=true
      * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -88,6 +84,10 @@ class NodeController extends VoryxController
      * @param Request $request
      *
      * @return Response
+     *
+     * @ApiDoc(
+     *     resource=true
+     * )
      */
     public function postAction(Request $request) {
         $entity = new Node();
@@ -115,6 +115,10 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     *
+     * @ApiDoc(
+     *     resource=true
+     * )
      */
     public function putAction(Request $request, Node $entity) {
         try {
@@ -144,6 +148,10 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     *
+     * @ApiDoc(
+     *     resource=true,
+     * )
      */
     public function patchAction(Request $request, Node $entity) {
         return $this->putAction($request, $entity);
@@ -157,6 +165,10 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     *
+     * @ApiDoc(
+     *     resource=true
+     * )
      */
     public function deleteAction(Request $request, Node $entity) {
         try {
