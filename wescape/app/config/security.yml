@@ -12,6 +12,9 @@ security:
 
   # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
   providers:
+    chain_provider: # Concatenazione di diversi user provider
+      chain:
+        provides: [ in_memory ]
     fos_user_bundle:
       id: fos_user.user_provider.username
     in_memory:
