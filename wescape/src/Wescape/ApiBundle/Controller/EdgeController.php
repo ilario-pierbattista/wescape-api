@@ -85,7 +85,6 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function postAction(Request $request) {
@@ -118,7 +117,6 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Edge $entity) {
@@ -153,7 +151,6 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function patchAction(Request $request, Edge $entity) {
@@ -171,7 +168,6 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Edge $entity) {

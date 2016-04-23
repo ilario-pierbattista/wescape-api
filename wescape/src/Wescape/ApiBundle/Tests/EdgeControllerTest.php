@@ -95,19 +95,19 @@ class EdgeControllerTest extends WebTestCase
         ];
 
         // Anonimo
-        $this->client->request("PUT",  "/api/v1/edges/1.json", $edge);
+        $this->client->request("PUT", "/api/v1/edges/1.json", $edge);
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Utente
         $this->authenticateUser($this->client);
 
-        $this->client->request("PUT",  "/api/v1/edges/1.json", $edge);
+        $this->client->request("PUT", "/api/v1/edges/1.json", $edge);
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
 
         // Admin
         $this->authenticateAdmin($this->client);
 
-        $this->client->request("PUT",  "/api/v1/edges/1.json", $edge);
+        $this->client->request("PUT", "/api/v1/edges/1.json", $edge);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $edge["begin"] = $this->getNodeInJson($edge["begin"]);
@@ -117,21 +117,21 @@ class EdgeControllerTest extends WebTestCase
 
     public function testDeleteAction() {
         // Anonimo
-        $this->client->request("DELETE",  "/api/v1/edges/1.json");
+        $this->client->request("DELETE", "/api/v1/edges/1.json");
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Utente
         $this->authenticateUser($this->client);
 
-        $this->client->request("DELETE",  "/api/v1/edges/1.json");
+        $this->client->request("DELETE", "/api/v1/edges/1.json");
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
 
         // Admin
         $this->authenticateAdmin($this->client);
 
-        $this->client->request("DELETE",  "/api/v1/edges/1.json");
+        $this->client->request("DELETE", "/api/v1/edges/1.json");
         $this->assertStatusCode(Response::HTTP_NO_CONTENT, $this->client);
-        $this->client->request("DELETE",  "/api/v1/edges/1.json");
+        $this->client->request("DELETE", "/api/v1/edges/1.json");
         $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);
     }
 

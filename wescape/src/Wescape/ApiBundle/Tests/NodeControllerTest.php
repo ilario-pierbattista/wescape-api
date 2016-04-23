@@ -3,7 +3,6 @@
 namespace Wescape\ApiBundle;
 
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wescape\ApiBundle\DataFixtures\ORM\LoadNodeData;
 use Wescape\CoreBundle\Test\WebTestCase;

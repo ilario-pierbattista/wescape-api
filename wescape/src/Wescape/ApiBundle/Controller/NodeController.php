@@ -29,7 +29,6 @@ class NodeController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
-     *
      * @ApiDoc(
      *     resource=true
      * )
@@ -54,7 +53,6 @@ class NodeController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
-     *
      * @ApiDoc(
      *     resource=true
      * )
@@ -86,11 +84,9 @@ class NodeController extends VoryxController
      * @param Request $request
      *
      * @return Response
-     *
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function postAction(Request $request) {
@@ -107,7 +103,7 @@ class NodeController extends VoryxController
 
             return $entity;
         }
-        
+
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
 
@@ -119,11 +115,9 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
-     *
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Node $entity) {
@@ -154,11 +148,9 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
-     *
      * @ApiDoc(
      *     resource=true,
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function patchAction(Request $request, Node $entity) {
@@ -173,11 +165,9 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
-     *
      * @ApiDoc(
      *     resource=true
      * )
-     *
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Node $entity) {
