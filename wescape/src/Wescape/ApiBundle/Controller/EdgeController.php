@@ -9,6 +9,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
@@ -84,6 +85,8 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function postAction(Request $request) {
         $entity = new Edge();
@@ -115,6 +118,8 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Edge $entity) {
         try {
@@ -148,6 +153,8 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function patchAction(Request $request, Edge $entity) {
         return $this->putAction($request, $entity);
@@ -164,6 +171,8 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Edge $entity) {
         try {

@@ -8,7 +8,10 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
+use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
@@ -30,7 +33,6 @@ class NodeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
-     *
      */
     public function getAction(Node $entity) {
         return $entity;
@@ -88,6 +90,8 @@ class NodeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function postAction(Request $request) {
         $entity = new Node();
@@ -119,6 +123,8 @@ class NodeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Node $entity) {
         try {
@@ -152,6 +158,8 @@ class NodeController extends VoryxController
      * @ApiDoc(
      *     resource=true,
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function patchAction(Request $request, Node $entity) {
         return $this->putAction($request, $entity);
@@ -169,6 +177,8 @@ class NodeController extends VoryxController
      * @ApiDoc(
      *     resource=true
      * )
+     *
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Node $entity) {
         try {
