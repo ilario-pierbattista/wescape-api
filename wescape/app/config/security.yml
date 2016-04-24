@@ -12,16 +12,8 @@ security:
 
   # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
   providers:
-    chain_provider: # Concatenazione di diversi user provider
-      chain:
-        providers: [in_memory, fos_user_bundle]
     fos_user_bundle:
-      id: fos_user.user_provider.username
-    in_memory:
-      memory:
-        users:
-          admin: { password: admin, roles: ROLE_ADMIN }
-          test_user: { password: test, roles: ROLE_USER }
+      id: fos_user.user_provider.username_email
 
   firewalls:
     # disables authentication for assets and the profiler, adapt it according to your needs
@@ -48,10 +40,6 @@ security:
       fos_oauth: true
       stateless: true
       anonymous: false
-      # security: true
-      # http_basic:
-      #   realm: 'Secured Area'
-      #   provider: in_memory
 
   access_control:
     - { path: ^/api/v1, roles: ROLE_USER }

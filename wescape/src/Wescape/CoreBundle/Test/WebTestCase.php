@@ -4,8 +4,7 @@ namespace Wescape\CoreBundle\Test;
 
 
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClient;
 
 class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
 {
@@ -17,34 +16,46 @@ class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
     /**
      * Autentica il client usato per i test come un utente normale
      *
-     * @param Client $client
+     * @return Client
      */
-    protected function authenticateUser(Client $client) {
-        $session = $client->getContainer()->get('session');
-
-        $firewall = 'api';
-        $token = new UsernamePasswordToken('test_user', null, $firewall, array('ROLE_USER'));
-        $session->set('_security_' . $firewall, serialize($token));
-        $session->save();
-
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $client->getCookieJar()->set($cookie);
+    protected function getAuthenticatedUser() {
+        $tokenClient = self::createClient();
+        $response = $this->getOAuthTokens($tokenClient, "user", "user");
+        return self::createClient([], [
+            "HTTP_Authorization" => "Bearer " . $response['access_token']
+        ]);
     }
 
     /**
      * Autentica il client usato per i test come admin
      *
-     * @param Client $client
+     * @return Client
      */
-    protected function authenticateAdmin(Client $client) {
-        $session = $client->getContainer()->get('session');
+    protected function getAuthenticatedAdmin() {
+        $tokenClient = self::createClient();
+        $response = $this->getOAuthTokens($tokenClient, "admin", "admin");
+        return self::createClient([], [
+            "HTTP_Authorization" => "Bearer " . $response['access_token']
+        ]);
+    }
 
-        $firewall = 'api';
-        $token = new UsernamePasswordToken('admin', null, $firewall, array('ROLE_ADMIN'));
-        $session->set('_security_' . $firewall, serialize($token));
-        $session->save();
-
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $client->getCookieJar()->set($cookie);
+    /**
+     * Richiede l'access token inviando email e password
+     *
+     * @param Client $client
+     * @param        $username
+     * @param        $password
+     *
+     * @return mixed
+     */
+    private function getOAuthTokens(Client $client, $username, $password) {
+        $client->request("POST", "/oauth/v2/token", [
+            "grant_type" => "password",
+            "client_id" => "1_" . LoadOAuthClient::RANDOM_ID,
+            "client_secret" => LoadOAuthClient::SECRET,
+            "username" => $username,
+            "password" => $password
+        ]);
+        return json_decode($client->getResponse()->getContent(), true);
     }
 }

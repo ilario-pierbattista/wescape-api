@@ -5,6 +5,8 @@ namespace Wescape\ApiBundle;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Wescape\ApiBundle\DataFixtures\ORM\LoadNodeData;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClient;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsers;
 use Wescape\CoreBundle\Test\WebTestCase;
 
 class NodeControllerTest extends WebTestCase
@@ -19,7 +21,7 @@ class NodeControllerTest extends WebTestCase
     protected function setUp() {
         parent::setUp();
         $this->wipeDatabase();
-        $this->loadFixtures([LoadNodeData::class]);
+        $this->loadFixtures([LoadNodeData::class, LoadOAuthUsers::class, LoadOAuthClient::class]);
         $this->client = self::createClient();
     }
 
@@ -29,7 +31,7 @@ class NodeControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Utente
-        $this->authenticateUser($this->client);
+        $this->client = $this->getAuthenticatedUser();
 
         $this->client->request("GET", "/api/v1/nodes/1.json");
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
@@ -55,13 +57,13 @@ class NodeControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Utente
-        $this->authenticateUser($this->client);
+        $this->client = $this->getAuthenticatedUser();
 
         $this->client->request("POST", "/api/v1/nodes.json", $node);
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
 
         // Admin
-        $this->authenticateAdmin($this->client);
+        $this->client = $this->getAuthenticatedAdmin();
 
         $this->client->request("POST", "/api/v1/nodes.json", $node);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
@@ -86,13 +88,13 @@ class NodeControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Utente
-        $this->authenticateUser($this->client);
+        $this->client = $this->getAuthenticatedUser();
 
         $this->client->request("PUT", "/api/v1/nodes/1.json", $node);
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
 
         // Admin
-        $this->authenticateAdmin($this->client);
+        $this->client = $this->getAuthenticatedAdmin();
 
         $this->client->request("PUT", "/api/v1/nodes/1.json", $node);
         $responseData = json_decode($this->client->getResponse()->getContent(), TRUE);
@@ -107,13 +109,13 @@ class NodeControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Utente
-        $this->authenticateUser($this->client);
+        $this->client = $this->getAuthenticatedUser();
 
         $this->client->request("DELETE", "/api/v1/nodes/1.json");
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
 
         // Admin
-        $this->authenticateAdmin($this->client);
+        $this->client = $this->getAuthenticatedAdmin();
 
         $this->client->request("DELETE", "/api/v1/nodes/1.json");
         $this->assertStatusCode(Response::HTTP_NO_CONTENT, $this->client);
