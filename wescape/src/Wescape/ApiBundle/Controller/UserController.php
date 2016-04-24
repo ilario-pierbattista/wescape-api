@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\User;
+use Wescape\CoreBundle\Form\CreateUserType;
 use Wescape\CoreBundle\Form\UserType;
 
 /**
@@ -40,7 +41,7 @@ class UserController extends VoryxController
      * @return Response
      * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset
      *                            from which to start listing notes.")
-     * @QueryParam(name="limit", requirements="\d+", default="20", description="How many
+     * @QueryParam(name="limit", requirements="\d+", default="0", description="How many
      *                           notes to return.")
      * @QueryParam(name="order_by", nullable=true, array=true, description="Order by
      *                              fields. Must be an array ie.
@@ -51,7 +52,7 @@ class UserController extends VoryxController
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
         try {
             $offset = $paramFetcher->get('offset');
-            $limit = $paramFetcher->get('limit');
+            $limit = $paramFetcher->get('limit') != 0 ? $paramFetcher->get('limit') : null;
             $order_by = $paramFetcher->get('order_by');
             $filters = !is_null($paramFetcher->get('filters')) ? $paramFetcher->get('filters') : array();
 
@@ -79,14 +80,14 @@ class UserController extends VoryxController
         /** @var UserManager $userManager */
         $userManager = $this->get("fos_user.user_manager");
         $user = $userManager->createUser();
-        $form = $this->createForm(get_class(new UserType()), $user, array("method" => $request->getMethod()));
+        $form = $this->createForm(get_class(new CreateUserType()), $user, array("method" => $request->getMethod()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $user->setUsername($user->getEmail());
-            $user->setEnabled(true);
-            $user->setRoles(['ROLE_USER']);
+            $user->setUsername($user->getEmail())
+                ->setRoles(['ROLE_USER'])
+                ->setEnabled(true);
 
             $userManager->updateUser($user);
 
