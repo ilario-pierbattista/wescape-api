@@ -5,8 +5,8 @@ namespace Wescape\ApiBundle;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Wescape\ApiBundle\DataFixtures\ORM\LoadNodeData;
-use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClient;
-use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsers;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsersTests;
 use Wescape\CoreBundle\Test\WebTestCase;
 
 class NodeControllerTest extends WebTestCase
@@ -21,7 +21,7 @@ class NodeControllerTest extends WebTestCase
     protected function setUp() {
         parent::setUp();
         $this->recreateDatabase();
-        $this->loadFixtures([LoadNodeData::class, LoadOAuthUsers::class, LoadOAuthClient::class]);
+        $this->loadFixtures([LoadNodeData::class, LoadOAuthUsersTests::class, LoadOAuthClientTests::class]);
         $this->client = self::createClient();
     }
 

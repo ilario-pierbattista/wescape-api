@@ -8,7 +8,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Wescape\CoreBundle\Entity\Client;
 
-class LoadOAuthClient extends AbstractFixture implements OrderedFixtureInterface
+class LoadOAuthClientTests extends AbstractFixture implements OrderedFixtureInterface
 {
     const RANDOM_ID = "3bcbxd9e24g0gk4swg0kwgcwg4o8k8g4g888kwc44gcc0gwwk4";
     const SECRET = "4ok2x70rlfokc8g0wws8c8kwcokw80k44sg48goc0ok4w0so0k";

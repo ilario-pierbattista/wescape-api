@@ -4,7 +4,7 @@ namespace Wescape\CoreBundle\Test;
 
 
 use Symfony\Bundle\FrameworkBundle\Client;
-use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClient;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
 
 abstract class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
 {
@@ -85,8 +85,8 @@ abstract class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
     private function getOAuthTokens(Client $client, $username, $password) {
         $client->request("POST", "/oauth/v2/token", [
             "grant_type" => "password",
-            "client_id" => "1_" . LoadOAuthClient::RANDOM_ID,
-            "client_secret" => LoadOAuthClient::SECRET,
+            "client_id" => "1_" . LoadOAuthClientTests::RANDOM_ID,
+            "client_secret" => LoadOAuthClientTests::SECRET,
             "username" => $username,
             "password" => $password
         ]);

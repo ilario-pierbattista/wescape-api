@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Wescape\CoreBundle\Entity\User;
 
-class LoadOAuthUsers extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /** @var ContainerInterface */
     private $container;

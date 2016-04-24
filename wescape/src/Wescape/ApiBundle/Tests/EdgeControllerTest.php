@@ -10,8 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Wescape\ApiBundle\DataFixtures\ORM\LoadEdgeData;
 use Wescape\ApiBundle\DataFixtures\ORM\LoadNodeData;
-use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClient;
-use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsers;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsersTests;
 use Wescape\CoreBundle\Test\WebTestCase;
 
 class EdgeControllerTest extends WebTestCase
@@ -26,7 +26,7 @@ class EdgeControllerTest extends WebTestCase
     protected function setUp() {
         parent::setUp();
         $this->recreateDatabase();
-        $this->loadFixtures([LoadEdgeData::class, LoadNodeData::class, LoadOAuthUsers::class, LoadOAuthClient::class]);
+        $this->loadFixtures([LoadEdgeData::class, LoadNodeData::class, LoadOAuthUsersTests::class, LoadOAuthClientTests::class]);
         $this->client = self::createClient();
         $this->em = static::$kernel->getContainer()->get("doctrine")
             ->getManager();
