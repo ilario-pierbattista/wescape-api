@@ -20,7 +20,7 @@ class NodeControllerTest extends WebTestCase
 
     protected function setUp() {
         parent::setUp();
-        $this->wipeDatabase();
+        $this->recreateDatabase();
         $this->loadFixtures([LoadNodeData::class, LoadOAuthUsers::class, LoadOAuthClient::class]);
         $this->client = self::createClient();
     }

@@ -25,7 +25,7 @@ class EdgeControllerTest extends WebTestCase
 
     protected function setUp() {
         parent::setUp();
-        $this->wipeDatabase();
+        $this->recreateDatabase();
         $this->loadFixtures([LoadEdgeData::class, LoadNodeData::class, LoadOAuthUsers::class, LoadOAuthClient::class]);
         $this->client = self::createClient();
         $this->em = static::$kernel->getContainer()->get("doctrine")

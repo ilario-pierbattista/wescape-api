@@ -6,13 +6,47 @@ namespace Wescape\CoreBundle\Test;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClient;
 
-class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
+abstract class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
 {
-    protected function wipeDatabase() {
+    /** @var bool Flag per garantire un'unica esecuzione del metodo */
+    private static $setupBeforeTestsExecuted = false;
+
+    protected function setUp() {
+        parent::setUp();
+        if(! self::$setupBeforeTestsExecuted) {
+            $this->setUpBeforeTests();
+            self::$setupBeforeTestsExecuted = true;
+        }
+    }
+
+    protected function setUpBeforeTests() {
+
+    }
+
+    protected function recreateDatabase() {
         $this->runCommand("doctrine:schema:drop", ["--force" => "true", "--env" => "test"]);
         $this->runCommand("doctrine:schema:create", ["--env" => "test"]);
     }
 
+    protected function clearTables($tables) {
+        if(!is_array($tables)) {
+            $tables = [$tables];
+        }
+
+        foreach ($tables as $table) {
+            $deleteTableSql = /** @lang SQL */ "DELETE FROM '".$table."'";
+            $resetAutoIncrementSql = /** @lang SQL*/ "ALTER TABLE '".$table."' AUTO_INCREMENT = 0";
+            $this->runCommand("doctrine:query:sql", [
+                "sql" =>  $deleteTableSql,
+                "--env" => "test"
+            ]);
+            $this->runCommand("doctrine:query:sql", [
+                "sql" => $resetAutoIncrementSql,
+                "--env" => "test"
+            ]);
+        }
+    }
+    
     /**
      * Autentica il client usato per i test come un utente normale
      *
