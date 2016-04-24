@@ -30,3 +30,12 @@ nelmio_cors:
       allow_headers: ['*']
       allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
       max_age: 3600
+
+fos_oauth_server:
+  db_driver:           orm
+  client_class:        Wescape\CoreBundle\Entity\Client
+  access_token_class:  Wescape\CoreBundle\Entity\AccessToken
+  refresh_token_class: Wescape\CoreBundle\Entity\RefreshToken
+  auth_code_class:     Wescape\CoreBundle\Entity\AuthCode
+  service:
+    user_provider: fos_user.user_manager

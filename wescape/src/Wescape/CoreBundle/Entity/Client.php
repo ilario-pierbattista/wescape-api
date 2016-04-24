@@ -5,26 +5,22 @@ namespace Wescape\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class User
+ * Class Client
  *
  * @package Wescape\CoreBundle\Entity
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="oauth2_clients")
  */
-class User extends \FOS\UserBundle\Model\User
+class Client extends \FOS\OAuthServerBundle\Entity\Client
 {
     /**
-     * @var integer
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
-    /**
-     * @return int
-     */
-    public function getId() {
-        return $this->id;
+    public function __construct() {
+        parent::__construct();
     }
 }

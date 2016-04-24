@@ -14,7 +14,7 @@ security:
   providers:
     chain_provider: # Concatenazione di diversi user provider
       chain:
-        provides: [ in_memory ]
+        providers: [in_memory, fos_user_bundle]
     fos_user_bundle:
       id: fos_user.user_provider.username
     in_memory:
@@ -39,6 +39,9 @@ security:
 
       # form_login: ~
       # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    oauth_token:
+      pattern: ^/oauth/v2/token
+      security: false
 
     api:
       pattern: ^/api/v1

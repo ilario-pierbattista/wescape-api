@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new \Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new \Nelmio\CorsBundle\NelmioCorsBundle(),
             new \Voryx\RESTGeneratorBundle\VoryxRESTGeneratorBundle(),
+            new \FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new AppBundle\AppBundle(),
             new Wescape\CoreBundle\CoreBundle(),
             new Wescape\ApiBundle\ApiBundle(),
