@@ -45,10 +45,13 @@ security:
 
     api:
       pattern: ^/api/v1
-      security: true
-      http_basic:
-        realm: 'Secured Area'
-        provider: in_memory
+      fos_oauth: true
+      stateless: true
+      anonymous: false
+      # security: true
+      # http_basic:
+      #   realm: 'Secured Area'
+      #   provider: in_memory
 
   access_control:
     - { path: ^/api/v1, roles: ROLE_USER }

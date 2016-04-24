@@ -4,8 +4,8 @@ static:
     prefix:   /static
 
 api:
+    type: rest
     resource: "@ApiBundle/Resources/config/routes.yml"
-    type:     rest
     prefix:   /api
     defaults: {_format: json} # Format default
     # Il versionamento delle API è hardcoded per il momento

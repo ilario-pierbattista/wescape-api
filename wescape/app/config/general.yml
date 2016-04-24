@@ -69,5 +69,5 @@ sensio_framework_extra:
 
 fos_user:
   db_driver: orm
-  firewall_name: main
+  firewall_name: api
   user_class: Wescape\CoreBundle\Entity\User
