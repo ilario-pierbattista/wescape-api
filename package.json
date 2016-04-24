@@ -9,14 +9,18 @@
     "gm": "^1.22.0",
     "gulp": "^3.9.1",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-sync": "^0.1.4",
     "node-xlsx": "^0.6.0",
     "progress": "^1.1.8",
+    "prompt": "^1.0.0",
     "restler": "^3.4.0",
     "semaphore": "^1.0.5",
     "strformat": "0.0.7",
     "through2": "^2.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-shell": "^0.5.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

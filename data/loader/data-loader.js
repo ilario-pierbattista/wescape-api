@@ -14,22 +14,22 @@ const LOG_FILE = "data-loader.log";
 /**
  * Prototipo di client restful configurato per autenticarsi con il server
  */
-Wescape = restler.service(function (u, p) {
-    this.defaults.username = u;
-    this.defaults.password = p;
-    this.defaults.headers = {"Content-Type": 'application/json'};
+OAuthClient = restler.service(function (accessToken) {
+    this.defaults.headers = {
+        "Content-Type": 'application/json',
+        "Authorization": 'Bearer '+accessToken
+    }
 });
-// Istanza del client
-var client = new Wescape("admin", "admin");
 
 /**
  * Classe per il caricamento dei dati
  * @constructor
  */
-function DataLoader() {
+function DataLoader(accessToken) {
     var $this = this;
     this.data = {};
     this.dbmirror = {};
+    this.client = new OAuthClient(accessToken);
 
     Object.keys(env.parsed_data_paths).map(function (label) {
         $this.data[label] = require(env.parsed_data_paths[label]);
@@ -58,7 +58,7 @@ DataLoader.prototype.clearData = function () {
 
     // Lettura degli archi presenti nel database
     mutex.take(function () {
-        client.get($this.endpoints.get_edges)
+        $this.client.get($this.endpoints.get_edges)
             .on("complete", function (data) {
                 $this.handleServerResult(data, {
                     "success": function (data) {
@@ -94,7 +94,7 @@ DataLoader.prototype.clearData = function () {
 
     // Lettura dei nodi presenti nel database
     mutex.take(function () {
-        client.get($this.endpoints.get_nodes)
+        $this.client.get($this.endpoints.get_nodes)
             .on("complete", function (data) {
                 $this.handleServerResult(data, {
                     "success": function (data) {
@@ -176,7 +176,7 @@ DataLoader.prototype.postNodeFunction = function (node) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_node(node);
-        client.post($this.endpoints.post_node, {data: jsonData})
+        $this.client.post($this.endpoints.post_node, {data: jsonData})
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     "success": function (data) {
@@ -214,7 +214,7 @@ DataLoader.prototype.postEdgeFunction = function (edge) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_edge(edge);
-        client.post($this.endpoints.post_edge, {data: jsonData})
+        $this.client.post($this.endpoints.post_edge, {data: jsonData})
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     success: function (data) {
@@ -247,7 +247,7 @@ DataLoader.prototype.postStairsFunction = function (stair) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_stairs(stair);
-        client.post($this.endpoints.post_edge, {data: jsonData})
+        $this.client.post($this.endpoints.post_edge, {data: jsonData})
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     success: function (data) {
@@ -285,7 +285,7 @@ DataLoader.prototype.postStairsFunction = function (stair) {
 DataLoader.prototype.deleteNodeFunction = function (node) {
     var $this = this;
     return function () {
-        client.del(strformat($this.endpoints.delete_node, {id: node.id}))
+        $this.client.del(strformat($this.endpoints.delete_node, {id: node.id}))
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     "complete": function () {
@@ -308,7 +308,7 @@ DataLoader.prototype.deleteNodeFunction = function (node) {
 DataLoader.prototype.deleteEdgeFunction = function (edge) {
     var $this = this;
     return function () {
-        client.del(strformat($this.endpoints.delete_edge, {id: edge.id}))
+        $this.client.del(strformat($this.endpoints.delete_edge, {id: edge.id}))
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     "complete": function () {
@@ -465,4 +465,4 @@ DataLoader.prototype.build_url = function (path) {
     });
 };
 
-module.exports = new DataLoader();
+module.exports = DataLoader;
