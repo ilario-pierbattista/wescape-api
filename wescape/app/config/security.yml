@@ -36,10 +36,24 @@ security:
       security: false
 
     api:
-      pattern: ^/api/v1
+      pattern: ^/api/v1/(nodes|edges)
       fos_oauth: true
       stateless: true
       anonymous: false
 
+    user_management_api:
+      pattern: ^/api/v1/users
+      fos_oauth: true
+      stateless: true
+      anonymous: false
+      methods: [GET, PUT, PATCH, DELETE]
+
+    user_signup_api:
+      pattern: ^/api/v1/users.json
+      stateless: true
+      anonymous: true
+      methods: [POST]
+
+
   access_control:
-    - { path: ^/api/v1, roles: ROLE_USER }
+    - { path: ^/api/v1/(nodes|edges), roles: ROLE_USER }

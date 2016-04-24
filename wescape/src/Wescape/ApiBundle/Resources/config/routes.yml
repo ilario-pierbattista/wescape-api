@@ -9,3 +9,9 @@ wescape_api_Edge:
   prefix: /v1
   resource: Wescape\ApiBundle\Controller\EdgeController
   name_prefix: api_1_
+
+wescape_api_User:
+  type: rest
+  prefix: /v1
+  resource: Wescape\ApiBundle\Controller\UserController
+  name_prefix: api_1_
