@@ -31,7 +31,7 @@ class User extends \FOS\UserBundle\Model\User
      * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $resetRequestedAt = null;
+    private $resetTokenExpiresAt = null;
 
     /**
      * @return int
@@ -60,17 +60,17 @@ class User extends \FOS\UserBundle\Model\User
     /**
      * @return \DateTime
      */
-    public function getResetRequestedAt() {
-        return $this->resetRequestedAt;
+    public function getResetTokenExpiresAt() {
+        return $this->resetTokenExpiresAt;
     }
 
     /**
-     * @param \DateTime $resetRequestedAt
+     * @param \DateTime $resetTokenExpiresAt
      *
      * @return $this
      */
-    public function setResetRequestedAt($resetRequestedAt) {
-        $this->resetRequestedAt = $resetRequestedAt;
+    public function setResetTokenExpiresAt($resetTokenExpiresAt) {
+        $this->resetTokenExpiresAt = $resetTokenExpiresAt;
         return $this;
     }
 }

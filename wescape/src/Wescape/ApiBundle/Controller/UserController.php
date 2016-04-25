@@ -18,6 +18,7 @@ use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\User;
 use Wescape\CoreBundle\Form\CreateUserType;
 use Wescape\CoreBundle\Form\RequestResetPasswordType;
+use Wescape\CoreBundle\Form\ResetPasswordType;
 use Wescape\CoreBundle\Form\UserType;
 use Wescape\CoreBundle\Service\PasswordResetService;
 
@@ -191,7 +192,7 @@ class UserController extends VoryxController
      *
      * @return Response
      *
-     * @Post("/users/password/reset")
+     * @Post("/users/password/request")
      */
     public function requestPasswordResetAction(Request $request) {
         try {
@@ -212,6 +213,8 @@ class UserController extends VoryxController
                 $passwordResetService = $this->container->get("core.password_reset");
                 $passwordResetService->request($user);
 
+                // For debugging
+                // return new Response();
                 return null;
             }
             
@@ -225,12 +228,38 @@ class UserController extends VoryxController
      * Reimposta la password dell'utente
      *
      * @param Request $request
-     * @param User    $user
      *
      * @return Response
-     * @Post("/users/{user}/password/reset")
+     * @Post("/users/password/reset")
      */
-    public function resetPasswordAction(Request $request, User $user) {
+    public function resetPasswordAction(Request $request) {
+        try {
+            /** @var UserManager $userManager */
+            $userManager = $this->get("fos_user.user_manager");
+            $form = $this->createForm(
+                get_class(new ResetPasswordType()),
+                null,
+                array("method" => $request->getMethod()));
 
+            $this->removeExtraFields($request, $form);
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                /** @var User $user */
+                $user = $userManager->findUserByEmail($form->get('email')->getData());
+                /** @var PasswordResetService $passwordResetService */
+                $passwordResetService = $this->container->get("core.password_reset");
+                
+                $resetToken = $form->get("reset_password_token")->getData();
+                $newPassword = $form->get("new_password")->getData();
+                
+                $user = $passwordResetService->reset($user, $resetToken, $newPassword);
+                return $user;
+            }
+
+            return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Exception $e) {
+            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -3,7 +3,9 @@
 namespace Wescape\CoreBundle\Service;
 
 
+use DateInterval;
 use FOS\UserBundle\Model\UserManager;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Wescape\CoreBundle\Entity\User;
 
 class PasswordResetService
@@ -30,8 +32,11 @@ class PasswordResetService
      */
     public function request(User $user) {
         $secret = $this->getAlphaNumRandom(6);
+        $expirationDate = new \DateTime("now");
+        $expirationDate->add(new DateInterval('PT1H'));
+
         $user->setResetPasswordToken($secret)
-            ->setResetRequestedAt(new \DateTime("now"));
+            ->setResetTokenExpiresAt($expirationDate);
         $this->userManager->updateUser($user);
 
         // @TODO Creare una mail degna di questo nome
@@ -49,9 +54,32 @@ class PasswordResetService
 
         $this->mailer->send($message);
     }
-    
-    public function reset() {
-        
+
+    /**
+     * Reimposta la password dell'utente
+     *
+     * @param User   $user        Utente di cui reimpostare la password
+     * @param string $resetToken  Token segreto per il reset
+     * @param string $newPassword Nuova password
+     *
+     * @return User
+     * @throws \Exception
+     */
+    public function reset(User $user, $resetToken, $newPassword) {
+        $now = new \DateTime("now");
+        if ($resetToken != $user->getResetPasswordToken()) {
+            throw new \Exception("The secret token is invalid");
+        }
+        if ($now >= $user->getResetTokenExpiresAt()) {
+            throw new \Exception("The secret token has expired");
+        }
+        // A questo punto il token non è scaduto ed è ancora valido
+        $user->setPlainPassword($newPassword)
+            ->setResetPasswordToken(null)
+            ->setResetTokenExpiresAt(null);
+        $this->userManager->updateUser($user);
+
+        return $user;
     }
 
     /**
