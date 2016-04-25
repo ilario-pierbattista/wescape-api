@@ -2,6 +2,7 @@
 
 namespace Wescape\ApiBundle\Controller;
 
+use FOS\OAuthServerBundle\Entity\TokenManager;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -11,9 +12,14 @@ use FOS\RestBundle\View\View as FOSView;
 use FOS\UserBundle\Model\UserManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use SensioLabs\Security\SecurityChecker;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
+use Wescape\CoreBundle\Entity\AccessToken;
 use Wescape\CoreBundle\Entity\User;
 use Wescape\CoreBundle\Form\CreateUserType;
 use Wescape\CoreBundle\Form\UserType;
@@ -149,6 +155,9 @@ class UserController extends VoryxController
      *
      * @return Response
      * @ApiDoc(resource=true)
+     * @Security(
+     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
+     * )
      */
     public function patchAction(Request $request, User $entity) {
         return $this->putAction($request, $entity);
