@@ -5,3 +5,10 @@ services:
       - "@doctrine.orm.entity_manager"
     tags:
       - { name: validator.constraint_validator , alias: exists.client.validator }
+
+  core.password_reset:
+    class: Wescape\CoreBundle\Service\PasswordResetService
+    arguments:
+      - "@fos_user.user_manager"
+      - "@mailer"
+      - "@twig"

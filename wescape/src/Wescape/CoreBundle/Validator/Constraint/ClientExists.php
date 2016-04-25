@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraint;
 
 class ClientExists extends Constraint
 {
+    public $clientDataNotFound = "The client data cannot be null";
     public $idNotFound = "The array does not contain an 'id' field";
     public $secretNotFound = "The array does not contain a 'secret' field";
     public $invalidClientIdFormat = "The string %id% is no a valid client id format";

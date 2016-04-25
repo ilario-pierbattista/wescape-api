@@ -19,7 +19,10 @@ class ClientExistsValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint) {
         /** @var ClientExists $constraint */
-        if (!array_key_exists("id", $value)) {
+        if(!is_array($value)) {
+            $this->context->buildViolation($constraint->clientDataNotFound)
+                ->addViolation();
+        } elseif (!array_key_exists("id", $value)) {
             $this->context->buildViolation($constraint->idNotFound)
                 ->addViolation();
         } elseif (!array_key_exists("secret", $value)) {

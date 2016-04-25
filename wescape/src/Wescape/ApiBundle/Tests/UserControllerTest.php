@@ -60,6 +60,13 @@ class UserControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
         $this->assertContains((new Email())->message, $this->client->getResponse()->getContent());
 
+        // Client data non viata
+        $clientNotFoundUser = $this->getNotFoundClientDataUser();
+        $this->client->request("POST", "/api/v1/users.json", $clientNotFoundUser);
+        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
+        $this->assertContains((new ClientExists())->clientDataNotFound,
+            $this->client->getResponse()->getContent());
+
         // Client id non inviato
         $idNotFoundUser = $this->getIdNotFoundUser();
         $this->client->request("POST", "/api/v1/users.json", $idNotFoundUser);
@@ -184,6 +191,20 @@ class UserControllerTest extends WebTestCase
             "email" => "test@wescape.it",
             "plainPassword" => "test",
             "client" => [
+                "id" => "1_" . LoadOAuthClientTests::RANDOM_ID,
+                "secret" => LoadOAuthClientTests::SECRET
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getNotFoundClientDataUser() {
+        return [
+            "email" => "test@wescape.it",
+            "plainPassword" => "test",
+            "cli" => [
                 "id" => "1_" . LoadOAuthClientTests::RANDOM_ID,
                 "secret" => LoadOAuthClientTests::SECRET
             ]

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ilario
- * Date: 24/04/16
- * Time: 23.44
- */
 
 namespace Wescape\CoreBundle\Form;
 

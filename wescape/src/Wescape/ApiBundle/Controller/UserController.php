@@ -2,7 +2,7 @@
 
 namespace Wescape\ApiBundle\Controller;
 
-use FOS\OAuthServerBundle\Entity\TokenManager;
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -12,17 +12,14 @@ use FOS\RestBundle\View\View as FOSView;
 use FOS\UserBundle\Model\UserManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use SensioLabs\Security\SecurityChecker;
-use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
-use Wescape\CoreBundle\Entity\AccessToken;
 use Wescape\CoreBundle\Entity\User;
 use Wescape\CoreBundle\Form\CreateUserType;
+use Wescape\CoreBundle\Form\RequestResetPasswordType;
 use Wescape\CoreBundle\Form\UserType;
+use Wescape\CoreBundle\Service\PasswordResetService;
 
 /**
  * User controller.
@@ -184,5 +181,56 @@ class UserController extends VoryxController
         } catch (\Exception $e) {
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    /**
+     * Richiede il codice per reimpostare la password
+     * @View(statusCode=202)
+     *
+     * @param Request $request
+     *
+     * @return Response
+     *
+     * @Post("/users/password/reset")
+     */
+    public function requestPasswordResetAction(Request $request) {
+        try {
+            /** @var UserManager $userManager */
+            $userManager = $this->get("fos_user.user_manager");
+            $form = $this->createForm(
+                get_class(new RequestResetPasswordType()),
+                null,
+                array("method" => $request->getMethod()));
+
+            $this->removeExtraFields($request, $form);
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                /** @var User $user */
+                $user = $userManager->findUserByEmail($form->get('email')->getData());
+                /** @var PasswordResetService $passwordResetService */
+                $passwordResetService = $this->container->get("core.password_reset");
+                $passwordResetService->request($user);
+
+                return null;
+            }
+            
+            return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Exception $e) {
+            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Reimposta la password dell'utente
+     *
+     * @param Request $request
+     * @param User    $user
+     *
+     * @return Response
+     * @Post("/users/{user}/password/reset")
+     */
+    public function resetPasswordAction(Request $request, User $user) {
+
     }
 }

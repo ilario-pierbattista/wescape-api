@@ -8,10 +8,6 @@ parameters:
     database_testing_name: wescape_test
     database_testing_password: root_test
     database_testing_port: 13306
-    mailer_transport: smtp
-    mailer_host: localhost
-    mailer_user: null
-    mailer_password: null
     secret: 1ddc0749c8e998ad48b92ce472e1d14918d2b905
     # Client OAuth2 preconfigurati
     oauth2_clients.data_loader.id: d9d9322ad1a46e889e8102aa9072ea2fc87b525652a114b335d21542cc528bee
