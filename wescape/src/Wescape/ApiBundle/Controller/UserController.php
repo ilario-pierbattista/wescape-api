@@ -196,8 +196,6 @@ class UserController extends VoryxController
      */
     public function requestPasswordResetAction(Request $request) {
         try {
-            /** @var UserManager $userManager */
-            $userManager = $this->get("fos_user.user_manager");
             $form = $this->createForm(
                 get_class(new RequestResetPasswordType()),
                 null,
@@ -207,11 +205,9 @@ class UserController extends VoryxController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                /** @var User $user */
-                $user = $userManager->findUserByEmail($form->get('email')->getData());
                 /** @var PasswordResetService $passwordResetService */
                 $passwordResetService = $this->container->get("core.password_reset");
-                $passwordResetService->request($user);
+                $passwordResetService->request($form->get('email')->getData());
 
                 // For debugging
                 // return new Response();
@@ -234,8 +230,6 @@ class UserController extends VoryxController
      */
     public function resetPasswordAction(Request $request) {
         try {
-            /** @var UserManager $userManager */
-            $userManager = $this->get("fos_user.user_manager");
             $form = $this->createForm(
                 get_class(new ResetPasswordType()),
                 null,
@@ -245,15 +239,14 @@ class UserController extends VoryxController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                /** @var User $user */
-                $user = $userManager->findUserByEmail($form->get('email')->getData());
                 /** @var PasswordResetService $passwordResetService */
                 $passwordResetService = $this->container->get("core.password_reset");
                 
                 $resetToken = $form->get("reset_password_token")->getData();
                 $newPassword = $form->get("new_password")->getData();
                 
-                $user = $passwordResetService->reset($user, $resetToken, $newPassword);
+                $user = $passwordResetService->reset($form->get('email')->getData(),
+                    $resetToken, $newPassword);
                 return $user;
             }
 

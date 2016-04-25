@@ -5,11 +5,14 @@ namespace Wescape\CoreBundle\Service;
 
 use DateInterval;
 use FOS\UserBundle\Model\UserManager;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Wescape\CoreBundle\Entity\User;
 
 class PasswordResetService
 {
+    const USER_NOT_FOUND_MSG = "User not found";
+    const INVALID_SECRET_TOKEN_MSG = "The secret token is invalid";
+    const EXPIRED_SECRET_TOKEN_MSG = "The secret token has expired";
+    
     /** @var UserManager */
     private $userManager;
     /** @var \Swift_Mailer */
@@ -28,9 +31,17 @@ class PasswordResetService
     /**
      * Genera il secret code e lo invia all'utente per email
      *
-     * @param User $user
+     * @param string $email
+     *
+     * @throws \Exception
      */
-    public function request(User $user) {
+    public function request($email) {
+        /** @var User $user */
+        $user = $this->userManager->findUserByEmail($email);
+        if ($user == null) {
+            throw new \Exception(self::USER_NOT_FOUND_MSG);
+        }
+
         $secret = $this->getAlphaNumRandom(6);
         $expirationDate = new \DateTime("now");
         $expirationDate->add(new DateInterval('PT1H'));
@@ -58,20 +69,25 @@ class PasswordResetService
     /**
      * Reimposta la password dell'utente
      *
-     * @param User   $user        Utente di cui reimpostare la password
+     * @param string $email       Utente di cui reimpostare la password
      * @param string $resetToken  Token segreto per il reset
      * @param string $newPassword Nuova password
      *
      * @return User
      * @throws \Exception
      */
-    public function reset(User $user, $resetToken, $newPassword) {
+    public function reset($email, $resetToken, $newPassword) {
+        /** @var User $user */
+        $user = $this->userManager->findUserByEmail($email);
+        if ($user == null) {
+            throw new \Exception(self::USER_NOT_FOUND_MSG);
+        }
         $now = new \DateTime("now");
         if ($resetToken != $user->getResetPasswordToken()) {
-            throw new \Exception("The secret token is invalid");
+            throw new \Exception(self::INVALID_SECRET_TOKEN_MSG);
         }
         if ($now >= $user->getResetTokenExpiresAt()) {
-            throw new \Exception("The secret token has expired");
+            throw new \Exception(self::EXPIRED_SECRET_TOKEN_MSG);
         }
         // A questo punto il token non è scaduto ed è ancora valido
         $user->setPlainPassword($newPassword)
