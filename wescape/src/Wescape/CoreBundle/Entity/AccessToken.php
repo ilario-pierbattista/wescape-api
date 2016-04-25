@@ -28,6 +28,7 @@ class AccessToken extends \FOS\OAuthServerBundle\Entity\AccessToken
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
 }

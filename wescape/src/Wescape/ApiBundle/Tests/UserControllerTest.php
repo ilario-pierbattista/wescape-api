@@ -24,7 +24,33 @@ class UserControllerTest extends WebTestCase
     }
 
     public function testGetAction() {
+        // anonimo
+        $this->client->request("GET", "/api/v1/users/2.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+        $this->client->request("GET", "/api/v1/users/1.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+        $this->client->request("GET", "/api/v1/users.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
+        // Utente
+        $this->client = $this->getAuthenticatedUser();
+        $this->client->request("GET", "/api/v1/users/2.json");
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $this->client->request("GET", "/api/v1/users/1.json");
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+        $this->client->request("GET", "/api/v1/users/3.json");
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+        $this->client->request("GET", "/api/v1/users.json");
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+
+        // Admin
+        $this->client = $this->getAuthenticatedAdmin();
+        $this->client->request("GET", "/api/v1/users/1.json");
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $this->client->request("GET", "/api/v1/users/2.json");
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $this->client->request("GET", "/api/v1/users.json");
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 
     public function testPostAction() {
@@ -88,11 +114,66 @@ class UserControllerTest extends WebTestCase
     }
 
     public function testPutAction() {
+        $firstUserUpdate = [
+            'email' => "user@wescape.it",
+            'plainPassword' => "prova"
+        ];
+        $secondUserUpdate = [
+            "email" => "test_user@wescape.it",
+            "plainPassword" => "adminprova"
+        ];
+        $invalidUser = [
+            "email" => "invalidEmail",
+            "plainPassword" => "altrepassword"
+        ];
 
+        // Anonimo
+        $this->client->request("PUT", "/api/v1/users/2.json", $firstUserUpdate);
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        // Utente
+        $this->client = $this->getAuthenticatedUser();
+        $this->client->request("PUT", "/api/v1/users/2.json", $firstUserUpdate);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertEquals($firstUserUpdate['email'], $responseData['email']);
+        $this->assertEquals($firstUserUpdate['email'], $responseData['email_canonical']);
+        $this->assertEquals($firstUserUpdate['email'], $responseData['username']);
+        $this->assertEquals($firstUserUpdate['email'], $responseData['username_canonical']);
+        $this->client->request("PUT", "/api/v1/users/2.json", $invalidUser);
+        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
+        $this->assertContains((new Email())->message, $this->client->getResponse()->getContent());
+        $this->client->request("PUT", "/api/v1/users/3.json", $firstUserUpdate);
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+
+        // Admin
+        $this->client = $this->getAuthenticatedAdmin();
+        $this->client->request("PUT", "/api/v1/users/3.json", $secondUserUpdate);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+        $this->assertEquals($secondUserUpdate['email'], $responseData['email']);
+        $this->assertEquals($secondUserUpdate['email'], $responseData['email_canonical']);
+        $this->assertEquals($secondUserUpdate['email'], $responseData['username']);
+        $this->assertEquals($secondUserUpdate['email'], $responseData['username_canonical']);
     }
 
     public function testDeleteAction() {
+        // Anonimo 
+        $this->client->request("DELETE", "/api/v1/users/2.json");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
+        // Utente
+        $this->client = $this->getAuthenticatedUser();
+        $this->client->request("DELETE", "/api/v1/users/2.json");
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+
+        // Admin
+        $this->client = $this->getAuthenticatedAdmin();
+        $this->client->request("DELETE", "/api/v1/users/2.json");
+        echo $this->client->getRequest()->getContent();
+        $this->assertStatusCode(Response::HTTP_NO_CONTENT, $this->client);
+        $this->client->request("DELETE", "/api/v1/users/1.json");
+        $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
     }
 
     /**

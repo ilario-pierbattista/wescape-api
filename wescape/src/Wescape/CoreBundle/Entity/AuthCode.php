@@ -29,6 +29,7 @@ class AuthCode extends \FOS\OAuthServerBundle\Entity\AuthCode
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $user;
 }

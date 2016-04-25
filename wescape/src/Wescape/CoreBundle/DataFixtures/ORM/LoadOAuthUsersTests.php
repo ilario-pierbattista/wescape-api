@@ -13,6 +13,11 @@ use Wescape\CoreBundle\Entity\User;
 
 class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    const TEST_ADMIN_EMAIL = "admin";
+    const TEST_ADMIN_PASS = "admin";
+    const TEST_USER_EMAIL = "user";
+    const TEST_USER_PASS = "user";
+    
     /** @var ContainerInterface */
     private $container;
 
@@ -21,22 +26,31 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
         $userManager = $this->container->get("fos_user.user_manager");
         /** @var User $admin */
         $admin = $userManager->createUser()
-            ->setUsername("admin")
-            ->setEmail("admin")
-            ->setPlainPassword("admin")
+            ->setUsername(self::TEST_ADMIN_EMAIL)
+            ->setEmail(self::TEST_ADMIN_EMAIL)
+            ->setPlainPassword(self::TEST_ADMIN_PASS)
             ->setRoles(['ROLE_ADMIN'])
             ->setEnabled(true);
         
         /** @var User $user */
-        $user = $userManager->createUser()
-            ->setUsername("user")
-            ->setEmail("user")
-            ->setPlainPassword("user")
+        $user1 = $userManager->createUser()
+            ->setUsername(self::TEST_USER_EMAIL)
+            ->setEmail(self::TEST_USER_EMAIL)
+            ->setPlainPassword(self::TEST_USER_PASS)
+            ->setRoles(['ROLE_USER'])
+            ->setEnabled(true);
+        
+        /** @var User $user2 */
+        $user2 = $userManager->createUser()
+            ->setUsername("test2@wescape.it")
+            ->setEmail("test2@wescape.it")
+            ->setPlainPassword("test2")
             ->setRoles(['ROLE_USER'])
             ->setEnabled(true);
 
         $userManager->updateUser($admin);
-        $userManager->updateUser($user);
+        $userManager->updateUser($user1);
+        $userManager->updateUser($user2);
     }
 
     public function setContainer(ContainerInterface $container = null) {

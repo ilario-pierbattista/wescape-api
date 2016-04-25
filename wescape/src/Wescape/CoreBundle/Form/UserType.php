@@ -22,11 +22,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, [
                 "constraints" => new Email()
             ])
-            ->add('plainPassword')
-            ->add('client', TextType::class, [
-                "mapped" => false,
-                "constraints" => new ClientExists()
-            ]);
+            ->add('plainPassword');
     }
 
     /**
@@ -36,9 +32,5 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Wescape\CoreBundle\Entity\User'
         ));
-    }
-
-    public function getParent() {
-        return RegistrationFormType::class;
     }
 }

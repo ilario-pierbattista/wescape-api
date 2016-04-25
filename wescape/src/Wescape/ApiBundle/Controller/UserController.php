@@ -9,6 +9,8 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
 use FOS\UserBundle\Model\UserManager;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
@@ -27,6 +29,10 @@ class UserController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
+     * @ApiDoc(resource=true)
+     * @Security(
+     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
+     * )
      */
     public function getAction(User $entity) {
         return $entity;
@@ -48,6 +54,8 @@ class UserController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
+     * @ApiDoc(resource=true)
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
         try {
@@ -75,6 +83,7 @@ class UserController extends VoryxController
      * @param Request $request
      *
      * @return Response
+     * @ApiDoc(resource=true)
      */
     public function postAction(Request $request) {
         /** @var UserManager $userManager */
@@ -105,6 +114,10 @@ class UserController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(resource=true)
+     * @Security(
+     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
+     * )
      */
     public function putAction(Request $request, User $entity) {
         try {
@@ -113,7 +126,9 @@ class UserController extends VoryxController
             $form = $this->createForm(get_class(new UserType()), $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
+
             if ($form->isValid()) {
+                $entity->setUsername($entity->getEmail());
                 $em->flush();
 
                 return $entity;
@@ -133,6 +148,7 @@ class UserController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(resource=true)
      */
     public function patchAction(Request $request, User $entity) {
         return $this->putAction($request, $entity);
@@ -146,12 +162,14 @@ class UserController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(resource=true)
+     * @Security("has_role('ROLE_ADMIN') && user.getId() != entity.getId()")
      */
     public function deleteAction(Request $request, User $entity) {
         try {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($entity);
-            $em->flush();
+            /** @var UserManager $userManager */
+            $userManager = $this->get("fos_user.user_manager");
+            $userManager->deleteUser($entity);
 
             return null;
         } catch (\Exception $e) {
