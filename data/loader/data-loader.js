@@ -446,11 +446,28 @@ DataLoader.prototype.transform_stairs = function (stairs) {
  * @returns {*}
  */
 DataLoader.prototype.search_node = function (nodes, params) {
-    var founds = nodes.searchObject(params);
-    if (founds.length > 0) {
-        return founds[0];
+    var searchParams = {
+        "name": params.name
+    };
+
+    var nodesFound = nodes.searchObject(searchParams);
+    var found = nodesFound.length > 0;
+    var unique = nodesFound.length == 1;
+
+    if(found && !unique) {
+        searchParams.meter_x = params.meter_x;
+        searchParams.meter_y = params.meter_y;
+        nodesFound = nodes.searchObject(searchParams);
+
+        found = nodesFound.length > 0;
+        unique = nodesFound.length == 1;
+    }
+
+    if(found && unique) {
+        return nodesFound[0];
     } else {
-        // @TODO debug log
+        // @TODO debugging
+        console.log("Node not found or not unique");
         console.log(params);
         return null;
     }

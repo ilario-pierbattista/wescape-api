@@ -15,6 +15,12 @@ const CENTER_PIXEL_Y = 180;
 var PIXEL_PER_METER_X = 142 / 18; // Larghezza della 155/d3 e 155/d2
 var PIXEL_PER_METER_Y = 223 / 29; // Lunghezza della 155/7 e 155/5-6
 
+/**
+ * Parser
+ * @param src
+ * @param dest
+ * @constructor
+ */
 function Parser(src, dest) {
     this.src = src;
     this.dest = dest;
@@ -98,8 +104,8 @@ Parser.prototype.get_edges = function (nodes) {
                     }
                 }
             };
-            var node1 = $this._find_node(nodes, edge.node1);
-            var node2 = $this._find_node(nodes, edge.node2);
+            var node1 = $this.search_node(nodes, edge.node1);
+            var node2 = $this.search_node(nodes, edge.node2);
             edge["lunghezza"] = $this._distance(node1, node2);
             edge["larghezza"] = $this._trunk_width(node1, node2);
             return edge;
@@ -178,12 +184,29 @@ Parser.prototype._trunk_width = function (begin, end) {
  * @param  {object} filterParams Codice di ricerca
  * @return {object}        Nodo trovato
  */
-Parser.prototype._find_node = function (nodes, filterParams) {
-    var founds = nodes.searchObject(filterParams);
+Parser.prototype.search_node = function (nodes, filterParams) {
+    var searchParams = {
+        "codice": filterParams.codice
+    };
 
-    if (founds.length > 0) {
-        return founds[0];
+    var nodesFound = nodes.searchObject(searchParams);
+    var found = nodesFound.length > 0;
+    var unique = nodesFound.length == 1;
+
+    if(found && !unique) {
+        searchParams.coordinates = filterParams.coordinates;
+        nodesFound = nodes.searchObject(searchParams);
+
+        found = nodesFound.length > 0;
+        unique = nodesFound.length == 1;
+    }
+
+    if(found && unique) {
+        return nodesFound[0];
     } else {
+        // @TODO debugging
+        console.log("Node not found or not unique");
+        console.log(filterParams);
         return null;
     }
 };

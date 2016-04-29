@@ -1330,15 +1330,15 @@
       }
     },
     "node2": {
-      "codice": "155EM3",
+      "codice": "155U1",
       "coordinates": {
         "meters": {
-          "x": 154,
+          "x": 136,
           "y": 456
         }
       }
     },
-    "lunghezza": 7,
+    "lunghezza": 11.18,
     "larghezza": 2.4
   },
   {
@@ -1374,7 +1374,7 @@
       }
     },
     "node2": {
-      "codice": "155EM1",
+      "codice": "155U1",
       "coordinates": {
         "meters": {
           "x": 136,
@@ -1382,8 +1382,8 @@
         }
       }
     },
-    "lunghezza": 11.4,
-    "larghezza": 1.8
+    "lunghezza": 13.34,
+    "larghezza": 2.4
   },
   {
     "node1": {
