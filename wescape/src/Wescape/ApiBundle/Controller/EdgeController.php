@@ -94,7 +94,7 @@ class EdgeController extends VoryxController
             ()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
-
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);

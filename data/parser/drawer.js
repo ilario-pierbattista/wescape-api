@@ -3,13 +3,6 @@ var gm = require('gm').subClass({imageMagick: true});
 var parser = require('./parser.js');
 var path = require('path');
 
-var data_src = {
-    "nodes": path.normalize(__dirname + "/../maps/json/nodes.json"),
-    "edges": path.normalize(__dirname + "/../maps/json/edges.json")
-};
-const IMG_SRC_PATH = path.normalize(__dirname + "/../maps/");
-const IMG_DEST_PATH = path.normalize(__dirname + "/../maps/graph/");
-
 const NODES_COLOR = "#E53A40";
 const EDGES_COLOR = "#30A9DE";
 const TEXT_COLOR = "#000000";
@@ -27,9 +20,9 @@ function Drawer(dataSrc, imgSrc, imgDest) {
     this.openedImages = {};
     var $this = this;
 
-    this.data = {};
+    $this.data = {};
     Object.keys(this.dataSrc).map(function(label) {
-        $this.data[label] = $this._readJson(data_src[label]);
+        $this.data[label] = $this._readJson($this.dataSrc[label]);
     });
 }
 
@@ -148,4 +141,4 @@ Drawer.prototype.write = function() {
 };
 
 // Esposizione del modulo
-module.exports = new Drawer(data_src, IMG_SRC_PATH, IMG_DEST_PATH);
+module.exports = Drawer;

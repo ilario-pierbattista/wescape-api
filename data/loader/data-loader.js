@@ -9,7 +9,7 @@ var exit = require('exit');
 var logger = require("../logger");
 require("../array-extension");
 
-const LOG_FILE = "data-loader.log";
+const LOG_FILE = "data-loader.log.json";
 
 /**
  * Prototipo di client restful configurato per autenticarsi con il server
@@ -17,7 +17,7 @@ const LOG_FILE = "data-loader.log";
 OAuthClient = restler.service(function (accessToken) {
     this.defaults.headers = {
         "Content-Type": 'application/json',
-        "Authorization": 'Bearer '+accessToken
+        "Authorization": 'Bearer ' + accessToken
     }
 });
 
@@ -36,14 +36,14 @@ function DataLoader(accessToken) {
     });
 
     this.endpoints = {
-        "get_node": this.build_url("api/v1/nodes/{id}.json"),
-        "get_nodes": this.build_url("api/v1/nodes.json"),
-        "post_node": this.build_url("api/v1/nodes.json"),
-        "delete_node": this.build_url("api/v1/nodes/{id}.json"),
-        "get_edge": this.build_url("api/v1/edges/{id}.json"),
-        "get_edges": this.build_url("api/v1/edges.json"),
-        "post_edge": this.build_url("api/v1/edges.json"),
-        "delete_edge": this.build_url("api/v1/edges/{id}.json")
+        "get_node": env.build_url("api/v1/nodes/{id}.json"),
+        "get_nodes": env.build_url("api/v1/nodes.json"),
+        "post_node": env.build_url("api/v1/nodes.json"),
+        "delete_node": env.build_url("api/v1/nodes/{id}.json"),
+        "get_edge": env.build_url("api/v1/edges/{id}.json"),
+        "get_edges": env.build_url("api/v1/edges.json"),
+        "post_edge": env.build_url("api/v1/edges.json"),
+        "delete_edge": env.build_url("api/v1/edges/{id}.json")
     }
 }
 
@@ -384,7 +384,7 @@ DataLoader.prototype.transform_node = function (node) {
 /**
  * Trasforma un oggetto Edge locale in un oggetto per l'inserimento nel db
  * @param edge
- * @returns {{begin: (*|String|string), end: (*|String|string), width: *, length: *, stairs: boolean, v: number, i: number, los: number, c: number}}
+ * @returns {{begin: (*|String|string), end: (*|String|string), width: *, length: *, v: number, i: number, los: number, c: number}}
  */
 DataLoader.prototype.transform_edge = function (edge) {
     var beginNode = this.search_node(this.dbmirror.nodes, {
@@ -403,12 +403,14 @@ DataLoader.prototype.transform_edge = function (edge) {
         "end": endNode.id,
         "width": edge.larghezza,
         "length": edge.lunghezza,
-        "stairs": false,
+        // Lo standard de facto dei form codificati in json prevede che
+        // i campi impostati a false siano assenti
+        // "stairs": false,
         "v": 0.,
         "i": 0.,
         "los": 0.,
         "c": 0.
-    }
+    };
 };
 
 /**
@@ -448,21 +450,10 @@ DataLoader.prototype.search_node = function (nodes, params) {
     if (founds.length > 0) {
         return founds[0];
     } else {
+        // @TODO debug log
+        console.log(params);
         return null;
     }
-};
-
-/**
- * Costruisce l'url dell'endpoint specificando la path
- * @param path
- * @returns {*}
- */
-DataLoader.prototype.build_url = function (path) {
-    return url.format({
-        protocol: "http",
-        hostname: env.host_name,
-        pathname: path
-    });
 };
 
 module.exports = DataLoader;

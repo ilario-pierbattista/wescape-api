@@ -41,5 +41,12 @@ module.exports = {
         } catch (err) {
             return null;
         }
+    },
+    deleteLog: function (logName) {
+        try {
+            fs.unlink(module.exports.getFilePath(logName));
+        } catch (err) {
+            console.log(err);
+        }
     }
 };

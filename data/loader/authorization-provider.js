@@ -4,8 +4,6 @@ var exit = require("exit");
 var env = require("../env");
 var logger = require("../logger");
 
-const CLIENT_ID = "1_d9d9322ad1a46e889e8102aa9072ea2fc87b525652a114b335d21542cc528bee";
-const CLIENT_SECRET = "7e1be901e9439a0176072e9277dbf04dd606b31054226eccbce1b9f611a81fcb";
 const LOG_FILE = "authentication-provider.log";
 const TOKEN_FILE = "authentication_tokens.json";
 
@@ -24,7 +22,7 @@ function AuthorizationProvider(clientId, clientSecret) {
     this.client_secret = clientSecret;
     this.username = null;
     this.password = null;
-    this.tokenEndpoint = env.build_url("/oauth/v2/token");
+    this.tokenEndpoint = env.build_url("oauth/v2/token");
     this.accessToken = null;
     this.refreshToken = null;
     this.tokenExpiration = null;
@@ -48,27 +46,26 @@ AuthorizationProvider.prototype.authenticate = function (callback) {
                 console.log(err);
                 exit(1);
             }
-            $this.requestTokens(result.username, result.password, callback);
+            $this.requestTokens({
+                grant_type: "password",
+                username: result.username,
+                password: result.password
+            }, callback);
         })
     }, 500);
 };
 
 /**
  * Richiede i token di accesso
- * @param username
- * @param password
+ * @param credentials
  * @param callback
  */
-AuthorizationProvider.prototype.requestTokens = function (username, password, callback) {
+AuthorizationProvider.prototype.requestTokens = function (credentials, callback) {
     var $this = this;
+    credentials['client_id'] = $this.client_id;
+    credentials['client_secret'] = $this.client_secret;
     restler.post(this.tokenEndpoint, {
-            data: {
-                grant_type: "password",
-                client_id: $this.client_id,
-                client_secret: $this.client_secret,
-                username: username,
-                password: password
-            }
+            data: credentials
         })
         .on("complete", function (result) {
             $this.accessToken = result['access_token'];
@@ -98,6 +95,13 @@ AuthorizationProvider.prototype.saveTokens = function () {
 };
 
 /**
+ * Pulisce i token salvati
+ */
+AuthorizationProvider.prototype.clearTokens = function () {
+    logger.deleteLog(TOKEN_FILE);
+};
+
+/**
  * Estrae l'access token
  * @param callback
  */
@@ -105,9 +109,28 @@ AuthorizationProvider.prototype.getBearer = function (callback) {
     var $this = this;
 
     $this.mutex.take(function () {
-        $this.authenticate(function () {
+        var savedTokens = logger.readLog(TOKEN_FILE);
+
+        if(savedTokens == null || Object.keys(savedTokens).length == 0) {
+            // Token non presente
+            $this.authenticate(function () {
+                $this.mutex.leave();
+            });
+        } else if (Date.now() >= savedTokens['tokenExpiration']) {
+            // Token expired
+            $this.requestTokens({
+                grant_type: "refresh_token",
+                refresh_token: savedTokens['refreshToken']
+            }, function () {
+                $this.mutex.leave();
+            })
+        } else {
+            // Token valido
+            $this.accessToken = savedTokens['accessToken'];
+            $this.refreshToken = savedTokens['refreshToken'];
+            $this.tokenExpiration = savedTokens['tokenExpiration'];
             $this.mutex.leave();
-        });
+        }
     });
 
     $this.mutex.take(function () {
@@ -115,4 +138,4 @@ AuthorizationProvider.prototype.getBearer = function (callback) {
     })
 };
 
-module.exports = new AuthorizationProvider(CLIENT_ID, CLIENT_SECRET);
+module.exports = new AuthorizationProvider(env.client_id, env.client_secret);

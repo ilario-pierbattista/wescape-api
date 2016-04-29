@@ -3,8 +3,6 @@ var fs = require('fs');
 var path = require('path');
 require("../array-extension");
 
-const DATAPATH = path.normalize(__dirname + "/../maps/data.xlsx");
-const DESTPATH = path.normalize(__dirname + "/../maps/json/");
 const NODES_SHEET = "elenco nodi";
 const EDGES_SHEET = "vie di piano";
 const STAIRS_SHEET = "scale";
@@ -42,7 +40,6 @@ Parser.prototype.get_sheet_data = function (sheet_name) {
 Parser.prototype.get_nodes = function () {
     var $this = this;
     var data_nodes = this.get_sheet_data(NODES_SHEET);
-    // Formattazione dei nodi @TODO parsare anche gli altri parametri
     var nodes = data_nodes.map(function (row) {
         if (typeof row[1] == "number" && typeof row[2] == "number") {
             var node = {
@@ -228,7 +225,7 @@ Parser.prototype.save = function (obj, filename) {
         fs.mkdirSync(this.dest);
     }
     // Pretty print del json
-    var content = JSON.stringify(obj, null, '\t');
+    var content = JSON.stringify(obj, null, '  ');
     fs.writeFileSync(filename, content);
 };
 
@@ -250,13 +247,13 @@ Parser.prototype.parse = function () {
  * @return {undefined}
  */
 Parser.prototype.clear = function () {
-    var files = fs.readdirSync(this.dest);
     var $this = this;
+    var files = fs.readdirSync(this.dest);
     files.map(function (f) {
-        var path = $this.dest + f;
+        var path = path.normalize($this.dest + f);
         fs.unlink(path);
     });
 };
 
 // Esposizione del modulo
-module.exports = new Parser(DATAPATH, DESTPATH);
+module.exports = Parser;
