@@ -37,7 +37,8 @@
     "jms/serializer-bundle": "^1.1",
     "friendsofsymfony/rest-bundle": "^1.7",
     "voryx/restgeneratorbundle": "dev-master",
-    "friendsofsymfony/user-bundle": "~2.0@dev"
+    "friendsofsymfony/user-bundle": "~2.0@dev",
+    "friendsofsymfony/oauth-server-bundle": "dev-master"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",
@@ -72,7 +73,8 @@
     "symfony-tests-dir": "tests",
     "symfony-assets-install": "relative",
     "incenteev-parameters": {
-      "file": "app/config/parameters.yml"
+      "file": "app/config/parameters.yml",
+      "keep-outdated": true
     }
   }
 }

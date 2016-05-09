@@ -2,35 +2,34 @@
 
 namespace Wescape\ApiBundle\Controller;
 
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Wescape\CoreBundle\Entity\Edge;
-use Wescape\CoreBundle\Form\EdgeType;
-
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Form;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
+use Wescape\CoreBundle\Entity\Edge;
+use Wescape\CoreBundle\Form\EdgeType;
 
 /**
  * Edge controller.
  * @RouteResource("Edge")
  */
-class EdgeRESTController extends VoryxController
+class EdgeController extends VoryxController
 {
     /**
      * Get a Edge entity
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
      */
     public function getAction(Edge $entity) {
         return $entity;
@@ -44,7 +43,7 @@ class EdgeRESTController extends VoryxController
      *
      * @return Response
      * @QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset
-     *                            from which to start listing notes.")
+     *    from which to start listing notes.")
      * @QueryParam(name="limit", requirements="\d+", default="0", description="How many
      *                           notes to return.")
      * @QueryParam(name="order_by", nullable=true, array=true, description="Order by
@@ -52,6 +51,9 @@ class EdgeRESTController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
+     * @ApiDoc(
+     *     resource=true
+     * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
         try {
@@ -81,9 +83,9 @@ class EdgeRESTController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
-     *     description="Insertion of an edge"
+     *     resource=true
      * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function postAction(Request $request) {
         $entity = new Edge();
@@ -112,6 +114,10 @@ class EdgeRESTController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Edge $entity) {
         try {
@@ -142,6 +148,10 @@ class EdgeRESTController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function patchAction(Request $request, Edge $entity) {
         return $this->putAction($request, $entity);
@@ -155,6 +165,10 @@ class EdgeRESTController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Edge $entity) {
         try {

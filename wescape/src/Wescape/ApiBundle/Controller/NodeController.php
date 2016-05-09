@@ -8,18 +8,19 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
+use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\Node;
 use Wescape\CoreBundle\Form\NodeType;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Node controller.
  * @RouteResource("Node")
- *
- * @TODO Completare la documentazione
  */
 class NodeController extends VoryxController
 {
@@ -28,12 +29,9 @@ class NodeController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
-     *
      * @ApiDoc(
-     *     resource=true,
-     *     description="It retrieves node's informations identified by node's id"
+     *     resource=true
      * )
-     *
      */
     public function getAction(Node $entity) {
         return $entity;
@@ -55,10 +53,8 @@ class NodeController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
-     *
      * @ApiDoc(
-     *     resource=true,
-     *     description="Retrieves the complete list of nodes"
+     *     resource=true
      * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -88,6 +84,10 @@ class NodeController extends VoryxController
      * @param Request $request
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function postAction(Request $request) {
         $entity = new Node();
@@ -103,7 +103,7 @@ class NodeController extends VoryxController
 
             return $entity;
         }
-        
+
         return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
 
@@ -115,6 +115,10 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Node $entity) {
         try {
@@ -144,6 +148,10 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true,
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function patchAction(Request $request, Node $entity) {
         return $this->putAction($request, $entity);
@@ -157,6 +165,10 @@ class NodeController extends VoryxController
      * @param         $entity
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, Node $entity) {
         try {

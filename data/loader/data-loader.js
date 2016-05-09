@@ -1,16 +1,35 @@
-var rest = require("restler");
+var restler = require("restler");
 var url = require('url');
 var env = require('../env.js');
 var mutex = require('semaphore')(1);
 var callSem = require('semaphore')(5);  // Massimo 5 in contemporanea
 var strformat = require('strformat');
 var Progress = require('progress');
+var exit = require('exit');
+var logger = require("../logger");
 require("../array-extension");
 
-function DataLoader() {
+const LOG_FILE = "data-loader.log";
+
+/**
+ * Prototipo di client restful configurato per autenticarsi con il server
+ */
+OAuthClient = restler.service(function (accessToken) {
+    this.defaults.headers = {
+        "Content-Type": 'application/json',
+        "Authorization": 'Bearer '+accessToken
+    }
+});
+
+/**
+ * Classe per il caricamento dei dati
+ * @constructor
+ */
+function DataLoader(accessToken) {
     var $this = this;
     this.data = {};
     this.dbmirror = {};
+    this.client = new OAuthClient(accessToken);
 
     Object.keys(env.parsed_data_paths).map(function (label) {
         $this.data[label] = require(env.parsed_data_paths[label]);
@@ -27,6 +46,90 @@ function DataLoader() {
         "delete_edge": this.build_url("api/v1/edges/{id}.json")
     }
 }
+
+/**
+ * Rimozione dei nodi presenti
+ * @returns {DataLoader}
+ */
+DataLoader.prototype.clearData = function () {
+    var $this = this;
+    var savedNodes = null;
+    var savedEdges = null;
+
+    // Lettura degli archi presenti nel database
+    mutex.take(function () {
+        $this.client.get($this.endpoints.get_edges)
+            .on("complete", function (data) {
+                $this.handleServerResult(data, {
+                    "success": function (data) {
+                        savedEdges = data;
+                    },
+                    "complete": function () {
+                        mutex.leave();
+                    }
+                })
+            })
+            .on("fail", function (data, response) {
+                logger.saveLog(LOG_FILE, {
+                    "response": response,
+                    "data": data
+                });
+                console.error("Error cleaning edges");
+                exit(1);
+            })
+    });
+
+    // Rimozione degli archi presenti nel database
+    mutex.take(function () {
+        if (!(typeof savedEdges == "string" && !savedEdges.trim())) {
+            $this.clearProgress = new Progress("clearing edges :bar :current/:total",
+                {total: savedEdges.length});
+            savedEdges.map(function (edge) {
+                callSem.take($this.deleteEdgeFunction(edge));
+            });
+        } else {
+            mutex.leave();
+        }
+    });
+
+    // Lettura dei nodi presenti nel database
+    mutex.take(function () {
+        $this.client.get($this.endpoints.get_nodes)
+            .on("complete", function (data) {
+                $this.handleServerResult(data, {
+                    "success": function (data) {
+                        savedNodes = data;
+                    },
+                    "complete": function () {
+                        mutex.leave();
+                    }
+                });
+            })
+            .on("fail", function (data, response) {
+                logger.saveLog(LOG_FILE, {
+                    "response": response,
+                    "data": data
+                });
+                console.error("Error cleaning nodes");
+                exit(1);
+            });
+    });
+
+    // Rimozione dei nodi presenti nel database
+    mutex.take(function () {
+        if (!(typeof savedNodes == "string" && !savedNodes.trim())) {
+            $this.clearProgress = new Progress("clearing nodes :bar :current/:total",
+                {total: savedNodes.length});
+            savedNodes.map(function (node) {
+                callSem.take($this.deleteNodeFunction(node));
+            });
+        } else {
+            mutex.leave();
+        }
+    });
+
+    return this;
+};
 
 /**
  * Upload
@@ -65,74 +168,6 @@ DataLoader.prototype.loadData = function () {
 };
 
 /**
- * Rimozione dei nodi presenti
- * @returns {DataLoader}
- */
-DataLoader.prototype.clearData = function () {
-    var $this = this;
-    var savedNodes = null;
-    var savedEdges = null;
-
-    // Lettura degli archi presenti nel database
-    mutex.take(function () {
-        rest.get($this.endpoints.get_edges)
-            .on("complete", function (data) {
-                $this.handleServerResult(data, {
-                    "success": function (data) {
-                        savedEdges = data;
-                    },
-                    "complete": function () {
-                        mutex.leave();
-                    }
-                })
-            })
-    });
-
-    // Rimozione degli archi presenti nel database
-    mutex.take(function () {
-        if (!(typeof savedEdges == "string" && !savedEdges.trim())) {
-            $this.clearProgress = new Progress("clearing edges :bar :current/:total",
-                {total: savedEdges.length});
-            savedEdges.map(function (edge) {
-                callSem.take($this.deleteEdgeFunction(edge));
-            });
-        } else {
-            mutex.leave();
-        }
-    });
-
-    // Lettura dei nodi presenti nel database
-    mutex.take(function () {
-        rest.get($this.endpoints.get_nodes)
-            .on("complete", function (data) {
-                $this.handleServerResult(data, {
-                    "success": function (data) {
-                        savedNodes = data;
-                    },
-                    "complete": function () {
-                        mutex.leave();
-                    }
-                });
-            });
-    });
-
-    // Rimozione dei nodi presenti nel database
-    mutex.take(function () {
-        if (!(typeof savedNodes == "string" && !savedNodes.trim())) {
-            $this.clearProgress = new Progress("clearing nodes :bar :current/:total",
-                {total: savedNodes.length});
-            savedNodes.map(function (node) {
-                callSem.take($this.deleteNodeFunction(node));
-            });
-        } else {
-            mutex.leave();
-        }
-    });
-
-    return this;
-};
-
-/**
  * Metodo per la definizione della funzione di creazione del nodo
  * @param node
  * @returns {Function}
@@ -141,7 +176,7 @@ DataLoader.prototype.postNodeFunction = function (node) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_node(node);
-        rest.postJson($this.endpoints.post_node, jsonData)
+        $this.client.post($this.endpoints.post_node, {data: jsonData})
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     "success": function (data) {
@@ -158,6 +193,14 @@ DataLoader.prototype.postNodeFunction = function (node) {
                         }
                     }
                 });
+            })
+            .on("fail", function (data, response) {
+                logger.saveLog(LOG_FILE, {
+                    "response": response,
+                    "data": data
+                });
+                console.error("Error posting Nodes");
+                exit(1);
             });
     };
 };
@@ -171,7 +214,7 @@ DataLoader.prototype.postEdgeFunction = function (edge) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_edge(edge);
-        rest.postJson($this.endpoints.post_edge, jsonData)
+        $this.client.post($this.endpoints.post_edge, {data: jsonData})
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     success: function (data) {
@@ -189,6 +232,14 @@ DataLoader.prototype.postEdgeFunction = function (edge) {
                     }
                 })
             })
+            .on("fail", function (data, response) {
+                logger.saveLog(LOG_FILE, {
+                    "response": response,
+                    "data": data
+                });
+                console.error("Error posting Edges");
+                exit(1);
+            });
     }
 };
 
@@ -196,7 +247,7 @@ DataLoader.prototype.postStairsFunction = function (stair) {
     var $this = this;
     return function () {
         var jsonData = $this.transform_stairs(stair);
-        rest.postJson($this.endpoints.post_edge, jsonData)
+        $this.client.post($this.endpoints.post_edge, {data: jsonData})
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     success: function (data) {
@@ -214,6 +265,14 @@ DataLoader.prototype.postStairsFunction = function (stair) {
                     }
                 })
             })
+            .on("fail", function (data, response) {
+                logger.saveLog(LOG_FILE, {
+                    "response": response,
+                    "data": data
+                });
+                console.error("Error posting Stairs");
+                exit(1);
+            });
     }
 };
 
@@ -226,7 +285,7 @@ DataLoader.prototype.postStairsFunction = function (stair) {
 DataLoader.prototype.deleteNodeFunction = function (node) {
     var $this = this;
     return function () {
-        rest.del(strformat($this.endpoints.delete_node, {id: node.id}))
+        $this.client.del(strformat($this.endpoints.delete_node, {id: node.id}))
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     "complete": function () {
@@ -249,7 +308,7 @@ DataLoader.prototype.deleteNodeFunction = function (node) {
 DataLoader.prototype.deleteEdgeFunction = function (edge) {
     var $this = this;
     return function () {
-        rest.del(strformat($this.endpoints.delete_edge, {id: edge.id}))
+        $this.client.del(strformat($this.endpoints.delete_edge, {id: edge.id}))
             .on("complete", function (result) {
                 $this.handleServerResult(result, {
                     "complete": function () {
@@ -406,4 +465,4 @@ DataLoader.prototype.build_url = function (path) {
     });
 };
 
-module.exports = new DataLoader();
+module.exports = DataLoader;

@@ -4,8 +4,8 @@ static:
     prefix:   /static
 
 api:
+    type: rest
     resource: "@ApiBundle/Resources/config/routes.yml"
-    type:     rest
     prefix:   /api
     defaults: {_format: json} # Format default
     # Il versionamento delle API è hardcoded per il momento
@@ -20,3 +20,6 @@ app:
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

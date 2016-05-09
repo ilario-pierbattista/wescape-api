@@ -2,33 +2,58 @@
 # http://symfony.com/doc/current/book/security.html
 security:
 
-    encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+  encoders:
+    Symfony\Component\Security\Core\User\User: plaintext
+    FOS\UserBundle\Model\UserInterface: bcrypt
 
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+  role_hierarchy:
+    ROLE_ADMIN: ROLE_USER
+    ROLE_SUPER_ADMIN: ROLE_ADMIN
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
-    providers:
-        fos_user_bundle:
-            id: fos_user.user_provider.username
-        in_memory:
-            memory: ~
+  # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+  providers:
+    fos_user_bundle:
+      id: fos_user.user_provider.username_email
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+  firewalls:
+    # disables authentication for assets and the profiler, adapt it according to your needs
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
 
-        main:
-            # Leggere: https://stackoverflow.com/questions/22366975/fosuserbundle-rest-api-call-how-to-use-custom-formtype/22394282#22394282
-            anonymous: ~
-            # activate different ways to authenticate
+    # main:
+      # Leggere: https://stackoverflow.com/questions/22366975/fosuserbundle-rest-api-call-how-to-use-custom-formtype/22394282#22394282
+      # anonymous: ~
+      # activate different ways to authenticate
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+      # http_basic: ~
+      # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+      # form_login: ~
+      # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    oauth_token:
+      pattern: ^/oauth/v2/token
+      security: false
+
+    api:
+      pattern: ^/api/v1/(nodes|edges)
+      fos_oauth: true
+      stateless: true
+      anonymous: false
+
+    user_management_api:
+      pattern: ^/api/v1/users
+      fos_oauth: true
+      stateless: true
+      anonymous: false
+      methods: [GET, PUT, PATCH, DELETE]
+
+    user_signup_api:
+      pattern: ^/api/v1/users.json
+      stateless: true
+      anonymous: true
+      methods: [POST]
+
+
+  access_control:
+    - { path: ^/api/v1/(nodes|edges), roles: ROLE_USER }
