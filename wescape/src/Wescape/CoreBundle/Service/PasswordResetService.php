@@ -79,6 +79,8 @@ class PasswordResetService
     public function reset($email, $resetToken, $newPassword) {
         /** @var User $user */
         $user = $this->userManager->findUserByEmail($email);
+        $resetToken = strtoupper($resetToken);
+
         if ($user == null) {
             throw new \Exception(self::USER_NOT_FOUND_MSG);
         }
