@@ -44,9 +44,10 @@ module.exports = {
     },
     deleteLog: function (logName) {
         try {
-            fs.unlink(module.exports.getFilePath(logName));
+            fs.unlinkSync(module.exports.getFilePath(logName));
         } catch (err) {
-            console.log(err);
+            // console.log(err);
+            console.log(logName + " not found");
         }
     }
 };
