@@ -15,7 +15,7 @@ module.exports = {
     dev_path_prefix: "app_dev.php/",
     environment: "dev",
     client_id: "1_d9d9322ad1a46e889e8102aa9072ea2fc87b525652a114b335d21542cc528bee",
-    client_secret: "7e1be901e9439a0176072e9277dbf04dd606b31054226eccbce1b9f611a81fcb",
+    client_secret: "7e1be901e9439a0176072e9277dbf04dd606b31054226eccbce1b9f611a81fcba",
 
     build_url: function (path) {
         if(module.exports.environment = "dev") {

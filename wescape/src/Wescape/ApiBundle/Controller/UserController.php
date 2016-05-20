@@ -20,6 +20,7 @@ use Wescape\CoreBundle\Form\CreateUserType;
 use Wescape\CoreBundle\Form\RequestResetPasswordType;
 use Wescape\CoreBundle\Form\ResetPasswordType;
 use Wescape\CoreBundle\Form\UserType;
+use Wescape\CoreBundle\Service\ErrorCodes;
 use Wescape\CoreBundle\Service\PasswordResetService;
 
 /**
@@ -101,6 +102,11 @@ class UserController extends VoryxController
             $user->setUsername($user->getEmail())
                 ->setRoles(['ROLE_USER'])
                 ->setEnabled(true);
+
+            // Gestione degli errori prevedibili
+            if($userManager->findUserByEmail($user->getEmail()) != null) {
+                return FOSView::create(["success" => false], ErrorCodes::SIGNUP_DUPLICATED_EMAIL);
+            }
 
             $userManager->updateUser($user);
 
