@@ -263,7 +263,7 @@ class UserController extends VoryxController
 
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
-            switch ($e->getCode()) {
+            switch ($e->getMessage()) {
                 case PasswordResetService::USER_NOT_FOUND_MSG: {
                     $errorCode = ErrorCodes::PASSWORD_RESET_WRONG_EMAIL;
                     break;
