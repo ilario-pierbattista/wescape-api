@@ -104,7 +104,7 @@ class UserController extends VoryxController
                 ->setEnabled(true);
 
             // Gestione degli errori prevedibili
-            if($userManager->findUserByEmail($user->getEmail()) != null) {
+            if ($userManager->findUserByEmail($user->getEmail()) != null) {
                 return FOSView::create(["success" => false], ErrorCodes::SIGNUP_DUPLICATED_EMAIL);
             }
 
@@ -197,7 +197,6 @@ class UserController extends VoryxController
      * @param Request $request
      *
      * @return Response
-     *
      * @Post("/users/password/request")
      */
     public function requestPasswordResetAction(Request $request) {
@@ -215,14 +214,20 @@ class UserController extends VoryxController
                 $passwordResetService = $this->container->get("core.password_reset");
                 $passwordResetService->request($form->get('email')->getData());
 
-                // For debugging
-                // return new Response();
-                return null;
+                return FOSView::create(["success" => true], Codes::HTTP_ACCEPTED);
             }
-            
+
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            switch ($e->getCode()) {
+                case PasswordResetService::USER_NOT_FOUND_MSG: {
+                    $errorCode = ErrorCodes::PASSWORD_RESET_WRONG_EMAIL;
+                    break;
+                }
+                default:
+                    $errorCode = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            }
+            return FOSView::create($e->getMessage(), $errorCode);
         }
     }
 
@@ -247,10 +252,10 @@ class UserController extends VoryxController
             if ($form->isValid()) {
                 /** @var PasswordResetService $passwordResetService */
                 $passwordResetService = $this->container->get("core.password_reset");
-                
+
                 $resetToken = $form->get("reset_password_token")->getData();
                 $newPassword = $form->get("new_password")->getData();
-                
+
                 $user = $passwordResetService->reset($form->get('email')->getData(),
                     $resetToken, $newPassword);
                 return $user;
@@ -258,7 +263,23 @@ class UserController extends VoryxController
 
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            switch ($e->getMessage()) {
+                case PasswordResetService::USER_NOT_FOUND_MSG: {
+                    $errorCode = ErrorCodes::PASSWORD_RESET_WRONG_EMAIL;
+                    break;
+                }
+                case PasswordResetService::INVALID_SECRET_TOKEN_MSG: {
+                    $errorCode = ErrorCodes::PASSWORD_RESET_WRONG_SECRET_CODE;
+                    break;
+                }
+                case PasswordResetService::EXPIRED_SECRET_TOKEN_MSG: {
+                    $errorCode = ErrorCodes::PASSWORD_RESET_EXPIRED_SECRET;
+                    break;
+                }
+                default:
+                    $errorCode = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            }
+            return FOSView::create($e->getMessage(), $errorCode);
         }
     }
 }
