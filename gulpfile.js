@@ -71,7 +71,7 @@ gulp.task('clear-oauth', function () {
 /**
  * Setup complessivo del database
  */
-gulp.task('setup', gulpsync.sync([
+gulp.task('default', gulpsync.sync([
     ['parse', 'setup-db', 'clear-oauth'],
     'load'
 ]));

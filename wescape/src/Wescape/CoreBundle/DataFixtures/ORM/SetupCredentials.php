@@ -27,8 +27,15 @@ class SetupCredentials extends AbstractFixture implements OrderedFixtureInterfac
             ->setPlainPassword("admin")
             ->setRoles(['ROLE_ADMIN'])
             ->setEnabled(true);
-
         $userManager->updateUser($admin);
+
+        /** @var User $user */
+        $user = $userManager->createUser()
+            ->setUsername("wescape@mailinator.com")
+            ->setEmail("wescape@mailinator.com")
+            ->setPlainPassword("password")
+            ->setEnabled(true);
+        $userManager->updateUser($user);
 
         // Client per l'upload dei dati
         $loaderClient = new Client();
