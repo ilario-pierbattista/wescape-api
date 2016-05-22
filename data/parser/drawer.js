@@ -1,6 +1,8 @@
 var fs = require('fs');
 var gm = require('gm').subClass({imageMagick: true});
-var parser = require('./parser.js');
+var env = require('./../env');
+var Parser = require('./parser.js');
+var parser = new Parser(env.data_src, env.data_dst);
 var path = require('path');
 
 const NODES_COLOR = "#E53A40";

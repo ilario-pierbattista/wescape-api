@@ -1283,48 +1283,6 @@
   {
     "coordinates": {
       "meters": {
-        "x": 156,
-        "y": 452
-      },
-      "pixel": {
-        "x": 807,
-        "y": 449
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155EM3",
-    "desc": "non usato",
-    "type": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": true
-    }
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 154,
-        "y": 454
-      },
-      "pixel": {
-        "x": 791,
-        "y": 434
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155EM2",
-    "desc": "non usato",
-    "type": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": true
-    }
-  },
-  {
-    "coordinates": {
-      "meters": {
         "x": 100,
         "y": 454
       },

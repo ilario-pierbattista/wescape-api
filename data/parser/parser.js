@@ -7,6 +7,8 @@ const NODES_SHEET = "elenco nodi";
 const EDGES_SHEET = "vie di piano";
 const STAIRS_SHEET = "scale";
 
+const NOT_USED_FLAG = "non usato";
+
 // Costanti per la traduzione delle coordinate
 const CENTER_METER_X = 95;
 const CENTER_METER_Y = 487;
@@ -60,6 +62,9 @@ Parser.prototype.get_nodes = function () {
                 "codice": row[5],
                 "desc": row[6]
             };
+            if(node.desc == NOT_USED_FLAG) {
+                return null;
+            }
             node["type"] = $this._get_node_type_description(node);
             node.coordinates["pixel"] = $this._get_node_pixel_coordinates(node);
             return node;

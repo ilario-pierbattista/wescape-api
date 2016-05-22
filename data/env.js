@@ -9,8 +9,8 @@ module.exports = {
         "edges": path.normalize(__dirname + "/maps/json/edges.json"),
         "stairs": path.normalize(__dirname + "/maps/json/stairs.json")
     },
-    images_src_path: path.normalize(__dirname + "/../maps/"),
-    images_dst_path: path.normalize(__dirname + "/../maps/graph/"),
+    images_src_path: path.normalize(__dirname + "/maps/"),
+    images_dst_path: path.normalize(__dirname + "/maps/graph/"),
     host_name: "wescape.dev",
     dev_path_prefix: "app_dev.php/",
     environment: "dev",
