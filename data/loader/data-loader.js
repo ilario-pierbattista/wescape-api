@@ -377,7 +377,8 @@ DataLoader.prototype.transform_node = function (node) {
         meter_x: node.coordinates.meters.x,
         meter_y: node.coordinates.meters.y,
         floor: node.quota,
-        width: node.larghezza
+        width: node.larghezza,
+        type: node.type
     };
 };
 

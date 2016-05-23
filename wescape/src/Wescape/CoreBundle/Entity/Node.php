@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Node
 {
+    const TYPE_GENERAL = "G";
+    const TYPE_ROOM = "R";
+    const TYPE_EMERGENCY = "E";
+    const TYPE_EXIT = "U";
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -62,6 +67,12 @@ class Node
      * @var integer Coordinata y in metri
      */
     private $meter_y;
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="enum('R', 'U', 'E', 'G')")
+     * @var string Tipo
+     */
+    private $type;
 
     /**
      * Get id
@@ -228,5 +239,29 @@ class Node
     public function getMeterY()
     {
         return $this->meter_y;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Node
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

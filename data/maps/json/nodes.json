@@ -14,11 +14,12 @@
     "larghezza": 1.8,
     "codice": "145DICEA",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -35,11 +36,12 @@
     "larghezza": 3,
     "codice": "145S1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -56,11 +58,12 @@
     "larghezza": 1.8,
     "codice": "145RG1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -77,11 +80,12 @@
     "larghezza": 1.8,
     "codice": "145R3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -98,11 +102,12 @@
     "larghezza": 1.8,
     "codice": "145R1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -119,11 +124,12 @@
     "larghezza": 1.8,
     "codice": "145RG2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -140,11 +146,12 @@
     "larghezza": 3,
     "codice": "145WC1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -161,11 +168,12 @@
     "larghezza": 3,
     "codice": "145S2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -182,11 +190,12 @@
     "larghezza": 1.8,
     "codice": "145S3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -203,11 +212,12 @@
     "larghezza": 1.8,
     "codice": "145A5",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -224,11 +234,12 @@
     "larghezza": 1.8,
     "codice": "145A3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -245,11 +256,12 @@
     "larghezza": 1.8,
     "codice": "145U1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": true,
       "uscita_emergenza": false
-    }
+    },
+    "type": "U"
   },
   {
     "coordinates": {
@@ -266,11 +278,12 @@
     "larghezza": 1.8,
     "codice": "145UA5",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": true,
       "uscita_emergenza": false
-    }
+    },
+    "type": "U"
   },
   {
     "coordinates": {
@@ -287,11 +300,12 @@
     "larghezza": 1.8,
     "codice": "145U3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": true,
       "uscita_emergenza": false
-    }
+    },
+    "type": "U"
   },
   {
     "coordinates": {
@@ -308,11 +322,12 @@
     "larghezza": 3,
     "codice": "145U2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": true,
       "uscita_emergenza": false
-    }
+    },
+    "type": "U"
   },
   {
     "coordinates": {
@@ -329,11 +344,12 @@
     "larghezza": 1.8,
     "codice": "145RAM",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -350,11 +366,12 @@
     "larghezza": 1.2,
     "codice": "145EMG1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -371,11 +388,12 @@
     "larghezza": 1.8,
     "codice": "145EMA7",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -392,11 +410,12 @@
     "larghezza": 3,
     "codice": "145EM1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -413,11 +432,12 @@
     "larghezza": 1.2,
     "codice": "145EMG2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -434,11 +454,12 @@
     "larghezza": 1.8,
     "codice": "145EMA3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -455,11 +476,12 @@
     "larghezza": 1.8,
     "codice": "150G1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -476,11 +498,12 @@
     "larghezza": 3,
     "codice": "150STRADE",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -497,11 +520,12 @@
     "larghezza": 1.8,
     "codice": "150DICEA",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -518,11 +542,12 @@
     "larghezza": 1.8,
     "codice": "150DICEA1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -539,11 +564,12 @@
     "larghezza": 1.8,
     "codice": "150R2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -560,11 +586,12 @@
     "larghezza": 1.8,
     "codice": "150WC1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -581,11 +608,12 @@
     "larghezza": 1.8,
     "codice": "150RL",
     "desc": "aulastudio",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -602,11 +630,12 @@
     "larghezza": 3,
     "codice": "150S1",
     "desc": "wc2+aula pc+csal",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -623,11 +652,12 @@
     "larghezza": 1.8,
     "codice": "150R1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -644,11 +674,12 @@
     "larghezza": 1.8,
     "codice": "150G2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -665,11 +696,12 @@
     "larghezza": 1.8,
     "codice": "150G1G2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -686,11 +718,12 @@
     "larghezza": 1.8,
     "codice": "150A5",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -707,11 +740,12 @@
     "larghezza": 1.8,
     "codice": "150A3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -728,11 +762,12 @@
     "larghezza": 1.8,
     "codice": "150A7",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -749,11 +784,12 @@
     "larghezza": 3,
     "codice": "150RAM",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -770,11 +806,12 @@
     "larghezza": 1.8,
     "codice": "150EMA7",
     "desc": "non usata",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -791,11 +828,12 @@
     "larghezza": 1.2,
     "codice": "150EM1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -812,11 +850,12 @@
     "larghezza": 1.8,
     "codice": "150EMRL",
     "desc": "uscita aula studio",
-    "type": {
+    "description": {
       "aula": true,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -833,11 +872,12 @@
     "larghezza": 3,
     "codice": "150EMR1",
     "desc": "uscita aula150/1",
-    "type": {
+    "description": {
       "aula": true,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -854,11 +894,12 @@
     "larghezza": 1.8,
     "codice": "150BIB",
     "desc": "biblioteca (posizione fittizia)",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -875,11 +916,12 @@
     "larghezza": 1.8,
     "codice": "155R567",
     "desc": "155/5-6 + 155/7",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -896,11 +938,12 @@
     "larghezza": 1.8,
     "codice": "155R4",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -917,11 +960,12 @@
     "larghezza": 1.8,
     "codice": "155R4D3",
     "desc": "155/4+155/d3",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -938,11 +982,12 @@
     "larghezza": 1.8,
     "codice": "155R23D2",
     "desc": "155/2-3+155/d2",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -959,11 +1004,12 @@
     "larghezza": 1.8,
     "codice": "155RD1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -980,11 +1026,12 @@
     "larghezza": 1.8,
     "codice": "155WC1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1001,11 +1048,12 @@
     "larghezza": 1.8,
     "codice": "155EM1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -1022,11 +1070,12 @@
     "larghezza": 1.8,
     "codice": "155S1",
     "desc": "presso l'affaccio, lato finestre",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1043,11 +1092,12 @@
     "larghezza": 3,
     "codice": "155WC2",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1064,11 +1114,12 @@
     "larghezza": 3,
     "codice": "155EM3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -1085,11 +1136,12 @@
     "larghezza": 3,
     "codice": "155CESMI",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1106,11 +1158,12 @@
     "larghezza": 3,
     "codice": "155ACQ",
     "desc": "aula \"acquario\" cesmi",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1127,11 +1180,12 @@
     "larghezza": 3,
     "codice": "155EM4",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -1148,11 +1202,12 @@
     "larghezza": 1.8,
     "codice": "155ECDL",
     "desc": "aula ECDL+155/10",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1169,11 +1224,12 @@
     "larghezza": 1.8,
     "codice": "155DICEA",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1190,11 +1246,12 @@
     "larghezza": 1.8,
     "codice": "155BAR",
     "desc": "",
-    "type": {
+    "description": {
       "aula": true,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -1211,11 +1268,12 @@
     "larghezza": 3,
     "codice": "155UP",
     "desc": "uscita principale lato bancomat",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": true,
       "uscita_emergenza": false
-    }
+    },
+    "type": "U"
   },
   {
     "coordinates": {
@@ -1232,11 +1290,12 @@
     "larghezza": 1.8,
     "codice": "155A5",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1253,11 +1312,12 @@
     "larghezza": 1.8,
     "codice": "155A3",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1274,11 +1334,12 @@
     "larghezza": 1.8,
     "codice": "155A7",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
-    }
+    },
+    "type": "G"
   },
   {
     "coordinates": {
@@ -1295,11 +1356,12 @@
     "larghezza": 1.2,
     "codice": "155EM1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
-      "uscita": false,
+      "uscita": true,
       "uscita_emergenza": true
-    }
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -1316,10 +1378,11 @@
     "larghezza": 3,
     "codice": "155U1",
     "desc": "",
-    "type": {
+    "description": {
       "aula": false,
       "uscita": true,
       "uscita_emergenza": false
-    }
+    },
+    "type": "U"
   }
 ]

@@ -5,6 +5,7 @@ namespace Wescape\ApiBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
@@ -97,6 +98,8 @@ class NodeController extends VoryxController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            //return FOSView::create($form->getData(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
