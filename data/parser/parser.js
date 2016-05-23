@@ -62,10 +62,12 @@ Parser.prototype.get_nodes = function () {
                 "codice": row[5],
                 "desc": row[6]
             };
-            if(node.desc == NOT_USED_FLAG) {
+            if (node.desc == NOT_USED_FLAG) {
                 return null;
             }
-            node["type"] = $this._get_node_type_description(node);
+            var description = $this._get_node_type_description(node);
+            node["description"] = description.desc;
+            node["type"] = description.type;
             node.coordinates["pixel"] = $this._get_node_pixel_coordinates(node);
             return node;
         } else {
@@ -129,11 +131,29 @@ Parser.prototype.get_edges = function (nodes) {
  * @return {object}      Oggetto descrizione del nodo
  */
 Parser.prototype._get_node_type_description = function (node) {
-    return {
+    var desc = {
         aula: /.*R.*/.test(node.codice),
         uscita: /.*U.*/.test(node.codice),
         uscita_emergenza: /.*EM.*/.test(node.codice)
     };
+    if (desc.uscita_emergenza) {
+        desc.uscita = true;
+    }
+
+    if (desc.aula) {
+        var type = "R";
+    } else if (desc.uscita && !desc.uscita_emergenza) {
+        var type = "U";
+    } else if (desc.uscita_emergenza) {
+        var type = "E";
+    } else {
+        var type = "G";
+    }
+
+    return {
+        "desc": desc,
+        "type": type
+    }
 };
 
 /**
@@ -198,7 +218,7 @@ Parser.prototype.search_node = function (nodes, filterParams) {
     var found = nodesFound.length > 0;
     var unique = nodesFound.length == 1;
 
-    if(found && !unique) {
+    if (found && !unique) {
         searchParams.coordinates = filterParams.coordinates;
         nodesFound = nodes.searchObject(searchParams);
 
@@ -206,7 +226,7 @@ Parser.prototype.search_node = function (nodes, filterParams) {
         unique = nodesFound.length == 1;
     }
 
-    if(found && unique) {
+    if (found && unique) {
         return nodesFound[0];
     } else {
         // @TODO debugging
