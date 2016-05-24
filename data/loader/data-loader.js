@@ -37,11 +37,11 @@ function DataLoader(accessToken) {
 
     this.endpoints = {
         "get_node": env.build_url("api/v1/nodes/{id}.json"),
-        "get_nodes": env.build_url("api/v1/nodes.json"),
+        "getNodes": env.build_url("api/v1/nodes.json"),
         "post_node": env.build_url("api/v1/nodes.json"),
         "delete_node": env.build_url("api/v1/nodes/{id}.json"),
         "get_edge": env.build_url("api/v1/edges/{id}.json"),
-        "get_edges": env.build_url("api/v1/edges.json"),
+        "getEdges": env.build_url("api/v1/edges.json"),
         "post_edge": env.build_url("api/v1/edges.json"),
         "delete_edge": env.build_url("api/v1/edges/{id}.json")
     }
@@ -58,7 +58,7 @@ DataLoader.prototype.clearData = function () {
 
     // Lettura degli archi presenti nel database
     mutex.take(function () {
-        $this.client.get($this.endpoints.get_edges)
+        $this.client.get($this.endpoints.getEdges)
             .on("complete", function (data) {
                 $this.handleServerResult(data, {
                     "success": function (data) {
@@ -94,7 +94,7 @@ DataLoader.prototype.clearData = function () {
 
     // Lettura dei nodi presenti nel database
     mutex.take(function () {
-        $this.client.get($this.endpoints.get_nodes)
+        $this.client.get($this.endpoints.getNodes)
             .on("complete", function (data) {
                 $this.handleServerResult(data, {
                     "success": function (data) {
@@ -388,12 +388,12 @@ DataLoader.prototype.transform_node = function (node) {
  * @returns {{begin: (*|String|string), end: (*|String|string), width: *, length: *, v: number, i: number, los: number, c: number}}
  */
 DataLoader.prototype.transform_edge = function (edge) {
-    var beginNode = this.search_node(this.dbmirror.nodes, {
+    var beginNode = this.searchNode(this.dbmirror.nodes, {
         "name": edge.node1.codice,
         "meter_x": edge.node1.coordinates.meters.x,
         "meter_y": edge.node1.coordinates.meters.y
     });
-    var endNode = this.search_node(this.dbmirror.nodes, {
+    var endNode = this.searchNode(this.dbmirror.nodes, {
         "name": edge.node2.codice,
         "meter_x": edge.node2.coordinates.meters.x,
         "meter_y": edge.node2.coordinates.meters.y
@@ -420,10 +420,10 @@ DataLoader.prototype.transform_edge = function (edge) {
  * @returns {{begin: (*|String|string), end: (*|String|string), width: *, length: *, stairs: boolean, v: number, i: number, los: number, c: number}}
  */
 DataLoader.prototype.transform_stairs = function (stairs) {
-    var beginNode = this.search_node(this.dbmirror.nodes, {
+    var beginNode = this.searchNode(this.dbmirror.nodes, {
         "name": stairs.node1
     });
-    var endNode = this.search_node(this.dbmirror.nodes, {
+    var endNode = this.searchNode(this.dbmirror.nodes, {
         "name": stairs.node2
     });
 
@@ -446,7 +446,7 @@ DataLoader.prototype.transform_stairs = function (stairs) {
  * @param params
  * @returns {*}
  */
-DataLoader.prototype.search_node = function (nodes, params) {
+DataLoader.prototype.searchNode = function (nodes, params) {
     var searchParams = {
         "name": params.name
     };

@@ -1,21 +1,26 @@
+'use strict';
+
 var xlsx = require('node-xlsx');
 var fs = require('fs');
 var path = require('path');
 require("../array-extension");
 
-const NODES_SHEET = "elenco nodi";
-const EDGES_SHEET = "vie di piano";
-const STAIRS_SHEET = "scale";
-
-const NOT_USED_FLAG = "non usato";
+var config = {
+    nodesSheet: 'elenco nodi',
+    edgesSheet: 'vie di piano',
+    stairsSheet: 'scale',
+    notUsedFlag: 'non usato'
+};
 
 // Costanti per la traduzione delle coordinate
-const CENTER_METER_X = 95;
-const CENTER_METER_Y = 487;
-const CENTER_PIXEL_X = 326;
-const CENTER_PIXEL_Y = 180;
-var PIXEL_PER_METER_X = 142 / 18; // Larghezza della 155/d3 e 155/d2
-var PIXEL_PER_METER_Y = 223 / 29; // Lunghezza della 155/7 e 155/5-6
+var coordinates = {
+    centerMeterX: 95,
+    centerMeterY: 487,
+    centerPixelX: 326,
+    centerPixelY: 180,
+    pixelPerMeterX: 142 / 18,
+    pixelPerMeterY: 223 / 29
+};
 
 /**
  * Parser
@@ -34,9 +39,9 @@ function Parser(src, dest) {
  * @param  {string} sheet_name Nome del foglio di calcolo
  * @return {object}            Dati estratti dal foglio
  */
-Parser.prototype.get_sheet_data = function (sheet_name) {
+Parser.prototype.getXLSSheetData = function (sheet_name) {
     var obj = this.parseData.filter(function (value) {
-        return value.name == sheet_name;
+        return value.name === sheet_name;
     });
     return obj[0].data;
 };
@@ -45,11 +50,11 @@ Parser.prototype.get_sheet_data = function (sheet_name) {
  * Estrazione della lista di nodi dal foglio excel
  * @return {Array} Array di nodi
  */
-Parser.prototype.get_nodes = function () {
+Parser.prototype.getNodes = function () {
     var $this = this;
-    var data_nodes = this.get_sheet_data(NODES_SHEET);
+    var data_nodes = this.getXLSSheetData(config.nodesSheet);
     var nodes = data_nodes.map(function (row) {
-        if (typeof row[1] == "number" && typeof row[2] == "number") {
+        if (typeof row[1] === "number" && typeof row[2] === "number") {
             var node = {
                 "coordinates": {
                     "meters": {
@@ -62,13 +67,13 @@ Parser.prototype.get_nodes = function () {
                 "codice": row[5],
                 "desc": row[6]
             };
-            if (node.desc == NOT_USED_FLAG) {
+            if (node.desc === config.notUsedFlag) {
                 return null;
             }
-            var description = $this._get_node_type_description(node);
-            node["description"] = description.desc;
-            node["type"] = description.type;
-            node.coordinates["pixel"] = $this._get_node_pixel_coordinates(node);
+            var description = $this.getNodeType(node);
+            node.description = description.desc;
+            node.type = description.type;
+            node.coordinates.pixel = $this.convertNodeCoordinatesToPixels(node);
             return node;
         } else {
             return null;
@@ -76,7 +81,7 @@ Parser.prototype.get_nodes = function () {
     });
     // Eliminazione delle voci nulle
     nodes = nodes.filter(function (value) {
-        return value != null;
+        return value !== null;
     });
     return nodes;
 };
@@ -86,11 +91,11 @@ Parser.prototype.get_nodes = function () {
  * @param  {Array} nodes Lista dei nodi che devono essere collegati
  * @return {Array}       Lista degli archi estratti
  */
-Parser.prototype.get_edges = function (nodes) {
-    var data_edges = this.get_sheet_data(EDGES_SHEET);
+Parser.prototype.getEdges = function (nodes) {
+    var data_edges = this.getXLSSheetData(config.edgesSheet);
     var $this = this;
     var edges = data_edges.map(function (row) {
-        if (typeof row[0] == "number" && typeof row[1] == "number") {
+        if (typeof row[0] === "number" && typeof row[1] === "number") {
             var edge = {
                 "node1": {
                     "codice": row[4],
@@ -111,18 +116,18 @@ Parser.prototype.get_edges = function (nodes) {
                     }
                 }
             };
-            var node1 = $this.search_node(nodes, edge.node1);
-            var node2 = $this.search_node(nodes, edge.node2);
-            edge["lunghezza"] = $this._distance(node1, node2);
-            edge["larghezza"] = $this._trunk_width(node1, node2);
+            var node1 = $this.searchNode(nodes, edge.node1, true);
+            var node2 = $this.searchNode(nodes, edge.node2, true);
+            edge.lunghezza = $this.distance(node1, node2);
+            edge.larghezza = $this.averageTrunkWidth(node1, node2);
             return edge;
         } else {
             return null;
         }
     });
     return edges.filter(function (value) {
-        return value != null;
-    })
+        return value !== null;
+    });
 };
 
 /**
@@ -130,7 +135,8 @@ Parser.prototype.get_edges = function (nodes) {
  * @param  {object} node Oggetto nodo da descrivere
  * @return {object}      Oggetto descrizione del nodo
  */
-Parser.prototype._get_node_type_description = function (node) {
+Parser.prototype.getNodeType = function (node) {
+    // Descrizione della tipologia di uscita
     var desc = {
         aula: /.*R.*/.test(node.codice),
         uscita: /.*U.*/.test(node.codice),
@@ -140,20 +146,47 @@ Parser.prototype._get_node_type_description = function (node) {
         desc.uscita = true;
     }
 
+    // Codice più sintentico descrittivo della tipologia di nodo
+    var type = "G";
     if (desc.aula) {
-        var type = "R";
+        type = "R";
     } else if (desc.uscita && !desc.uscita_emergenza) {
-        var type = "U";
+        type = "U";
     } else if (desc.uscita_emergenza) {
-        var type = "E";
-    } else {
-        var type = "G";
+        type = "E";
     }
 
     return {
         "desc": desc,
         "type": type
+    };
+};
+
+/**
+ * Rimuove i nodi che non sono connessi tra di loro con degli archi
+ * @param nodes Nodi
+ * @param edges Archi
+ * @returns {Array} Nodi connessi
+ */
+Parser.prototype.removeUnlinkedNodes = function (nodes, edges) {
+    var $this = this;
+    var linkedNodes = [];
+    var end = null, begin = null, edge = null;
+
+    for(var i = 0; i < edges.length; i++) {
+        edge = edges[i];
+        begin = $this.searchNode(nodes, edge.node1, false);
+        end = $this.searchNode(nodes, edge.node2, false);
+
+        if($this.searchNode(linkedNodes, begin, false) === null) {
+            linkedNodes.push(begin);
+        }
+        if($this.searchNode(linkedNodes, end, false) === null) {
+            linkedNodes.push(end);
+        }
     }
+
+    return linkedNodes;
 };
 
 /**
@@ -161,20 +194,20 @@ Parser.prototype._get_node_type_description = function (node) {
  * @param  {object} node Oggetto nodo
  * @return {object}      Nuove coordinate in pixel
  */
-Parser.prototype._get_node_pixel_coordinates = function (node) {
+Parser.prototype.convertNodeCoordinatesToPixels = function (node) {
     var xm = node.coordinates.meters.x;
     var ym = node.coordinates.meters.y;
-    var delta_xm = xm - CENTER_METER_X;
-    var delta_ym = -(ym - CENTER_METER_Y);
-    var delta_xp = delta_xm * PIXEL_PER_METER_X;
-    var delta_yp = delta_ym * PIXEL_PER_METER_Y;
-    var xp = CENTER_PIXEL_X + delta_xp;
-    var yp = CENTER_PIXEL_Y + delta_yp;
+    var delta_xm = xm - coordinates.centerMeterX;
+    var delta_ym = -(ym - coordinates.centerMeterY);
+    var delta_xp = delta_xm * coordinates.pixelPerMeterX;
+    var delta_yp = delta_ym * coordinates.pixelPerMeterY;
+    var xp = coordinates.centerPixelX + delta_xp;
+    var yp = coordinates.centerMeterY + delta_yp;
 
     return {
         x: Math.round(xp),
         y: Math.round(yp)
-    }
+    };
 };
 
 /**
@@ -183,7 +216,7 @@ Parser.prototype._get_node_pixel_coordinates = function (node) {
  * @param  {object} end   Nodo di fine
  * @return {number}       Distanza euclidea tra i due nodi in metri
  */
-Parser.prototype._distance = function (begin, end) {
+Parser.prototype.distance = function (begin, end) {
     var x1 = begin.coordinates.meters.x;
     var x2 = end.coordinates.meters.x;
     var y1 = begin.coordinates.meters.y;
@@ -198,7 +231,7 @@ Parser.prototype._distance = function (begin, end) {
  * @param  {object} end   Nodo di fine
  * @return {number}       Larghezza media del tronco
  */
-Parser.prototype._trunk_width = function (begin, end) {
+Parser.prototype.averageTrunkWidth = function (begin, end) {
     var width = (begin.larghezza + end.larghezza) / 2;
     return Math.round(width * 100) / 100;
 };
@@ -207,31 +240,35 @@ Parser.prototype._trunk_width = function (begin, end) {
  * Ricerca di un nodo in base al codice dalla lista dei nodi
  * @param  {Array} nodes  Array di nodi
  * @param  {object} filterParams Codice di ricerca
+ * @param  {boolean} debug Attivazione del debug
  * @return {object}        Nodo trovato
  */
-Parser.prototype.search_node = function (nodes, filterParams) {
+Parser.prototype.searchNode = function (nodes, filterParams, debug) {
+    debug = typeof debug !== "undefined" ? debug : false;
+
     var searchParams = {
         "codice": filterParams.codice
     };
 
     var nodesFound = nodes.searchObject(searchParams);
     var found = nodesFound.length > 0;
-    var unique = nodesFound.length == 1;
+    var unique = nodesFound.length === 1;
 
     if (found && !unique) {
         searchParams.coordinates = filterParams.coordinates;
         nodesFound = nodes.searchObject(searchParams);
 
         found = nodesFound.length > 0;
-        unique = nodesFound.length == 1;
+        unique = nodesFound.length === 1;
     }
 
     if (found && unique) {
         return nodesFound[0];
     } else {
-        // @TODO debugging
-        console.log("Node not found or not unique");
-        console.log(filterParams);
+        if(debug) {
+            console.log("Node not found or not unique");
+            console.log(filterParams);
+        }
         return null;
     }
 };
@@ -240,24 +277,24 @@ Parser.prototype.search_node = function (nodes, filterParams) {
  * Estrazione della lista delle scale
  * @return {Array} Lista delle scale estratte
  */
-Parser.prototype.get_stairs = function () {
-    var data_stairs = this.get_sheet_data(STAIRS_SHEET);
+Parser.prototype.getStairs = function () {
+    var data_stairs = this.getXLSSheetData(config.stairsSheet);
     var stairs = data_stairs.map(function (row) {
-        if (typeof row[1] == "number" && typeof row[2] == "number") {
+        if (typeof row[1] === "number" && typeof row[2] === "number") {
             return {
                 "node1": row[4],
                 "node2": row[8],
                 "codice": row[9],
                 "lunghezza": row[10],
                 "larghezza": row[11]
-            }
+            };
         } else {
             return null;
         }
     });
     return stairs.filter(function (v) {
-        return v != null;
-    })
+        return v !== null;
+    });
 };
 
 /**
@@ -282,12 +319,15 @@ Parser.prototype.save = function (obj, filename) {
  * @return {undefined}
  */
 Parser.prototype.parse = function () {
-    var nodes = this.get_nodes();
-    this.save(nodes, this.dest + "nodes.json");
-    var edges = this.get_edges(nodes);
+    var nodes = this.getNodes();
+    // this.save(nodes, this.dest + "nodes.json");
+    var edges = this.getEdges(nodes);
     this.save(edges, this.dest + "edges.json");
-    var stairs = this.get_stairs();
+    nodes = this.removeUnlinkedNodes(nodes, edges);
+    this.save(nodes, this.dest + "nodes.json");
+    var stairs = this.getStairs();
     this.save(stairs, this.dest + "stairs.json");
+    // @TODO Rimuovere qui i nodi non collegati
 };
 
 /**
