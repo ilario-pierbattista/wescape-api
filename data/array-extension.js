@@ -7,7 +7,7 @@
 Array.prototype.searchObject = function (filterParams) {
     return this.filter(function (v) {
         return recursiveMatchFunc(v, filterParams);
-    })
+    });
 };
 
 /**

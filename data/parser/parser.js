@@ -178,10 +178,10 @@ Parser.prototype.removeUnlinkedNodes = function (nodes, edges) {
         begin = $this.searchNode(nodes, edge.node1, false);
         end = $this.searchNode(nodes, edge.node2, false);
 
-        if($this.searchNode(linkedNodes, begin, false) === null) {
+        if(linkedNodes.searchObject(begin).length === 0) {
             linkedNodes.push(begin);
         }
-        if($this.searchNode(linkedNodes, end, false) === null) {
+        if(linkedNodes.searchObject(end).length === 0) {
             linkedNodes.push(end);
         }
     }
@@ -202,7 +202,7 @@ Parser.prototype.convertNodeCoordinatesToPixels = function (node) {
     var delta_xp = delta_xm * coordinates.pixelPerMeterX;
     var delta_yp = delta_ym * coordinates.pixelPerMeterY;
     var xp = coordinates.centerPixelX + delta_xp;
-    var yp = coordinates.centerMeterY + delta_yp;
+    var yp = coordinates.centerPixelY + delta_yp;
 
     return {
         x: Math.round(xp),
