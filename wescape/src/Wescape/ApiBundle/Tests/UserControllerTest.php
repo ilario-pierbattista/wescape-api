@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Email;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsersTests;
+use Wescape\CoreBundle\Service\ErrorCodes;
 use Wescape\CoreBundle\Test\WebTestCase;
 use Wescape\CoreBundle\Validator\Constraint\ClientExists;
 
@@ -116,8 +117,7 @@ class UserControllerTest extends WebTestCase
 
         // Duplicazione dell'utente
         $this->client->request("POST", "/api/v1/users.json", $validUser);
-        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
-        $this->assertContains("Duplicate entry", $this->client->getResponse()->getContent());
+        $this->assertStatusCode(ErrorCodes::SIGNUP_DUPLICATED_EMAIL, $this->client);
     }
 
     public function testPutAction() {
