@@ -28,7 +28,7 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\EdgeType",
      *     output="Wescape\CoreBundle\Entity\Edge",
      *     statusCodes={
@@ -36,8 +36,8 @@ class EdgeController extends VoryxController
      *     404="Returned if the edge does not exists"}
      * )
      */
-    public function getAction(Edge $entity) {
-        return $entity;
+    public function getAction(Edge $edge) {
+        return $edge;
     }
 
     /**
@@ -91,7 +91,7 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\EdgeType",
      *     output="Wescape\CoreBundle\Entity\Edge",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -127,11 +127,11 @@ class EdgeController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $entity
+     * @param         $edge
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\EdgeType",
      *     output="Wescape\CoreBundle\Entity\Edge",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -143,11 +143,11 @@ class EdgeController extends VoryxController
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function putAction(Request $request, Edge $entity) {
+    public function putAction(Request $request, Edge $edge) {
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(EdgeType::class, $entity, array("method" =>
+            $form = $this->createForm(EdgeType::class, $edge, array("method" =>
                 $request->getMethod
                 ()));
             $this->removeExtraFields($request, $form);
@@ -155,7 +155,7 @@ class EdgeController extends VoryxController
             if ($form->isValid()) {
                 $em->flush();
 
-                return $entity;
+                return $edge;
             }
 
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
@@ -169,11 +169,11 @@ class EdgeController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $entity
+     * @param         $edge
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\EdgeType",
      *     output="Wescape\CoreBundle\Entity\Edge",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -185,8 +185,8 @@ class EdgeController extends VoryxController
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function patchAction(Request $request, Edge $entity) {
-        return $this->putAction($request, $entity);
+    public function patchAction(Request $request, Edge $edge) {
+        return $this->putAction($request, $edge);
     }
 
     /**
@@ -194,11 +194,11 @@ class EdgeController extends VoryxController
      * @View(statusCode=204)
      *
      * @param Request $request
-     * @param         $entity
+     * @param         $edge
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\EdgeType",
      *     output="Wescape\CoreBundle\Entity\Edge",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -210,10 +210,10 @@ class EdgeController extends VoryxController
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function deleteAction(Request $request, Edge $entity) {
+    public function deleteAction(Request $request, Edge $edge) {
         try {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($entity);
+            $em->remove($edge);
             $em->flush();
 
             return null;

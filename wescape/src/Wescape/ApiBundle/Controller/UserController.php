@@ -36,7 +36,7 @@ class UserController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     output="Wescape\CoreBundle\Entity\User",
      *     authenticationRoles={"ROLE_USER"},
      *     statusCodes={
@@ -105,7 +105,7 @@ class UserController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\CreateUserType",
      *     output="Wescape\CoreBundle\Entity\User",
      *     statusCodes={
@@ -152,7 +152,7 @@ class UserController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\UserType",
      *     output="Wescape\CoreBundle\Entity\User",
      *     authenticationRoles={"ROLE_USER"},
@@ -202,7 +202,7 @@ class UserController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\UserType",
      *     output="Wescape\CoreBundle\Entity\User",
      *     authenticationRoles={"ROLE_USER"},
@@ -229,7 +229,7 @@ class UserController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     output="Wescape\CoreBundle\Entity\User",
      *     authenticationRoles={"ROLE_ADMIN"},
      *     statusCodes={

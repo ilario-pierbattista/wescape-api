@@ -5,12 +5,9 @@ namespace Wescape\ApiBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
-use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +28,7 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\NodeType",
      *     output="Wescape\CoreBundle\Entity\Node",
      *     statusCodes={
@@ -94,7 +91,7 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\NodeType",
      *     output="Wescape\CoreBundle\Entity\Node",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -135,7 +132,7 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\NodeType",
      *     output="Wescape\CoreBundle\Entity\Node",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -176,7 +173,7 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\NodeType",
      *     output="Wescape\CoreBundle\Entity\Node",
      *     authenticationRoles={"ROLE_ADMIN"},
@@ -201,7 +198,7 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
      *     input="Wescape\CoreBundle\Form\NodeType",
      *     output="Wescape\CoreBundle\Entity\Node",
      *     authenticationRoles={"ROLE_ADMIN"},

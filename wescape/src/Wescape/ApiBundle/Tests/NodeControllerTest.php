@@ -4,7 +4,7 @@ namespace Wescape\ApiBundle;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\HttpFoundation\Response;
-use Wescape\ApiBundle\DataFixtures\ORM\LoadNodeData;
+use Wescape\CoreBundle\DataFixtures\ORM\LoadNodeData;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsersTests;
 use Wescape\CoreBundle\Test\WebTestCase;
