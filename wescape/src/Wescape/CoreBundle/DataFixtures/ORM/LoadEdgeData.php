@@ -1,6 +1,6 @@
 <?php
 
-namespace Wescape\ApiBundle\DataFixtures\ORM;
+namespace Wescape\CoreBundle\DataFixtures\ORM;
 
 
 use Doctrine\Common\DataFixtures\AbstractFixture;

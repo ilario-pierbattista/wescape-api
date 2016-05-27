@@ -3,6 +3,7 @@
 namespace Wescape\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class User
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package Wescape\CoreBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @TODO    Escludere al serializzatore alcune informazioni
  */
 class User extends \FOS\UserBundle\Model\User
 {

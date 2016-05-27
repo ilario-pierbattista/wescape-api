@@ -48,6 +48,12 @@ security:
       anonymous: false
       methods: [GET, PUT, PATCH, DELETE]
 
+    position_management_api:
+      pattern: ^/api/v1/user/positions
+      fos_oauth: true
+      stateless: true
+      anonymous: false
+
     user_signup_api:
       pattern: ^/api/v1/users.json
       stateless: true

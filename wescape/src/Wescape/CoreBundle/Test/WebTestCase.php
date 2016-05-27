@@ -72,6 +72,11 @@ abstract class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
             "HTTP_Authorization" => "Bearer " . $response['access_token']
         ]);
     }
+    
+    protected function printJsonContent(Client $client) {
+        echo "\n";
+        echo json_encode(json_decode($client->getResponse()->getContent()), JSON_PRETTY_PRINT);
+    }
 
     /**
      * Richiede l'access token inviando email e password
