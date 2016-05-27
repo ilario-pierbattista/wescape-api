@@ -28,7 +28,9 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\EdgeType",
+     *     output="Wescape\CoreBundle\Entity\Edge"
      * )
      */
     public function getAction(Edge $entity) {

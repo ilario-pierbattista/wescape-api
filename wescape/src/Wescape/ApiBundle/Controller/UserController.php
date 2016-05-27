@@ -37,7 +37,7 @@ class UserController extends VoryxController
      * @ApiDoc(
      *     resource=true,
      *     output="Wescape\CoreBundle\Entity\User",
-     *     authenticationRoles={"ROLE_ADMIN"}
+     *     authenticationRoles={"ROLE_USER"}
      * )
      * @Security(
      * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"

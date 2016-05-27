@@ -17,68 +17,86 @@ use Doctrine\ORM\Mapping as ORM;
 class Edge
 {
     /**
+     * Edge identifier
      * @ORM\Column(type="integer")
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var integer Id
+     * @var integer
      */
     protected $id;
 
     /**
+     * The beginning vertex of the edge
      * @ORM\ManyToOne(targetEntity="Node")
      * @ORM\JoinColumn(name="begin", referencedColumnName="id")
-     * @var Node Estremo iniziale dell'arco
+     *
+     * @var Node
      */
     private $begin;
 
     /**
+     * The ending vertex of the edge
      * @ORM\ManyToOne(targetEntity="Node")
      * @ORM\JoinColumn(name="end", referencedColumnName="id")
-     * @var Node Estremo finale dell'arco
+     *
+     * @var Node
      */
     private $end;
 
     /**
+     * Length of the edge
      * @ORM\Column(type="decimal", scale=2)
-     * @var double Lunghezza del tronco in metri
+     *
+     * @var double
      */
     private $length;
 
     /**
+     * Average width of the edge
      * @ORM\Column(type="decimal", scale=2)
-     * @var double Larghezza media del tronco in metri
+     *
+     * @var double
      */
     private $width;
 
     /**
+     * Flag for knowing if the edge represents a stairs or not
      * @ORM\Column(type="boolean")
-     * @var boolean Se il tronco rappresenta una scala, questo flag è impostato a TRUE,
-     * altrimenti a FALSE
+     *
+     * @var boolean
      */
     private $stairs = false;
 
     /**
+     * Risk of development of fires
      * @ORM\Column(type="decimal", scale=4)
-     * @var double Propensione allo sviluppo di incendi
+     *
+     * @var double
      */
     private $v;
 
     /**
+     * Risk of development of toxicological chain reactions
      * @ORM\Column(type="decimal", scale=4)
-     * @var double Reazioni a catena tossicologiche
+     *
+     * @var double
      */
     private $i;
 
     /**
+     * Average portions of area per person
      * @ORM\Column(type="decimal", scale=4)
-     * @var double Superficie calpestabile disponibile ad una persona lungo il tratto
-     * di evaquazione
+     *
+     * @var double
      */
     private $los;
 
     /**
+     * Smoke presence parameter
      * @ORM\Column(type="decimal", scale=4)
-     * @var double Parametro di presenza di fumo
+     *
+     * @var double
      */
     private $c;
 
