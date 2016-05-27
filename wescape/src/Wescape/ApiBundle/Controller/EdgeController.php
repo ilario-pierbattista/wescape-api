@@ -30,7 +30,10 @@ class EdgeController extends VoryxController
      * @ApiDoc(
      *     resource=true,
      *     input="Wescape\CoreBundle\Form\EdgeType",
-     *     output="Wescape\CoreBundle\Entity\Edge"
+     *     output="Wescape\CoreBundle\Entity\Edge",
+     *     statusCodes={
+     *     200="Returned if the edge is found",
+     *     404="Returned if the edge does not exists"}
      * )
      */
     public function getAction(Edge $entity) {
@@ -54,7 +57,10 @@ class EdgeController extends VoryxController
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\Edge",
+     *     statusCodes={
+     *     200="Returned in case of success. Almost always."}
      * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -85,7 +91,15 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\EdgeType",
+     *     output="Wescape\CoreBundle\Entity\Edge",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     201="Returned if the edge is created",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -96,7 +110,7 @@ class EdgeController extends VoryxController
             ()));
         $this->removeExtraFields($request, $form);
         $form->handleRequest($request);
-        
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -117,7 +131,15 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\EdgeType",
+     *     output="Wescape\CoreBundle\Entity\Edge",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned if the edge is updated",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -151,7 +173,15 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\EdgeType",
+     *     output="Wescape\CoreBundle\Entity\Edge",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned if the edge is updated",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -168,7 +198,15 @@ class EdgeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\EdgeType",
+     *     output="Wescape\CoreBundle\Entity\Edge",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     204="Returned if the edge is deleted",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
