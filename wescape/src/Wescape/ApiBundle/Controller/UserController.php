@@ -210,10 +210,14 @@ class UserController extends VoryxController
      *
      * @return Response
      * @Post("/users/password/request")
-     *
      * @ApiDoc(
      *     resource=false,
-     *     input="Wescape\CoreBundle\Form\RequestResetPasswordType"
+     *     input="Wescape\CoreBundle\Form\RequestResetPasswordType",
+     *     statusCodes={
+     *     202="Returned when successful",
+     *     500="Returned if some general error occurs",
+     *     520="Returned when the submitted email does not match to any existing account"
+     * }
      * )
      */
     public function requestPasswordResetAction(Request $request) {
@@ -255,6 +259,18 @@ class UserController extends VoryxController
      *
      * @return Response
      * @Post("/users/password/reset")
+     *
+     * @ApiDoc(
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\ResetPasswordType",
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     statusCodes={
+     *     200="Returned when successful",
+     *     500="Returned if some general error occurs",
+     *     520="Returned when the submitted email does not match to any existing account",
+     *     521="Returned if the sent secret code is invalid",
+     *     522="Returned if the sent secret code is expired"}
+     * )
      */
     public function resetPasswordAction(Request $request) {
         try {
