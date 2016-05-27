@@ -14,6 +14,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\User;
 use Wescape\CoreBundle\Form\CreateUserType;
@@ -37,14 +38,18 @@ class UserController extends VoryxController
      * @ApiDoc(
      *     resource=true,
      *     output="Wescape\CoreBundle\Entity\User",
-     *     authenticationRoles={"ROLE_USER"}
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     200="Returned if the edge is found",
+     *     404="Returned if the edge does not exists"}
      * )
      * @Security(
-     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
+     * "has_role('ROLE_USER')"
      * )
      */
-    public function getAction(User $entity) {
-        return $entity;
+    public function getAction(User $user) {
+        $this->denyAccessUnlessGranted('edit', $user);
+        return $user;
     }
 
     /**
@@ -63,7 +68,14 @@ class UserController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
-     * @ApiDoc(resource=true)
+     * @ApiDoc(
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     statusCodes={
+     *     200="Returned in case of success.",
+     *     204="Returned if no content is found",
+     *     500="Returned if some general error occurs"}
+     * )
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -94,8 +106,15 @@ class UserController extends VoryxController
      * @return Response
      * @ApiDoc(
      *     resource=true,
-     *     input="Wescape\CoreBundle\Form\UserType",
-     *     output="Wescape\CoreBundle\Entity\User"
+     *     input="Wescape\CoreBundle\Form\CreateUserType",
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     statusCodes={
+     *     201="Returned if the user is created",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs",
+     *     510="Returned if exists another user with the same email address"
+     *     }
      * )
      */
     public function postAction(Request $request) {
@@ -129,32 +148,48 @@ class UserController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $entity
+     * @param         $user
      *
      * @return Response
-     * @ApiDoc(resource=true)
+     * @ApiDoc(
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\UserType",
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     200="Returned if the user is updated",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
      * @Security(
-     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
+     * "has_role('ROLE_USER')"
      * )
      */
-    public function putAction(Request $request, User $entity) {
+    public function putAction(Request $request, User $user) {
         try {
+            $this->denyAccessUnlessGranted('edit', $user);
+
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(get_class(new UserType()), $entity, array("method" => $request->getMethod()));
+            $form = $this->createForm(get_class(new UserType()), $user, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $entity->setUsername($entity->getEmail());
+                $user->setUsername($user->getEmail());
                 $em->flush();
 
-                return $entity;
+                return $user;
             }
 
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            if ($e instanceof AccessDeniedException) {
+                $code = Codes::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
         }
     }
 
@@ -163,16 +198,26 @@ class UserController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $userEntity
+     * @param         $user
      *
      * @return Response
-     * @ApiDoc(resource=true)
+     * @ApiDoc(
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\UserType",
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     200="Returned if the user is updated",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
      * @Security(
-     * "has_role('ROLE_ADMIN')||(has_role('ROLE_USER')&&user.getId()==userEntity.getId())"
+     * "has_role('ROLE_USER')"
      * )
      */
-    public function patchAction(Request $request, User $userEntity) {
-        return $this->putAction($request, $userEntity);
+    public function patchAction(Request $request, User $user) {
+        return $this->putAction($request, $user);
     }
 
     /**
@@ -180,25 +225,36 @@ class UserController extends VoryxController
      * @View(statusCode=204)
      *
      * @param Request $request
-     * @param         $entity
+     * @param         $user
      *
      * @return Response
      * @ApiDoc(
      *     resource=true,
      *     output="Wescape\CoreBundle\Entity\User",
-     *     authenticationRoles={"ROLE_ADMIN"}
-     *     )
-     * @Security("has_role('ROLE_ADMIN') && user.getId() != entity.getId()")
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     204="Returned if the user is deleted",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function deleteAction(Request $request, User $entity) {
+    public function deleteAction(Request $request, User $user) {
         try {
+            $this->denyAccessUnlessGranted('delete', $user);
+
             /** @var UserManager $userManager */
             $userManager = $this->get("fos_user.user_manager");
-            $userManager->deleteUser($entity);
+            $userManager->deleteUser($user);
 
-            return $entity;
+            return $user;
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            if($e instanceof AccessDeniedException) {
+                $code = Codes::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
         }
     }
 
@@ -259,7 +315,6 @@ class UserController extends VoryxController
      *
      * @return Response
      * @Post("/users/password/reset")
-     *
      * @ApiDoc(
      *     resource=false,
      *     input="Wescape\CoreBundle\Form\ResetPasswordType",

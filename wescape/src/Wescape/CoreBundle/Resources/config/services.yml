@@ -12,3 +12,10 @@ services:
       - "@fos_user.user_manager"
       - "@mailer"
       - "@twig"
+
+  core.user_voter:
+    class: Wescape\CoreBundle\Security\UserVoter
+    tags:
+      - { name: security.voter }
+    public: false
+    arguments: [ '@security.access.decision_manager' ]
