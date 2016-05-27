@@ -31,7 +31,12 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     statusCodes={
+     *     200="Returned if the node is found",
+     *     404="Returned if the node does not exists"}
      * )
      */
     public function getAction(Node $entity) {
@@ -55,7 +60,10 @@ class NodeController extends VoryxController
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     statusCodes={
+     *     200="Returned in case of success. Almost always."}
      * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -86,7 +94,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     201="Returned if the node is created",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -119,7 +135,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned if the node is updated",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -153,6 +177,14 @@ class NodeController extends VoryxController
      * @return Response
      * @ApiDoc(
      *     resource=true,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned if the node is updated",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -169,7 +201,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     204="Returned if the node is deleted",
+     *     401="Returned if the client is not authorized",
+     *     404="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
