@@ -17,7 +17,7 @@ class RequestResetPasswordType extends AbstractType
             ->add('email', EmailType::class, [
                 'constraints' => new Email()
             ])
-            ->add('client', TextType::class, [
+            ->add('client', ClientType::class, [
                 "mapped" => false,
                 "constraints" => new ClientExists()
             ]);

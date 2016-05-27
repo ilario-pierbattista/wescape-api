@@ -28,11 +28,14 @@ class PositionController extends VoryxController
      *
      * @return Response
      * @Security(
-     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getUser().getId())"
+     * "has_role('ROLE_ADMIN')"
      * )
      */
-    public function getAction(User $user, Position $entity) {
-        return $entity;
+    public function getAction(User $user) {
+        $em = $this->getDoctrine()->getManager();
+        $position = $em->getRepository("CoreBundle:Position")
+            ->findOneBy(['user' => $user->getId()]);
+        return $position;
     }
 
     /**

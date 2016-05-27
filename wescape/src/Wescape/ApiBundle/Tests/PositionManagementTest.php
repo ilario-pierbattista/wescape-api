@@ -37,17 +37,21 @@ class PositionManagementTest extends WebTestCase
         // Richiesta anonima
         $this->client->request("GET", "/api/v1/user/positions");
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
-        $this->client->request("GET", "/api/v1/users/1/positions/1");
-        $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);
-        $this->client->request("GET", "/api/v1/users/2/positions/1");
+        $this->client->request("GET", "/api/v1/users/1/position");
         $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
-
-        $this->printJsonContent($this->client);
+        $this->client->request("GET", "/api/v1/users/2/position");
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
 
         // Richiesta da utente autenticato
         $this->client = $this->getAuthenticatedUser();
         $this->client->request("GET", "/api/v1/user/positions");
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+        $this->client->request("GET", "/api/v1/users/1/position");
+        $this->assertStatusCode(Response::HTTP_NOT_FOUND, $this->client);
+        $this->client->request("GET", "/api/v1/users/2/position");
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+
+        $this->printJsonContent($this->client);
 
         // Richiesta di un amministratore
         $this->client = $this->getAuthenticatedAdmin();

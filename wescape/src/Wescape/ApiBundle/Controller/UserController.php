@@ -34,13 +34,17 @@ class UserController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
-     * @ApiDoc(resource=true)
+     * @ApiDoc(
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     authenticationRoles={"ROLE_ADMIN"}
+     * )
      * @Security(
      * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
      * )
      */
-    public function getAction(User $user) {
-        return $user;
+    public function getAction(User $entity) {
+        return $entity;
     }
 
     /**
@@ -88,7 +92,11 @@ class UserController extends VoryxController
      * @param Request $request
      *
      * @return Response
-     * @ApiDoc(resource=true)
+     * @ApiDoc(
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\UserType",
+     *     output="Wescape\CoreBundle\Entity\User"
+     * )
      */
     public function postAction(Request $request) {
         /** @var UserManager $userManager */
@@ -121,7 +129,7 @@ class UserController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $user
+     * @param         $entity
      *
      * @return Response
      * @ApiDoc(resource=true)
@@ -129,19 +137,19 @@ class UserController extends VoryxController
      * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
      * )
      */
-    public function putAction(Request $request, User $user) {
+    public function putAction(Request $request, User $entity) {
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(get_class(new UserType()), $user, array("method" => $request->getMethod()));
+            $form = $this->createForm(get_class(new UserType()), $entity, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $user->setUsername($user->getEmail());
+                $entity->setUsername($entity->getEmail());
                 $em->flush();
 
-                return $user;
+                return $entity;
             }
 
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
@@ -155,16 +163,16 @@ class UserController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $user
+     * @param         $userEntity
      *
      * @return Response
      * @ApiDoc(resource=true)
      * @Security(
-     * "has_role('ROLE_ADMIN') || (has_role('ROLE_USER') && user.getId()==entity.getId())"
+     * "has_role('ROLE_ADMIN')||(has_role('ROLE_USER')&&user.getId()==userEntity.getId())"
      * )
      */
-    public function patchAction(Request $request, User $user) {
-        return $this->putAction($request, $user);
+    public function patchAction(Request $request, User $userEntity) {
+        return $this->putAction($request, $userEntity);
     }
 
     /**
@@ -172,19 +180,23 @@ class UserController extends VoryxController
      * @View(statusCode=204)
      *
      * @param Request $request
-     * @param         $user
+     * @param         $entity
      *
      * @return Response
-     * @ApiDoc(resource=true)
+     * @ApiDoc(
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     authenticationRoles={"ROLE_ADMIN"}
+     *     )
      * @Security("has_role('ROLE_ADMIN') && user.getId() != entity.getId()")
      */
-    public function deleteAction(Request $request, User $user) {
+    public function deleteAction(Request $request, User $entity) {
         try {
             /** @var UserManager $userManager */
             $userManager = $this->get("fos_user.user_manager");
-            $userManager->deleteUser($user);
+            $userManager->deleteUser($entity);
 
-            return null;
+            return $entity;
         } catch (\Exception $e) {
             return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -198,6 +210,11 @@ class UserController extends VoryxController
      *
      * @return Response
      * @Post("/users/password/request")
+     *
+     * @ApiDoc(
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\RequestResetPasswordType"
+     * )
      */
     public function requestPasswordResetAction(Request $request) {
         try {
