@@ -98,7 +98,7 @@ class NodeController extends VoryxController
      *     statusCodes={
      *     201="Returned if the node is created",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
@@ -139,7 +139,7 @@ class NodeController extends VoryxController
      *     statusCodes={
      *     200="Returned if the node is updated",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
@@ -180,7 +180,7 @@ class NodeController extends VoryxController
      *     statusCodes={
      *     200="Returned if the node is updated",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
@@ -205,7 +205,7 @@ class NodeController extends VoryxController
      *     statusCodes={
      *     204="Returned if the node is deleted",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")

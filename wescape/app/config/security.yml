@@ -49,7 +49,7 @@ security:
       methods: [GET, PUT, PATCH, DELETE]
 
     position_management_api:
-      pattern: ^/api/v1/user/positions
+      pattern: ^/api/v1/(user|users)/positions
       fos_oauth: true
       stateless: true
       anonymous: false

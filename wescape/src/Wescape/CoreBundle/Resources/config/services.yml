@@ -19,3 +19,10 @@ services:
       - { name: security.voter }
     public: false
     arguments: [ '@security.access.decision_manager' ]
+
+  core.position_voter:
+    class: Wescape\CoreBundle\Security\PositionVoter
+    tags:
+      - { name: security.voter }
+    public: false
+    arguments: [ "@security.access.decision_manager" ]

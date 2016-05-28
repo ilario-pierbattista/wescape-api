@@ -111,7 +111,7 @@ class UserController extends VoryxController
      *     statusCodes={
      *     201="Returned if the user is created",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs",
      *     510="Returned if exists another user with the same email address"
      *     }
@@ -159,7 +159,7 @@ class UserController extends VoryxController
      *     statusCodes={
      *     200="Returned if the user is updated",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security(
@@ -209,7 +209,7 @@ class UserController extends VoryxController
      *     statusCodes={
      *     200="Returned if the user is updated",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security(
@@ -235,7 +235,7 @@ class UserController extends VoryxController
      *     statusCodes={
      *     204="Returned if the user is deleted",
      *     401="Returned if the client is not authorized",
-     *     404="Returned if the user doesn't have the correct privileges",
+     *     403="Returned if the user doesn't have the correct privileges",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")

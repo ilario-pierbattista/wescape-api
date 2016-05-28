@@ -8,13 +8,17 @@ use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\Position;
 use Wescape\CoreBundle\Entity\User;
 use Wescape\CoreBundle\Form\PositionType;
+use Wescape\CoreBundle\Service\ErrorCodes;
 
 /**
  * Position controller.
@@ -27,15 +31,36 @@ class PositionController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\Position",
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     200="Returned if the position for the user is found",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     404="Returned if the user has no position",
+     *     500="Returned if some general error occurs"}
+     * )
      * @Security(
-     * "has_role('ROLE_ADMIN')"
+     * "has_role('ROLE_USER')"
      * )
      */
     public function getAction(User $user) {
-        $em = $this->getDoctrine()->getManager();
-        $position = $em->getRepository("CoreBundle:Position")
-            ->findOneBy(['user' => $user->getId()]);
-        return $position;
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $position = $em->getRepository("CoreBundle:Position")
+                ->findOneBy(['user' => $user->getId()]);
+            $this->denyAccessUnlessGranted('view', $position);
+
+            return $position;
+        } catch (\Exception $e) {
+            $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            if ($e instanceof AccessDeniedException) {
+                $code = Codes::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
+        }
     }
 
     /**
@@ -54,6 +79,17 @@ class PositionController extends VoryxController
      *                              &order_by[name]=ASC&order_by[description]=DESC")
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
+     * @ApiDoc(
+     *     resource=false,
+     *     output="Wescape\CoreBundle\Entity\Position",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned in case of success",
+     *     204="Returned if no one user has a position",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -83,22 +119,50 @@ class PositionController extends VoryxController
      * @param Request $request
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\PositionType",
+     *     output="Wescape\CoreBundle\Entity\Position",
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     201="Returned if the new position is setted",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
+     * @Security("has_role('ROLE_USER')")
      */
     public function postAction(Request $request) {
-        $entity = new Position();
-        $form = $this->createForm(get_class(new PositionType()), $entity, array("method" => $request->getMethod()));
-        $this->removeExtraFields($request, $form);
-        $form->handleRequest($request);
+        try {
+            $entity = new Position();
+            $form = $this->createForm(get_class(new PositionType()), $entity, array("method" => $request->getMethod()));
+            $this->removeExtraFields($request, $form);
+            $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->denyAccessUnlessGranted('create', $entity);
 
-            return $entity;
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $existingPosition = $em->getRepository("CoreBundle:Position")
+                    ->findOneBy(["user" => $entity->getUser()]);
+
+                if (!empty($existingPosition)) {
+                    return FOSView::create(["success" => false], ErrorCodes::POSITION_ALREADY_CREATED);
+                }
+
+                $em->persist($entity);
+                $em->flush();
+
+                return $entity;
+            }
+            return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (Exception $e) {
+            $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            if ($code instanceof AccessDeniedException) {
+                $code = Codes::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
         }
-
-        return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -106,26 +170,45 @@ class PositionController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $entity
+     * @param         $position
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=true,
+     *     input="Wescape\CoreBundle\Form\PositionType",
+     *     output="Wescape\CoreBundle\Entity\Position",
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     200="Returned if the new position is updated",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
+     * @Security("has_role('ROLE_USER')")
      */
-    public function putAction(Request $request, Position $entity) {
+    public function putAction(Request $request, Position $position) {
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
-            $form = $this->createForm(get_class(new PositionType()), $entity, array("method" => $request->getMethod()));
+            $form = $this->createForm(get_class(new PositionType()), $position, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
+
+            $this->denyAccessUnlessGranted('edit', $position);
+
             if ($form->isValid()) {
                 $em->flush();
 
-                return $entity;
+                return $position;
             }
 
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            if ($e instanceof AccessDeniedException) {
+                $code = Codes::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
         }
     }
 

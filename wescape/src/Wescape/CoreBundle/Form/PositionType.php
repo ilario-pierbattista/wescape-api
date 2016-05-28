@@ -15,12 +15,8 @@ class PositionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('user', 'voryx_entity', [
-                'class' => 'Wescape\CoreBundle\Entity\User'
-            ])
-            ->add('node', 'voryx_entity', [
-                'class' => 'Wescape\CoreBundle\Entity\Node'
-            ])
+            ->add('user')
+            ->add('node')
         ;
     }
     

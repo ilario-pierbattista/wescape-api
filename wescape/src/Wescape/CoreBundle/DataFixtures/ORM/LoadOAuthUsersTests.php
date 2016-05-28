@@ -48,13 +48,23 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
             ->setRoles(['ROLE_USER'])
             ->setEnabled(true);
 
+        /** @var User $user3 */
+        $user3 = $userManager->createUser()
+            ->setUsername("user3")
+            ->setEmail("user3")
+            ->setPlainPassword("user3")
+            ->setRoles(['ROLE_USER'])
+            ->setEnabled(true);
+
         $userManager->updateUser($admin);
         $userManager->updateUser($user1);
         $userManager->updateUser($user2);
+        $userManager->updateUser($user3);
 
         $this->addReference('admin', $admin);
         $this->addReference('user1', $user1);
         $this->addReference('user2', $user2);
+        $this->addReference('user3', $user3);
     }
 
     public function setContainer(ContainerInterface $container = null) {

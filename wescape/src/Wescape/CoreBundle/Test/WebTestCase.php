@@ -46,15 +46,18 @@ abstract class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
             ]);
         }
     }
-    
+
     /**
      * Autentica il client usato per i test come un utente normale
      *
+     * @param string $username
+     * @param string $password
+     *
      * @return Client
      */
-    protected function getAuthenticatedUser() {
+    protected function getAuthenticatedUser($username = "user", $password = "user") {
         $tokenClient = self::createClient();
-        $response = $this->getOAuthTokens($tokenClient, "user", "user");
+        $response = $this->getOAuthTokens($tokenClient, $username, $password);
         return self::createClient([], [
             "HTTP_Authorization" => "Bearer " . $response['access_token']
         ]);
@@ -72,10 +75,22 @@ abstract class WebTestCase extends \Liip\FunctionalTestBundle\Test\WebTestCase
             "HTTP_Authorization" => "Bearer " . $response['access_token']
         ]);
     }
-    
+
+    /**
+     * @param Client $client
+     */
     protected function printJsonContent(Client $client) {
         echo "\n";
         echo json_encode(json_decode($client->getResponse()->getContent()), JSON_PRETTY_PRINT);
+    }
+
+    /**
+     * @param Client $client
+     *
+     * @return mixed
+     */
+    protected function decodeJsonContent(Client $client) {
+        return json_decode($client->getResponse()->getContent(), true);
     }
 
     /**
