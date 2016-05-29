@@ -135,26 +135,30 @@ class PositionController extends VoryxController
      */
     public function postAction(Request $request) {
         try {
-            $entity = new Position();
-            $form = $this->createForm(get_class(new PositionType()), $entity, array("method" => $request->getMethod()));
+            $position = new Position();
+            $form = $this->createForm(get_class(new PositionType()), $position, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
 
-            $this->denyAccessUnlessGranted('create', $entity);
+            $this->denyAccessUnlessGranted('create', $position);
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $existingPosition = $em->getRepository("CoreBundle:Position")
-                    ->findOneBy(["user" => $entity->getUser()]);
+                    ->findOneBy(["user" => $position->getUser()]);
 
                 if (!empty($existingPosition)) {
                     return FOSView::create(["success" => false], ErrorCodes::POSITION_ALREADY_CREATED);
                 }
 
-                $em->persist($entity);
+                $em->persist($position);
                 $em->flush();
 
-                return $entity;
+                // Aggiornamento del los
+                $losManager = $this->get("core.los_manager");
+                $losManager->updateEdge($position->getEdge());
+
+                return $position;
             }
             return FOSView::create(array('errors' => $form->getErrors()), Codes::HTTP_INTERNAL_SERVER_ERROR);
         } catch (Exception $e) {
@@ -197,6 +201,7 @@ class PositionController extends VoryxController
             if ($position === null) {
                 return FOSView::create(["success" => false], ErrorCodes::POSITION_NOT_FOUND);
             }
+            $oldEdge = $position->getEdge();
 
             $form = $this->createForm(get_class(new PositionType()), $position, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
@@ -208,6 +213,10 @@ class PositionController extends VoryxController
             if ($form->isValid()) {
                 $em->flush();
 
+                // Aggiornamento del los
+                $losManager = $this->get("core.los_manager");
+                $losManager->updateEdge($oldEdge)
+                    ->updateEdge($position->getEdge());
                 return $position;
             }
 
@@ -267,6 +276,10 @@ class PositionController extends VoryxController
 
             $em->remove($position);
             $em->flush();
+
+            // Aggiornamento del los
+            $losManager = $this->get("core.los_manager");
+            $losManager->updateEdge($position->getEdge());
 
             return null;
         } catch (\Exception $e) {

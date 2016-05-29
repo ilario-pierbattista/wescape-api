@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Position
  *
  * @package Wescape\CoreBundle\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Wescape\CoreBundle\Entity\Repository\PositionRepository")
  * @ORM\Table(name="position")
  */
 class Position
