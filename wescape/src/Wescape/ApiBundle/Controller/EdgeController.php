@@ -139,12 +139,13 @@ class EdgeController extends VoryxController
      *     200="Returned if the edge is updated",
      *     401="Returned if the client is not authorized",
      *     403="Returned if the user doesn't have the correct privileges",
+     *     404="Returned if the resource has been not found",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function putAction(Request $request, Edge $edge) {
-        try {
+        try  {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
             $form = $this->createForm(EdgeType::class, $edge, array("method" =>

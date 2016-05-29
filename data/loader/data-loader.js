@@ -1,3 +1,5 @@
+'use strict';
+
 var restler = require("restler");
 var url = require('url');
 var env = require('../env.js');
@@ -8,18 +10,14 @@ var Progress = require('progress');
 var exit = require('exit');
 var logger = require("../logger");
 require("../array-extension");
+var wescapeClient = require('./../wescape-client');
 
-const LOG_FILE = "data-loader.log.json";
+var LOG_FILE = "data-loader.log.json";
 
 /**
  * Prototipo di client restful configurato per autenticarsi con il server
  */
-OAuthClient = restler.service(function (accessToken) {
-    this.defaults.headers = {
-        "Content-Type": 'application/json',
-        "Authorization": 'Bearer ' + accessToken
-    }
-});
+var OAuthClient = wescapeClient.constructor;
 
 /**
  * Classe per il caricamento dei dati
@@ -35,16 +33,7 @@ function DataLoader(accessToken) {
         $this.data[label] = require(env.parsed_data_paths[label]);
     });
 
-    this.endpoints = {
-        "get_node": env.build_url("api/v1/nodes/{id}.json"),
-        "getNodes": env.build_url("api/v1/nodes.json"),
-        "post_node": env.build_url("api/v1/nodes.json"),
-        "delete_node": env.build_url("api/v1/nodes/{id}.json"),
-        "get_edge": env.build_url("api/v1/edges/{id}.json"),
-        "getEdges": env.build_url("api/v1/edges.json"),
-        "post_edge": env.build_url("api/v1/edges.json"),
-        "delete_edge": env.build_url("api/v1/edges/{id}.json")
-    }
+    this.endpoints = wescapeClient.endpoints;
 }
 
 /**
@@ -67,7 +56,7 @@ DataLoader.prototype.clearData = function () {
                     "complete": function () {
                         mutex.leave();
                     }
-                })
+                });
             })
             .on("fail", function (data, response) {
                 logger.saveLog(LOG_FILE, {
@@ -76,12 +65,12 @@ DataLoader.prototype.clearData = function () {
                 });
                 console.error("Error cleaning edges");
                 exit(1);
-            })
+            });
     });
 
     // Rimozione degli archi presenti nel database
     mutex.take(function () {
-        if (!(typeof savedEdges == "string" && !savedEdges.trim())) {
+        if (!(typeof savedEdges === "string" && !savedEdges.trim())) {
             $this.clearProgress = new Progress("clearing edges :bar :current/:total",
                 {total: savedEdges.length});
             savedEdges.map(function (edge) {
@@ -117,7 +106,7 @@ DataLoader.prototype.clearData = function () {
 
     // Rimozione dei nodi presenti nel database
     mutex.take(function () {
-        if (!(typeof savedNodes == "string" && !savedNodes.trim())) {
+        if (!(typeof savedNodes === "string" && !savedNodes.trim())) {
             $this.clearProgress = new Progress("clearing nodes :bar :current/:total",
                 {total: savedNodes.length});
             savedNodes.map(function (node) {
@@ -161,7 +150,7 @@ DataLoader.prototype.loadData = function () {
             {total: $this.data.stairs.length});
         $this.data.stairs.map(function (stair) {
             callSem.take($this.postStairsFunction(stair));
-        })
+        });
     });
 
     return this;
@@ -230,7 +219,7 @@ DataLoader.prototype.postEdgeFunction = function (edge) {
                             mutex.leave();
                         }
                     }
-                })
+                });
             })
             .on("fail", function (data, response) {
                 logger.saveLog(LOG_FILE, {
@@ -240,7 +229,7 @@ DataLoader.prototype.postEdgeFunction = function (edge) {
                 console.error("Error posting Edges");
                 exit(1);
             });
-    }
+    };
 };
 
 DataLoader.prototype.postStairsFunction = function (stair) {
@@ -263,7 +252,7 @@ DataLoader.prototype.postStairsFunction = function (stair) {
                             mutex.leave();
                         }
                     }
-                })
+                });
             })
             .on("fail", function (data, response) {
                 logger.saveLog(LOG_FILE, {
@@ -273,7 +262,7 @@ DataLoader.prototype.postStairsFunction = function (stair) {
                 console.error("Error posting Stairs");
                 exit(1);
             });
-    }
+    };
 };
 
 /**
@@ -295,7 +284,7 @@ DataLoader.prototype.deleteNodeFunction = function (node) {
                             mutex.leave();
                         }
                     }
-                })
+                });
             });
     };
 };
@@ -318,9 +307,9 @@ DataLoader.prototype.deleteEdgeFunction = function (edge) {
                             mutex.leave();
                         }
                     }
-                })
+                });
             });
-    }
+    };
 };
 
 /**
@@ -338,7 +327,7 @@ DataLoader.prototype.handleServerResult = function (result, callbacks) {
         },
         "error": function (error) {
             console.log(strformat("Errore {code}", {code: error.error.code}));
-            console.log(error.error["exception"]);
+            console.log(error.error.exception);
         },
         "complete": function (result) {
         }
@@ -346,7 +335,7 @@ DataLoader.prototype.handleServerResult = function (result, callbacks) {
 
     // Registrazione delle callback custom
     Object.keys(handlers).map(function (label) {
-        if (callbacks.hasOwnProperty(label) && typeof callbacks[label] == "function") {
+        if (callbacks.hasOwnProperty(label) && typeof callbacks[label] === "function") {
             handlers[label] = callbacks[label];
         }
     });
@@ -407,10 +396,10 @@ DataLoader.prototype.transform_edge = function (edge) {
         // Lo standard de facto dei form codificati in json prevede che
         // i campi impostati a false siano assenti
         // "stairs": false,
-        "v": 0.,
-        "i": 0.,
-        "los": 0.,
-        "c": 0.
+        "v": 0.0,
+        "i": 0.0,
+        "los": 0.0,
+        "c": 0.0
     };
 };
 
@@ -433,11 +422,11 @@ DataLoader.prototype.transform_stairs = function (stairs) {
         "width": stairs.larghezza,
         "length": stairs.lunghezza,
         "stairs": true,
-        "v": 0.,
-        "i": 0.,
-        "los": 0.,
-        "c": 0.
-    }
+        "v": 0.0,
+        "i": 0.0,
+        "los": 0.0,
+        "c": 0.0
+    };
 };
 
 /**
@@ -453,18 +442,18 @@ DataLoader.prototype.searchNode = function (nodes, params) {
 
     var nodesFound = nodes.searchObject(searchParams);
     var found = nodesFound.length > 0;
-    var unique = nodesFound.length == 1;
+    var unique = nodesFound.length === 1;
 
-    if(found && !unique) {
+    if (found && !unique) {
         searchParams.meter_x = params.meter_x;
         searchParams.meter_y = params.meter_y;
         nodesFound = nodes.searchObject(searchParams);
 
         found = nodesFound.length > 0;
-        unique = nodesFound.length == 1;
+        unique = nodesFound.length === 1;
     }
 
-    if(found && unique) {
+    if (found && unique) {
         return nodesFound[0];
     } else {
         // @TODO debugging
