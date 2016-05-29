@@ -14,11 +14,13 @@ class PositionVoter extends Voter
     const EDIT = 'edit';
     const VIEW = 'view';
     const CREATE = 'create';
+    const DELETE = 'delete';
 
     private $supportedAttributes = [
         self::EDIT,
         self::VIEW,
-        self::CREATE
+        self::CREATE,
+        self::DELETE
     ];
     private $decisionManager;
 
@@ -70,6 +72,8 @@ class PositionVoter extends Voter
                 return $this->isAdmin($token) || $this->canView($position, $agent);
             case self::CREATE:
                 return $this->isAdmin($token) || $this->canCreate($position, $agent);
+            case self::DELETE:
+                return $this->isAdmin($token) || $this->canDelete($position, $agent);
         }
 
         throw new \LogicException("This code should not be reached");
@@ -102,6 +106,16 @@ class PositionVoter extends Voter
      * @return bool
      */
     private function canCreate(Position $position, User $agent) {
+        return $agent->getId() == $position->getUser()->getId();
+    }
+
+    /**
+     * @param Position $position
+     * @param User     $agent
+     *
+     * @return bool
+     */
+    private function canDelete(Position $position, User $agent) {
         return $agent->getId() == $position->getUser()->getId();
     }
 

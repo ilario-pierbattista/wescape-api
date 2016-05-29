@@ -12,7 +12,7 @@ class LoadUsersPositons extends AbstractFixture implements OrderedFixtureInterfa
 {
     public function load(ObjectManager $manager) {
         $position1 = new Position();
-        $position1->setNode($this->getReference('node-1'))
+        $position1->setEdge($this->getReference('edge-1'))
             ->setUser($this->getReference('user1'));
 
         $manager->persist($position1);
@@ -20,6 +20,6 @@ class LoadUsersPositons extends AbstractFixture implements OrderedFixtureInterfa
     }
 
     public function getOrder() {
-        return 2;
+        return 4;
     }
 }

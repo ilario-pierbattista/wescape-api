@@ -22,7 +22,7 @@ class LoadEdgeData extends AbstractFixture implements OrderedFixtureInterface
             ->setLos(0)
             ->setLength(20)
             ->setV(0);
-
+        
         foreach ($this->edges as $e) {
             $manager->persist($e);
         }

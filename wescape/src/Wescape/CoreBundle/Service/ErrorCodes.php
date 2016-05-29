@@ -14,5 +14,6 @@ class ErrorCodes
     const PASSWORD_RESET_EXPIRED_SECRET = 522;
     
     // Gestione della posizione dell'utente
-    const POSITION_ALREADY_CREATED = 530;
+    const POSITION_ALREADY_CREATED = 430;
+    const POSITION_NOT_FOUND = 431;
 }

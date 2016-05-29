@@ -16,7 +16,7 @@ class PositionType extends AbstractType
     {
         $builder
             ->add('user')
-            ->add('node')
+            ->add('edge')
         ;
     }
     

@@ -29,9 +29,9 @@ class Position
 
     /**
      * @var Node
-     * @ORM\ManyToOne(targetEntity="Wescape\CoreBundle\Entity\Node")
+     * @ORM\ManyToOne(targetEntity="Wescape\CoreBundle\Entity\Edge")
      */
-    private $node;
+    private $edge;
 
     /**
      * Get id
@@ -68,26 +68,26 @@ class Position
     }
 
     /**
-     * Set node
+     * Set edge
      *
-     * @param \Wescape\CoreBundle\Entity\Node $node
+     * @param \Wescape\CoreBundle\Entity\Edge $edge
      *
      * @return Position
      */
-    public function setNode(\Wescape\CoreBundle\Entity\Node $node = null)
+    public function setEdge(\Wescape\CoreBundle\Entity\Edge $edge = null)
     {
-        $this->node = $node;
+        $this->edge = $edge;
 
         return $this;
     }
 
     /**
-     * Get node
+     * Get edge
      *
-     * @return \Wescape\CoreBundle\Entity\Node
+     * @return \Wescape\CoreBundle\Entity\Edge
      */
-    public function getNode()
+    public function getEdge()
     {
-        return $this->node;
+        return $this->edge;
     }
 }

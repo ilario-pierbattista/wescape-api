@@ -128,6 +128,7 @@ class PositionController extends VoryxController
      *     201="Returned if the new position is setted",
      *     401="Returned if the client is not authorized",
      *     403="Returned if the user doesn't have the correct privileges",
+     *     430="Returned if the user has already a position defined",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_USER')")
@@ -170,7 +171,7 @@ class PositionController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $position
+     * @param User    $user
      *
      * @return Response
      * @ApiDoc(
@@ -182,18 +183,26 @@ class PositionController extends VoryxController
      *     200="Returned if the new position is updated",
      *     401="Returned if the client is not authorized",
      *     403="Returned if the user doesn't have the correct privileges",
+     *     431="Returned if the user hasn't set the position yet",
      *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_USER')")
      */
-    public function putAction(Request $request, Position $position) {
+    public function putAction(Request $request, User $user) {
         try {
             $em = $this->getDoctrine()->getManager();
             $request->setMethod('PATCH'); //Treat all PUTs as PATCH
+            $position = $em->getRepository("CoreBundle:Position")
+                ->findOneBy(['user' => $user->getId()]);
+            if ($position === null) {
+                return FOSView::create(["success" => false], ErrorCodes::POSITION_NOT_FOUND);
+            }
+
             $form = $this->createForm(get_class(new PositionType()), $position, array("method" => $request->getMethod()));
             $this->removeExtraFields($request, $form);
             $form->handleRequest($request);
 
+            $this->denyAccessUnlessGranted('edit', $user);
             $this->denyAccessUnlessGranted('edit', $position);
 
             if ($form->isValid()) {
@@ -217,12 +226,12 @@ class PositionController extends VoryxController
      * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
-     * @param         $entity
+     * @param User    $user
      *
      * @return Response
      */
-    public function patchAction(Request $request, Position $entity) {
-        return $this->putAction($request, $entity);
+    public function patchAction(Request $request, User $user) {
+        return $this->putAction($request, $user);
     }
 
     /**
@@ -230,19 +239,42 @@ class PositionController extends VoryxController
      * @View(statusCode=204)
      *
      * @param Request $request
-     * @param         $entity
+     * @param User    $user
      *
      * @return Response
+     * @ApiDoc(
+     *     resource=false,
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     204="Returned if the position is deleted",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     431="Returned if the user has not a position to delete",
+     *     500="Returned if some general error occurs"}
+     * )
+     * @Security("has_role('ROLE_USER')")
      */
-    public function deleteAction(Request $request, Position $entity) {
+    public function deleteAction(Request $request, User $user) {
         try {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($entity);
+            $position = $em->getRepository("CoreBundle:Position")->findOneBy(['user' => $user->getId()]);
+
+            $this->denyAccessUnlessGranted('edit', $user);
+            if ($position === null) {
+                return FOSView::create(['success' => false], ErrorCodes::POSITION_NOT_FOUND);
+            }
+            $this->denyAccessUnlessGranted('delete', $position);
+
+            $em->remove($position);
             $em->flush();
 
             return null;
         } catch (\Exception $e) {
-            return FOSView::create($e->getMessage(), Codes::HTTP_INTERNAL_SERVER_ERROR);
+            $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
+            if ($e instanceof AccessDeniedException) {
+                $code = Codes::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
         }
     }
 }
