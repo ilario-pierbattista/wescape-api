@@ -2,7 +2,6 @@ branches:
     only:
         - master
         - dev
-        
 
 notifications:
   email: false
@@ -43,6 +42,7 @@ before_install:
 
 script:
   - cd wescape
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
   - phpunit
   - cd ..
 

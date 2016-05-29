@@ -1,19 +1,19 @@
-# This file is a "template" of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+# This file is auto-generated during the composer install
 parameters:
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
-    # database_path: "%kernel.root_dir%/data.db3"
-
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
-
-    # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    database_host: wescape.db.service
+    database_port: 3306
+    database_name: wescape
+    database_user: root
+    database_password: root
+    database_testing_name: wescape_test
+    database_testing_password: root_test
+    database_testing_port: 13306
+    secret: 1ddc0749c8e998ad48b92ce472e1d14918d2b905
+    oauth2_clients.data_loader.id: d9d9322ad1a46e889e8102aa9072ea2fc87b525652a114b335d21542cc528bee
+    oauth2_clients.data_loader.secret: 7e1be901e9439a0176072e9277dbf04dd606b31054226eccbce1b9f611a81fcb
+    oauth2_clients.wescape_app.id: f9333e7fd031066729f232e7a1d3ceed622605a0317386339915a04b7fb3bcd1
+    oauth2_clients.wescape_app.secret: 03d6630b54ff78bb1e616994f60ccb11b9c7547ea3fe25534e4afc944537e14d
+    mailer_transport: gmail
+    mailer_user: wescape.app@gmail.com
+    mailer_password: wescape_pass
+    mailer_host: 127.0.0.1
