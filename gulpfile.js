@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp = require("gulp");
 var plugins = require("gulp-load-plugins");
 var shell = require("gulp-shell");
@@ -8,6 +10,7 @@ var Drawer = require("./data/parser/drawer.js");
 var DataLoader = require("./data/loader/data-loader");
 var env = require("./data/env");
 var authorization_provider = require("./data/loader/authorization-provider");
+var SensorsSimulator = require('./data/simulation/sensors');
 
 /**
  * Parsing dei dati
@@ -66,6 +69,28 @@ gulp.task('setup-db', shell.task([
  */
 gulp.task('clear-oauth', function () {
     authorization_provider.clearTokens();
+});
+
+/**
+ * Aggiornamento con valori casuali di tutti i nodi
+ */
+gulp.task('sensors-simulate', function () {
+    authorization_provider.getBearer(function ($this) {
+        var simulator = new SensorsSimulator($this.accessToken);
+        $this.mutex.leave();
+        simulator.updateAllEdges();
+    });
+});
+
+/**
+ * Simulazione continua ogni 60 secondi
+ */
+gulp.task('simulation', function () {
+    authorization_provider.getBearer(function ($this) {
+        var simulator = new SensorsSimulator($this.accessToken);
+        $this.mutex.leave();
+        simulator.continuousSimulation(60);
+    });
 });
 
 /**

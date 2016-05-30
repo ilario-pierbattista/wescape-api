@@ -12,3 +12,22 @@ services:
       - "@fos_user.user_manager"
       - "@mailer"
       - "@twig"
+
+  core.los_manager:
+    class: Wescape\CoreBundle\Service\LOSManagerService
+    arguments:
+     - "@doctrine.orm.entity_manager"
+
+  core.user_voter:
+    class: Wescape\CoreBundle\Security\UserVoter
+    tags:
+      - { name: security.voter }
+    public: false
+    arguments: [ '@security.access.decision_manager' ]
+
+  core.position_voter:
+    class: Wescape\CoreBundle\Security\PositionVoter
+    tags:
+      - { name: security.voter }
+    public: false
+    arguments: [ "@security.access.decision_manager" ]

@@ -17,7 +17,7 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
     const TEST_ADMIN_PASS = "admin";
     const TEST_USER_EMAIL = "user";
     const TEST_USER_PASS = "user";
-    
+
     /** @var ContainerInterface */
     private $container;
 
@@ -31,7 +31,7 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
             ->setPlainPassword(self::TEST_ADMIN_PASS)
             ->setRoles(['ROLE_ADMIN'])
             ->setEnabled(true);
-        
+
         /** @var User $user */
         $user1 = $userManager->createUser()
             ->setUsername(self::TEST_USER_EMAIL)
@@ -39,7 +39,7 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
             ->setPlainPassword(self::TEST_USER_PASS)
             ->setRoles(['ROLE_USER'])
             ->setEnabled(true);
-        
+
         /** @var User $user2 */
         $user2 = $userManager->createUser()
             ->setUsername("test2@wescape.it")
@@ -48,9 +48,23 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
             ->setRoles(['ROLE_USER'])
             ->setEnabled(true);
 
+        /** @var User $user3 */
+        $user3 = $userManager->createUser()
+            ->setUsername("user3")
+            ->setEmail("user3")
+            ->setPlainPassword("user3")
+            ->setRoles(['ROLE_USER'])
+            ->setEnabled(true);
+
         $userManager->updateUser($admin);
         $userManager->updateUser($user1);
         $userManager->updateUser($user2);
+        $userManager->updateUser($user3);
+
+        $this->addReference('admin', $admin);
+        $this->addReference('user1', $user1);
+        $this->addReference('user2', $user2);
+        $this->addReference('user3', $user3);
     }
 
     public function setContainer(ContainerInterface $container = null) {

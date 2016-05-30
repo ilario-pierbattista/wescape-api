@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthUsersTests;
 use Wescape\CoreBundle\DataFixtures\ORM\PasswordResetUsersTest;
+use Wescape\CoreBundle\Service\ErrorCodes;
 use Wescape\CoreBundle\Service\PasswordResetService;
 use Wescape\CoreBundle\Test\WebTestCase;
 
@@ -39,7 +40,7 @@ class UserManagementTest extends WebTestCase
 
         // Utente non esistente
         $this->client->request("POST", "/api/v1/users/password/request", $notExistingUser);
-        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
+        $this->assertStatusCode(ErrorCodes::PASSWORD_RESET_WRONG_EMAIL, $this->client);
         $this->assertContains(PasswordResetService::USER_NOT_FOUND_MSG,
             $this->client->getResponse()->getContent());
 
@@ -64,7 +65,7 @@ class UserManagementTest extends WebTestCase
 
         $notExistingUser['new_password'] = "unemptypassword";
         $this->client->request("POST", "/api/v1/users/password/reset", $notExistingUser);
-        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
+        $this->assertStatusCode(ErrorCodes::PASSWORD_RESET_WRONG_EMAIL, $this->client);
         $this->assertContains(PasswordResetService::USER_NOT_FOUND_MSG,
             $this->client->getResponse()->getContent());
 
@@ -75,13 +76,13 @@ class UserManagementTest extends WebTestCase
             "reset_password_token" => "invalid"
         ];
         $this->client->request("POST", "/api/v1/users/password/reset", $expiredUser);
-        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
+        $this->assertStatusCode(ErrorCodes::PASSWORD_RESET_WRONG_SECRET_CODE, $this->client);
         $this->assertContains(PasswordResetService::INVALID_SECRET_TOKEN_MSG,
             $this->client->getResponse()->getContent());
 
         $expiredUser["reset_password_token"] = PasswordResetUsersTest::TEST_VALID_TOKEN;
         $this->client->request("POST", "/api/v1/users/password/reset", $expiredUser);
-        $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
+        $this->assertStatusCode(ErrorCodes::PASSWORD_RESET_EXPIRED_SECRET, $this->client);
         $this->assertContains(PasswordResetService::EXPIRED_SECRET_TOKEN_MSG,
             $this->client->getResponse()->getContent());
 

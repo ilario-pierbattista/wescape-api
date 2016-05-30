@@ -15,3 +15,9 @@ wescape_api_User:
   prefix: /v1
   resource: Wescape\ApiBundle\Controller\UserController
   name_prefix: api_1_
+
+wescape_api_Position:
+  type:   rest
+  parent: wescape_api_User
+  resource: Wescape\ApiBundle\Controller\PositionController
+  name_prefix: api_1_

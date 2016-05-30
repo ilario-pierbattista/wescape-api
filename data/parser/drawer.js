@@ -93,8 +93,8 @@ Drawer.prototype._draw_node = function(node) {
  * @return {object}      Istanza corrente di Drawer
  */
 Drawer.prototype._draw_edge = function(edge) {
-    var node1 = parser.search_node(this.data.nodes, edge.node1);
-    var node2 = parser.search_node(this.data.nodes, edge.node2);
+    var node1 = parser.searchNode(this.data.nodes, edge.node1);
+    var node2 = parser.searchNode(this.data.nodes, edge.node2);
     var imageGm = this._open_image(node1.quota + ".jpg");
     var x1 = node1.coordinates.pixel.x;
     var y1 = node1.coordinates.pixel.y;

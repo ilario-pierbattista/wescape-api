@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Ricerca di oggetti tramite parametri
  * 
@@ -7,7 +9,15 @@
 Array.prototype.searchObject = function (filterParams) {
     return this.filter(function (v) {
         return recursiveMatchFunc(v, filterParams);
-    })
+    });
+};
+
+/**
+ * Ritorna un elemento casuale dell'array
+ * @returns {*}
+ */
+Array.prototype.randomSelect = function () {
+    return this[Math.floor(Math.random() * this.length)];
 };
 
 /**

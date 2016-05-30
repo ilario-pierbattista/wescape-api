@@ -2,6 +2,94 @@
   {
     "coordinates": {
       "meters": {
+        "x": 143,
+        "y": 473
+      },
+      "pixel": {
+        "x": 705,
+        "y": 288
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145A3",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 145,
+        "y": 475
+      },
+      "pixel": {
+        "x": 720,
+        "y": 272
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145EMA3",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 91,
+        "y": 484
+      },
+      "pixel": {
+        "x": 294,
+        "y": 203
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145A5",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 90,
+        "y": 487
+      },
+      "pixel": {
+        "x": 287,
+        "y": 180
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145UA5",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": false
+    },
+    "type": "U"
+  },
+  {
+    "coordinates": {
+      "meters": {
         "x": 71,
         "y": 465
       },
@@ -46,39 +134,105 @@
   {
     "coordinates": {
       "meters": {
-        "x": 90,
-        "y": 480
-      },
-      "pixel": {
-        "x": 287,
-        "y": 234
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145RG1",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 100,
+        "x": 63,
         "y": 465
       },
       "pixel": {
-        "x": 365,
+        "x": 74,
         "y": 349
       }
     },
     "quota": 145,
     "larghezza": 1.8,
-    "codice": "145R3",
+    "codice": "145EMA7",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 109,
+        "y": 482
+      },
+      "pixel": {
+        "x": 436,
+        "y": 218
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.2,
+    "codice": "145EMG1",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 110,
+        "y": 465
+      },
+      "pixel": {
+        "x": 444,
+        "y": 349
+      }
+    },
+    "quota": 150,
+    "larghezza": 1.8,
+    "codice": "150G1G2",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 112,
+        "y": 482
+      },
+      "pixel": {
+        "x": 460,
+        "y": 218
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.2,
+    "codice": "145EMG2",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 133,
+        "y": 480
+      },
+      "pixel": {
+        "x": 626,
+        "y": 234
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145RG2",
     "desc": "",
     "description": {
       "aula": true,
@@ -113,28 +267,6 @@
     "coordinates": {
       "meters": {
         "x": 133,
-        "y": 480
-      },
-      "pixel": {
-        "x": 626,
-        "y": 234
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145RG2",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 133,
         "y": 465
       },
       "pixel": {
@@ -152,6 +284,116 @@
       "uscita_emergenza": false
     },
     "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 100,
+        "y": 465
+      },
+      "pixel": {
+        "x": 365,
+        "y": 349
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145R3",
+    "desc": "",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 90,
+        "y": 480
+      },
+      "pixel": {
+        "x": 287,
+        "y": 234
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145RG1",
+    "desc": "",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 87,
+        "y": 482
+      },
+      "pixel": {
+        "x": 263,
+        "y": 218
+      }
+    },
+    "quota": 145,
+    "larghezza": 1.8,
+    "codice": "145U1",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": false
+    },
+    "type": "U"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 133,
+        "y": 482
+      },
+      "pixel": {
+        "x": 626,
+        "y": 218
+      }
+    },
+    "quota": 145,
+    "larghezza": 3,
+    "codice": "145U2",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": false
+    },
+    "type": "U"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 85,
+        "y": 454
+      },
+      "pixel": {
+        "x": 247,
+        "y": 434
+      }
+    },
+    "quota": 145,
+    "larghezza": 3,
+    "codice": "145EM1",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
   },
   {
     "coordinates": {
@@ -200,90 +442,24 @@
   {
     "coordinates": {
       "meters": {
-        "x": 91,
-        "y": 484
+        "x": 135,
+        "y": 454
       },
       "pixel": {
-        "x": 294,
-        "y": 203
+        "x": 642,
+        "y": 434
       }
     },
     "quota": 145,
     "larghezza": 1.8,
-    "codice": "145A5",
+    "codice": "145RAM",
     "desc": "",
     "description": {
-      "aula": false,
+      "aula": true,
       "uscita": false,
       "uscita_emergenza": false
     },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 143,
-        "y": 473
-      },
-      "pixel": {
-        "x": 705,
-        "y": 288
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145A3",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 87,
-        "y": 482
-      },
-      "pixel": {
-        "x": 263,
-        "y": 218
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145U1",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": false
-    },
-    "type": "U"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 90,
-        "y": 487
-      },
-      "pixel": {
-        "x": 287,
-        "y": 180
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145UA5",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": false
-    },
-    "type": "U"
+    "type": "R"
   },
   {
     "coordinates": {
@@ -310,237 +486,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 133,
-        "y": 482
+        "x": 144,
+        "y": 474
       },
       "pixel": {
-        "x": 626,
-        "y": 218
-      }
-    },
-    "quota": 145,
-    "larghezza": 3,
-    "codice": "145U2",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": false
-    },
-    "type": "U"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 135,
-        "y": 454
-      },
-      "pixel": {
-        "x": 642,
-        "y": 434
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145RAM",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 109,
-        "y": 482
-      },
-      "pixel": {
-        "x": 436,
-        "y": 218
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.2,
-    "codice": "145EMG1",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 63,
-        "y": 465
-      },
-      "pixel": {
-        "x": 74,
-        "y": 349
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145EMA7",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 85,
-        "y": 454
-      },
-      "pixel": {
-        "x": 247,
-        "y": 434
-      }
-    },
-    "quota": 145,
-    "larghezza": 3,
-    "codice": "145EM1",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 112,
-        "y": 482
-      },
-      "pixel": {
-        "x": 460,
-        "y": 218
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.2,
-    "codice": "145EMG2",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 145,
-        "y": 475
-      },
-      "pixel": {
-        "x": 720,
-        "y": 272
-      }
-    },
-    "quota": 145,
-    "larghezza": 1.8,
-    "codice": "145EMA3",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 87,
-        "y": 465
-      },
-      "pixel": {
-        "x": 263,
-        "y": 349
+        "x": 713,
+        "y": 280
       }
     },
     "quota": 150,
     "larghezza": 1.8,
-    "codice": "150G1",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 87,
-        "y": 456
-      },
-      "pixel": {
-        "x": 263,
-        "y": 418
-      }
-    },
-    "quota": 150,
-    "larghezza": 3,
-    "codice": "150STRADE",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 90,
-        "y": 472
-      },
-      "pixel": {
-        "x": 287,
-        "y": 295
-      }
-    },
-    "quota": 150,
-    "larghezza": 1.8,
-    "codice": "150DICEA",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 69,
-        "y": 464
-      },
-      "pixel": {
-        "x": 121,
-        "y": 357
-      }
-    },
-    "quota": 150,
-    "larghezza": 1.8,
-    "codice": "150DICEA1",
+    "codice": "150A3",
     "desc": "",
     "description": {
       "aula": false,
@@ -574,17 +530,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 135,
-        "y": 456
+        "x": 63,
+        "y": 464
       },
       "pixel": {
-        "x": 642,
-        "y": 418
+        "x": 74,
+        "y": 357
       }
     },
     "quota": 150,
     "larghezza": 1.8,
-    "codice": "150WC1",
+    "codice": "150A7",
     "desc": "",
     "description": {
       "aula": false,
@@ -596,83 +552,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 151,
-        "y": 485
+        "x": 69,
+        "y": 464
       },
       "pixel": {
-        "x": 768,
-        "y": 195
+        "x": 121,
+        "y": 357
       }
     },
     "quota": 150,
     "larghezza": 1.8,
-    "codice": "150RL",
-    "desc": "aulastudio",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 154,
-        "y": 474
-      },
-      "pixel": {
-        "x": 791,
-        "y": 280
-      }
-    },
-    "quota": 150,
-    "larghezza": 3,
-    "codice": "150S1",
-    "desc": "wc2+aula pc+csal",
-    "description": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 157,
-        "y": 485
-      },
-      "pixel": {
-        "x": 815,
-        "y": 195
-      }
-    },
-    "quota": 150,
-    "larghezza": 1.8,
-    "codice": "150R1",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 129,
-        "y": 465
-      },
-      "pixel": {
-        "x": 594,
-        "y": 349
-      }
-    },
-    "quota": 150,
-    "larghezza": 1.8,
-    "codice": "150G2",
+    "codice": "150DICEA1",
     "desc": "",
     "description": {
       "aula": false,
@@ -684,17 +574,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 110,
-        "y": 465
+        "x": 90,
+        "y": 472
       },
       "pixel": {
-        "x": 444,
-        "y": 349
+        "x": 287,
+        "y": 295
       }
     },
     "quota": 150,
     "larghezza": 1.8,
-    "codice": "150G1G2",
+    "codice": "150DICEA",
     "desc": "",
     "description": {
       "aula": false,
@@ -728,17 +618,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 144,
-        "y": 474
+        "x": 87,
+        "y": 465
       },
       "pixel": {
-        "x": 713,
-        "y": 280
+        "x": 263,
+        "y": 349
       }
     },
     "quota": 150,
     "larghezza": 1.8,
-    "codice": "150A3",
+    "codice": "150G1",
     "desc": "",
     "description": {
       "aula": false,
@@ -746,50 +636,6 @@
       "uscita_emergenza": false
     },
     "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 63,
-        "y": 464
-      },
-      "pixel": {
-        "x": 74,
-        "y": 357
-      }
-    },
-    "quota": 150,
-    "larghezza": 1.8,
-    "codice": "150A7",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 152,
-        "y": 456
-      },
-      "pixel": {
-        "x": 776,
-        "y": 418
-      }
-    },
-    "quota": 150,
-    "larghezza": 3,
-    "codice": "150RAM",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
   },
   {
     "coordinates": {
@@ -816,24 +662,112 @@
   {
     "coordinates": {
       "meters": {
-        "x": 100,
-        "y": 453
+        "x": 135,
+        "y": 456
       },
       "pixel": {
-        "x": 365,
-        "y": 441
+        "x": 642,
+        "y": 418
       }
     },
     "quota": 150,
-    "larghezza": 1.2,
-    "codice": "150EM1",
+    "larghezza": 1.8,
+    "codice": "150WC1",
     "desc": "",
     "description": {
       "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
+      "uscita": false,
+      "uscita_emergenza": false
     },
-    "type": "E"
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 87,
+        "y": 456
+      },
+      "pixel": {
+        "x": 263,
+        "y": 418
+      }
+    },
+    "quota": 150,
+    "larghezza": 3,
+    "codice": "150STRADE",
+    "desc": "",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 129,
+        "y": 465
+      },
+      "pixel": {
+        "x": 594,
+        "y": 349
+      }
+    },
+    "quota": 150,
+    "larghezza": 1.8,
+    "codice": "150G2",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 157,
+        "y": 485
+      },
+      "pixel": {
+        "x": 815,
+        "y": 195
+      }
+    },
+    "quota": 150,
+    "larghezza": 1.8,
+    "codice": "150R1",
+    "desc": "",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 151,
+        "y": 485
+      },
+      "pixel": {
+        "x": 768,
+        "y": 195
+      }
+    },
+    "quota": 150,
+    "larghezza": 1.8,
+    "codice": "150RL",
+    "desc": "aulastudio",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
   },
   {
     "coordinates": {
@@ -860,22 +794,22 @@
   {
     "coordinates": {
       "meters": {
-        "x": 147,
-        "y": 500
+        "x": 152,
+        "y": 456
       },
       "pixel": {
-        "x": 736,
-        "y": 80
+        "x": 776,
+        "y": 418
       }
     },
     "quota": 150,
     "larghezza": 3,
-    "codice": "150EMR1",
-    "desc": "uscita aula150/1",
+    "codice": "150RAM",
+    "desc": "",
     "description": {
       "aula": true,
-      "uscita": true,
-      "uscita_emergenza": true
+      "uscita": false,
+      "uscita_emergenza": false
     },
     "type": "R"
   },
@@ -904,193 +838,61 @@
   {
     "coordinates": {
       "meters": {
-        "x": 91,
-        "y": 467
+        "x": 154,
+        "y": 474
       },
       "pixel": {
-        "x": 294,
-        "y": 334
+        "x": 791,
+        "y": 280
       }
     },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155R567",
-    "desc": "155/5-6 + 155/7",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 100,
-        "y": 467
-      },
-      "pixel": {
-        "x": 365,
-        "y": 334
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155R4",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 107,
-        "y": 467
-      },
-      "pixel": {
-        "x": 421,
-        "y": 334
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155R4D3",
-    "desc": "155/4+155/d3",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 117,
-        "y": 467
-      },
-      "pixel": {
-        "x": 500,
-        "y": 334
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155R23D2",
-    "desc": "155/2-3+155/d2",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 125,
-        "y": 467
-      },
-      "pixel": {
-        "x": 563,
-        "y": 334
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155RD1",
-    "desc": "",
-    "description": {
-      "aula": true,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "R"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 133,
-        "y": 467
-      },
-      "pixel": {
-        "x": 626,
-        "y": 334
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155WC1",
-    "desc": "",
+    "quota": 150,
+    "larghezza": 3,
+    "codice": "150S1",
+    "desc": "wc2+aula pc+csal",
     "description": {
       "aula": false,
       "uscita": false,
       "uscita_emergenza": false
     },
     "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 136,
-        "y": 456
-      },
-      "pixel": {
-        "x": 649,
-        "y": 418
-      }
-    },
-    "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155EM1",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
   },
   {
     "coordinates": {
       "meters": {
         "x": 147,
-        "y": 456
+        "y": 500
       },
       "pixel": {
         "x": 736,
-        "y": 418
+        "y": 80
+      }
+    },
+    "quota": 150,
+    "larghezza": 3,
+    "codice": "150EMR1",
+    "desc": "uscita aula150/1",
+    "description": {
+      "aula": true,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 62,
+        "y": 465
+      },
+      "pixel": {
+        "x": 66,
+        "y": 349
       }
     },
     "quota": 155,
     "larghezza": 1.8,
-    "codice": "155S1",
-    "desc": "presso l'affaccio, lato finestre",
-    "description": {
-      "aula": false,
-      "uscita": false,
-      "uscita_emergenza": false
-    },
-    "type": "G"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 149,
-        "y": 472
-      },
-      "pixel": {
-        "x": 752,
-        "y": 295
-      }
-    },
-    "quota": 155,
-    "larghezza": 3,
-    "codice": "155WC2",
+    "codice": "155A7",
     "desc": "",
     "description": {
       "aula": false,
@@ -1102,39 +904,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 154,
-        "y": 456
+        "x": 86,
+        "y": 465
       },
       "pixel": {
-        "x": 791,
-        "y": 418
+        "x": 255,
+        "y": 349
       }
     },
     "quota": 155,
-    "larghezza": 3,
-    "codice": "155EM3",
-    "desc": "",
-    "description": {
-      "aula": false,
-      "uscita": true,
-      "uscita_emergenza": true
-    },
-    "type": "E"
-  },
-  {
-    "coordinates": {
-      "meters": {
-        "x": 159,
-        "y": 472
-      },
-      "pixel": {
-        "x": 831,
-        "y": 295
-      }
-    },
-    "quota": 155,
-    "larghezza": 3,
-    "codice": "155CESMI",
+    "larghezza": 1.8,
+    "codice": "155DICEA",
     "desc": "",
     "description": {
       "aula": false,
@@ -1190,18 +970,18 @@
   {
     "coordinates": {
       "meters": {
-        "x": 140,
-        "y": 471
+        "x": 159,
+        "y": 472
       },
       "pixel": {
-        "x": 681,
-        "y": 303
+        "x": 831,
+        "y": 295
       }
     },
     "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155ECDL",
-    "desc": "aula ECDL+155/10",
+    "larghezza": 3,
+    "codice": "155CESMI",
+    "desc": "",
     "description": {
       "aula": false,
       "uscita": false,
@@ -1212,17 +992,17 @@
   {
     "coordinates": {
       "meters": {
-        "x": 86,
-        "y": 465
+        "x": 149,
+        "y": 472
       },
       "pixel": {
-        "x": 255,
-        "y": 349
+        "x": 752,
+        "y": 295
       }
     },
     "quota": 155,
-    "larghezza": 1.8,
-    "codice": "155DICEA",
+    "larghezza": 3,
+    "codice": "155WC2",
     "desc": "",
     "description": {
       "aula": false,
@@ -1256,6 +1036,116 @@
   {
     "coordinates": {
       "meters": {
+        "x": 91,
+        "y": 467
+      },
+      "pixel": {
+        "x": 294,
+        "y": 334
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155R567",
+    "desc": "155/5-6 + 155/7",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 140,
+        "y": 471
+      },
+      "pixel": {
+        "x": 681,
+        "y": 303
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155ECDL",
+    "desc": "aula ECDL+155/10",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 136,
+        "y": 456
+      },
+      "pixel": {
+        "x": 649,
+        "y": 418
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155EM1",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 147,
+        "y": 456
+      },
+      "pixel": {
+        "x": 736,
+        "y": 418
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155S1",
+    "desc": "presso l'affaccio, lato finestre",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 154,
+        "y": 456
+      },
+      "pixel": {
+        "x": 791,
+        "y": 418
+      }
+    },
+    "quota": 155,
+    "larghezza": 3,
+    "codice": "155EM3",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": true,
+      "uscita_emergenza": true
+    },
+    "type": "E"
+  },
+  {
+    "coordinates": {
+      "meters": {
         "x": 160,
         "y": 445
       },
@@ -1278,68 +1168,68 @@
   {
     "coordinates": {
       "meters": {
-        "x": 91,
-        "y": 484
+        "x": 117,
+        "y": 467
       },
       "pixel": {
-        "x": 294,
-        "y": 203
+        "x": 500,
+        "y": 334
       }
     },
     "quota": 155,
     "larghezza": 1.8,
-    "codice": "155A5",
-    "desc": "",
+    "codice": "155R23D2",
+    "desc": "155/2-3+155/d2",
     "description": {
-      "aula": false,
+      "aula": true,
       "uscita": false,
       "uscita_emergenza": false
     },
-    "type": "G"
+    "type": "R"
   },
   {
     "coordinates": {
       "meters": {
-        "x": 144,
-        "y": 474
+        "x": 125,
+        "y": 467
       },
       "pixel": {
-        "x": 713,
-        "y": 280
+        "x": 563,
+        "y": 334
       }
     },
     "quota": 155,
     "larghezza": 1.8,
-    "codice": "155A3",
+    "codice": "155RD1",
     "desc": "",
     "description": {
-      "aula": false,
+      "aula": true,
       "uscita": false,
       "uscita_emergenza": false
     },
-    "type": "G"
+    "type": "R"
   },
   {
     "coordinates": {
       "meters": {
-        "x": 62,
-        "y": 465
+        "x": 100,
+        "y": 467
       },
       "pixel": {
-        "x": 66,
-        "y": 349
+        "x": 365,
+        "y": 334
       }
     },
     "quota": 155,
     "larghezza": 1.8,
-    "codice": "155A7",
+    "codice": "155R4",
     "desc": "",
     "description": {
-      "aula": false,
+      "aula": true,
       "uscita": false,
       "uscita_emergenza": false
     },
-    "type": "G"
+    "type": "R"
   },
   {
     "coordinates": {
@@ -1366,6 +1256,72 @@
   {
     "coordinates": {
       "meters": {
+        "x": 107,
+        "y": 467
+      },
+      "pixel": {
+        "x": 421,
+        "y": 334
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155R4D3",
+    "desc": "155/4+155/d3",
+    "description": {
+      "aula": true,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "R"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 91,
+        "y": 484
+      },
+      "pixel": {
+        "x": 294,
+        "y": 203
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155A5",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 133,
+        "y": 467
+      },
+      "pixel": {
+        "x": 626,
+        "y": 334
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155WC1",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
+  },
+  {
+    "coordinates": {
+      "meters": {
         "x": 136,
         "y": 454
       },
@@ -1384,5 +1340,27 @@
       "uscita_emergenza": false
     },
     "type": "U"
+  },
+  {
+    "coordinates": {
+      "meters": {
+        "x": 144,
+        "y": 474
+      },
+      "pixel": {
+        "x": 713,
+        "y": 280
+      }
+    },
+    "quota": 155,
+    "larghezza": 1.8,
+    "codice": "155A3",
+    "desc": "",
+    "description": {
+      "aula": false,
+      "uscita": false,
+      "uscita_emergenza": false
+    },
+    "type": "G"
   }
 ]

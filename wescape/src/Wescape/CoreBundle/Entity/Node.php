@@ -5,7 +5,7 @@ namespace Wescape\CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Node
+ * This class represent a vertex of the graph, modelling the map
  *
  * @package Wescape\CoreBundle\Entity
  * @ORM\Entity
@@ -19,58 +19,76 @@ class Node
     const TYPE_EXIT = "U";
 
     /**
+     * Node identifier
      * @ORM\Column(type="integer")
+     *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @var integer Id numerico
+     * @var integer
      */
     protected $id;
 
     /**
+     * Node name
      * @ORM\Column(type="string", length=30)
-     * @var string Nome del nodo
+     *
+     * @var string
      */
     private $name;
 
     /**
+     * X-axis pixel coordinate of the point in the map image
      * @ORM\Column(type="integer")
-     * @var integer Coordinata x rispetto all'immagine della mappa
+     *
+     * @var integer
      */
     private $x;
 
     /**
+     * Y-axis pixel coordinate of the point in the map image
      * @ORM\Column(type="integer")
-     * @var integer Coordinata y rispetto all'immagine della mappa
+     *
+     * @var integer
      */
     private $y;
 
     /**
+     * Floor of the node
      * @ORM\Column(type="string", columnDefinition="enum('145', '150', '155')")
-     * @var integer Piano
+     *
+     * @var integer
      */
     private $floor;
 
     /**
+     * Node width
      * @ORM\Column(type="decimal", scale=2)
-     * @var integer Larghezza del nodo in metri
+     *
+     * @var integer
      */
     private $width;
 
     /**
+     * X-axis coordinate in meters
      * @ORM\Column(type="integer")
-     * @var integer Coordinata x in metri
+     *
+     * @var integer
      */
     private $meter_x;
 
     /**
+     * Y-axis coordinate in meters
      * @ORM\Column(type="integer")
-     * @var integer Coordinata y in metri
+     *
+     * @var integer
      */
     private $meter_y;
 
     /**
+     * Node type (one of 'R', 'U', 'E', 'G')
      * @ORM\Column(type="string", columnDefinition="enum('R', 'U', 'E', 'G')")
-     * @var string Tipo
+     *
+     * @var string
      */
     private $type;
 
@@ -200,8 +218,7 @@ class Node
      *
      * @return Node
      */
-    public function setMeterX($meterX)
-    {
+    public function setMeterX($meterX) {
         $this->meter_x = $meterX;
 
         return $this;
@@ -212,8 +229,7 @@ class Node
      *
      * @return integer
      */
-    public function getMeterX()
-    {
+    public function getMeterX() {
         return $this->meter_x;
     }
 
@@ -224,8 +240,7 @@ class Node
      *
      * @return Node
      */
-    public function setMeterY($meterY)
-    {
+    public function setMeterY($meterY) {
         $this->meter_y = $meterY;
 
         return $this;
@@ -236,8 +251,7 @@ class Node
      *
      * @return integer
      */
-    public function getMeterY()
-    {
+    public function getMeterY() {
         return $this->meter_y;
     }
 
@@ -248,8 +262,7 @@ class Node
      *
      * @return Node
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
 
         return $this;
@@ -260,8 +273,7 @@ class Node
      *
      * @return string
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 }

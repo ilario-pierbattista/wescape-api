@@ -5,12 +5,9 @@ namespace Wescape\ApiBundle\Controller;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View as FOSView;
-use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +28,12 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     statusCodes={
+     *     200="Returned if the node is found",
+     *     404="Returned if the node does not exists"}
      * )
      */
     public function getAction(Node $entity) {
@@ -55,7 +57,10 @@ class NodeController extends VoryxController
      * @QueryParam(name="filters", nullable=true, array=true, description="Filter by
      *                             fields. Must be an array ie. &filters[id]=3")
      * @ApiDoc(
-     *     resource=true
+     *     resource=true,
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     statusCodes={
+     *     200="Returned in case of success. Almost always."}
      * )
      */
     public function cgetAction(ParamFetcherInterface $paramFetcher) {
@@ -86,7 +91,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     201="Returned if the node is created",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -119,7 +132,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned if the node is updated",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -152,7 +173,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true,
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     200="Returned if the node is updated",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -169,7 +198,15 @@ class NodeController extends VoryxController
      *
      * @return Response
      * @ApiDoc(
-     *     resource=true
+     *     resource=false,
+     *     input="Wescape\CoreBundle\Form\NodeType",
+     *     output="Wescape\CoreBundle\Entity\Node",
+     *     authenticationRoles={"ROLE_ADMIN"},
+     *     statusCodes={
+     *     204="Returned if the node is deleted",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
      * )
      * @Security("has_role('ROLE_ADMIN')")
      */

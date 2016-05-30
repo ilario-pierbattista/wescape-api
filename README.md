@@ -1,6 +1,10 @@
 Wescape RESTful service
 =======================
 
+# Current Status
+* master [![Build Status](https://travis-ci.com/ilario-pierbattista/wescape-api.svg?token=894qm4cv3JJJRkA24pJY&branch=master)](https://travis-ci.com/ilario-pierbattista/wescape-api)
+* dev [![Build Status](https://travis-ci.com/ilario-pierbattista/wescape-api.svg?token=894qm4cv3JJJRkA24pJY&branch=dev)](https://travis-ci.com/ilario-pierbattista/wescape-api)
+
 # Installazione
 Consultare la relativa [sezione](https://github.com/ilario-pierbattista/wescape-api/wiki/Installazione) della wiki.
 
