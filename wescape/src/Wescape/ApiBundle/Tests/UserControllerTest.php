@@ -105,13 +105,7 @@ class UserControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_CREATED, $this->client);
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertEquals($validUser['email'], $responseData['email']);
-        $this->assertEquals($validUser['email'], $responseData['email_canonical']);
         $this->assertEquals($validUser['email'], $responseData['username']);
-        $this->assertEquals($validUser['email'], $responseData['username_canonical']);
-        $this->assertEquals(true, $responseData['enabled']);
-        $this->assertEquals(false, $responseData['locked']);
-        $this->assertEquals(false, $responseData['expired']);
-        $this->assertEquals(false, $responseData['credentials_expired']);
         // Non testare ROLE_USER, non viene salvato nel database
         // https://github.com/FriendsOfSymfony/FOSUserBundle/issues/1102
 
@@ -148,9 +142,7 @@ class UserControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $responseData = $this->decodeJsonContent($this->client);
         $this->assertEquals($firstUserUpdate['email'], $responseData['email']);
-        $this->assertEquals($firstUserUpdate['email'], $responseData['email_canonical']);
         $this->assertEquals($firstUserUpdate['email'], $responseData['username']);
-        $this->assertEquals($firstUserUpdate['email'], $responseData['username_canonical']);
         $this->client->request("PUT", "/api/v1/users/2.json", $invalidUser);
         $this->assertStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR, $this->client);
         $this->assertContains((new Email())->message, $this->client->getResponse()->getContent());
@@ -178,9 +170,7 @@ class UserControllerTest extends WebTestCase
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
         $responseData = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertEquals($secondUserUpdate['email'], $responseData['email']);
-        $this->assertEquals($secondUserUpdate['email'], $responseData['email_canonical']);
         $this->assertEquals($secondUserUpdate['email'], $responseData['username']);
-        $this->assertEquals($secondUserUpdate['email'], $responseData['username_canonical']);
     }
 
     public function testDeleteAction() {

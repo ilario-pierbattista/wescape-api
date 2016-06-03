@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @package Wescape\CoreBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @TODO    Escludere al serializzatore alcune informazioni
+ * @Serializer\ExclusionPolicy("all")
  */
 class User extends \FOS\UserBundle\Model\User
 {
@@ -20,8 +20,21 @@ class User extends \FOS\UserBundle\Model\User
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Expose()
      */
     protected $id;
+
+    /**
+     * @var string
+     * @Serializer\Expose()
+     */
+    protected $email;
+
+    /**
+     * @var string
+     * @Serializer\Expose()
+     */
+    protected $username;
 
     /**
      * @var string
@@ -37,8 +50,10 @@ class User extends \FOS\UserBundle\Model\User
 
     /**
      * Identificativo del dispositivo usato dell'utente
+     *
      * @var string
      * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Expose()
      */
     private $deviceKey = null;
 
@@ -90,8 +105,7 @@ class User extends \FOS\UserBundle\Model\User
      *
      * @return User
      */
-    public function setDeviceKey($deviceKey)
-    {
+    public function setDeviceKey($deviceKey) {
         $this->deviceKey = $deviceKey;
 
         return $this;
@@ -102,8 +116,7 @@ class User extends \FOS\UserBundle\Model\User
      *
      * @return string
      */
-    public function getDeviceKey()
-    {
+    public function getDeviceKey() {
         return $this->deviceKey;
     }
 }

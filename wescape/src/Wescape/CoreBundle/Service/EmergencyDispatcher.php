@@ -45,7 +45,7 @@ class EmergencyDispatcher
             'failures' => 0
         ];
         foreach ($users as $user) {
-            $response = $this->curlSafeSendPushNotifications($user->getDeviceKey());
+            $response = $this->sendPushNotification($user->getDeviceKey());
             if ($response['success']) {
                 $report['successes'] += 1;
             } else {
@@ -57,36 +57,6 @@ class EmergencyDispatcher
     }
 
     private function sendPushNotification($deviceKey) {
-        $ch = curl_init('fcm.googleapis.com/fcm/send');
-        $data = [
-            "to"           => $deviceKey,
-            "priority"     => "high",
-            "notification" => [
-                "body"  => "Situazione di emergenza!",
-                "title" => "Emergenza Wescape",
-                "click_action" => "EMERGENCY_ACTION",
-            ],
-            "data"         => [
-                "emergency" => TRUE
-            ]
-        ];
-        $data_json = json_encode($data);
-
-        $options = [
-            CURLOPT_CUSTOMREQUEST  => "POST",
-            CURLOPT_HTTPHEADER     => [
-                'Content-type: application/json',
-                'Authorization: key=' . $this->firebaseSecret
-            ],
-            CURLOPT_POSTFIELDS     => $data_json,
-            CURLOPT_RETURNTRANSFER => TRUE,
-
-        ];
-        curl_setopt_array($ch, $options);
-        return json_decode(curl_exec($ch), true);
-    }
-
-    private function curlSafeSendPushNotifications($deviceKey) {
         $data = [
             "to"           => $deviceKey,
             "priority"     => "high",

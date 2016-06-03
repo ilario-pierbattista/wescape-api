@@ -2,6 +2,7 @@
 
 namespace Wescape\ApiBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -14,6 +15,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Voryx\RESTGeneratorBundle\Controller\VoryxController;
 use Wescape\CoreBundle\Entity\User;
@@ -178,7 +180,7 @@ class UserController extends VoryxController
 
             if ($form->isValid()) {
                 $plainPassword = $form->get('plainPassword')->getData();
-                if($plainPassword != null) {
+                if ($plainPassword != null) {
                     $user->setPlainPassword($plainPassword);
                 }
                 $user->setUsername($user->getEmail());
@@ -256,7 +258,7 @@ class UserController extends VoryxController
             return $user;
         } catch (\Exception $e) {
             $code = Codes::HTTP_INTERNAL_SERVER_ERROR;
-            if($e instanceof AccessDeniedException) {
+            if ($e instanceof AccessDeniedException) {
                 $code = Codes::HTTP_FORBIDDEN;
             }
             return FOSView::create($e->getMessage(), $code);
@@ -315,6 +317,7 @@ class UserController extends VoryxController
 
     /**
      * Reimposta la password dell'utente
+     * @View(serializerEnableMaxDepthChecks=true)
      *
      * @param Request $request
      *
@@ -373,6 +376,39 @@ class UserController extends VoryxController
                     $errorCode = Codes::HTTP_INTERNAL_SERVER_ERROR;
             }
             return FOSView::create($e->getMessage(), $errorCode);
+        }
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     * @ApiDoc(
+     *     resource=false,
+     *     output="Wescape\CoreBundle\Entity\User",
+     *     authenticationRoles={"ROLE_USER"},
+     *     statusCodes={
+     *     200="Returned if the user is identified",
+     *     401="Returned if the client is not authorized",
+     *     403="Returned if the user doesn't have the correct privileges",
+     *     500="Returned if some general error occurs"}
+     * )
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function getWhoamiAction(Request $request) {
+        try {
+            /** @var TokenInterface $token */
+            $token = $this->get('security.token_storage')->getToken();
+            if ($token === null) {
+                throw new AccessDeniedException();
+            }
+            return $token->getUser();
+        } catch (\Exception $e) {
+            $code = Response::HTTP_INTERNAL_SERVER_ERROR;
+            if ($e instanceof AccessDeniedException) {
+                $code = Response::HTTP_FORBIDDEN;
+            }
+            return FOSView::create($e->getMessage(), $code);
         }
     }
 }

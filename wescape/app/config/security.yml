@@ -54,6 +54,12 @@ security:
       stateless: true
       anonymous: false
 
+    user_whoami_api:
+      pattern: ^/api/v1/user/whoami
+      fos_oauth: true
+      stateless: true
+      anonymous: true
+
     user_signup_api:
       pattern: ^/api/v1/users.json
       stateless: true
