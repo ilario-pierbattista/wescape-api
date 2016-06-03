@@ -177,7 +177,12 @@ class UserController extends VoryxController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                $plainPassword = $form->get('plainPassword')->getData();
+                if($plainPassword != null) {
+                    $user->setPlainPassword($plainPassword);
+                }
                 $user->setUsername($user->getEmail());
+
                 $em->flush();
 
                 return $user;

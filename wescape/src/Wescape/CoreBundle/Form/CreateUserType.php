@@ -24,6 +24,9 @@ class CreateUserType extends AbstractType
                 "constraints" => new Email()
             ])
             ->add('plainPassword')
+            ->add('deviceKey', TextType::class, [
+                'required' => false
+            ])
             ->add('client', TextType::class, [
                 "mapped" => false,
                 "constraints" => new ClientExists()

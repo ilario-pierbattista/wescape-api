@@ -36,6 +36,13 @@ class User extends \FOS\UserBundle\Model\User
     private $resetTokenExpiresAt = null;
 
     /**
+     * Identificativo del dispositivo usato dell'utente
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $deviceKey = null;
+
+    /**
      * @return int
      */
     public function getId() {
@@ -74,5 +81,29 @@ class User extends \FOS\UserBundle\Model\User
     public function setResetTokenExpiresAt($resetTokenExpiresAt) {
         $this->resetTokenExpiresAt = $resetTokenExpiresAt;
         return $this;
+    }
+
+    /**
+     * Set deviceKey
+     *
+     * @param string $deviceKey
+     *
+     * @return User
+     */
+    public function setDeviceKey($deviceKey)
+    {
+        $this->deviceKey = $deviceKey;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceKey
+     *
+     * @return string
+     */
+    public function getDeviceKey()
+    {
+        return $this->deviceKey;
     }
 }

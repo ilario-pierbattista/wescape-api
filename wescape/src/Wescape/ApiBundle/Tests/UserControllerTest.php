@@ -133,6 +133,10 @@ class UserControllerTest extends WebTestCase
             "email" => "invalidEmail",
             "plainPassword" => "altrepassword"
         ];
+        $secondUserDeviceKey = [
+            'email' => 'test2@wescape.it',
+            'deviceKey' => 'abc123'
+        ];
 
         // Anonimo
         $this->client->request("PUT", "/api/v1/users/2.json", $firstUserUpdate);
@@ -142,7 +146,7 @@ class UserControllerTest extends WebTestCase
         $this->client = $this->getAuthenticatedUser();
         $this->client->request("PUT", "/api/v1/users/2.json", $firstUserUpdate);
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
-        $responseData = json_decode($this->client->getResponse()->getContent(), true);
+        $responseData = $this->decodeJsonContent($this->client);
         $this->assertEquals($firstUserUpdate['email'], $responseData['email']);
         $this->assertEquals($firstUserUpdate['email'], $responseData['email_canonical']);
         $this->assertEquals($firstUserUpdate['email'], $responseData['username']);
@@ -152,6 +156,21 @@ class UserControllerTest extends WebTestCase
         $this->assertContains((new Email())->message, $this->client->getResponse()->getContent());
         $this->client->request("PUT", "/api/v1/users/3.json", $firstUserUpdate);
         $this->assertStatusCode(Response::HTTP_FORBIDDEN, $this->client);
+
+        // User2
+        $this->client = $this->getAuthenticatedUser("test2@wescape.it", "test2");
+        $this->client->request('PUT', '/api/v1/users/3.json', $secondUserDeviceKey);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+        $responseData = $this->decodeJsonContent($this->client);
+        $this->assertEquals($secondUserDeviceKey['email'], $responseData['email']);
+        $this->assertEquals($secondUserDeviceKey['deviceKey'], $responseData['device_key']);
+        // Autenticandomi una seconda volta mi assicuro che la password non si stata
+        // modificata
+        $this->client = $this->getAuthenticatedUser("test2@wescape.it", "test2");
+        // Se fosse stata cambiata la password, il test fallirebbe perchè non si avrebbe
+        // l'access token per eseguire la richiesta
+        $this->client->request('GET', '/api/v1/users/3.json');
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
 
         // Admin
         $this->client = $this->getAuthenticatedAdmin();
