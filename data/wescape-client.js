@@ -21,6 +21,7 @@ module.exports = {
         "getEdges": env.build_url("api/v1/edges.json"),
         "post_edge": env.build_url("api/v1/edges.json"),
         "put_edge": env.build_url("api/v1/edges/{id}.json"),
-        "delete_edge": env.build_url("api/v1/edges/{id}.json")
+        "delete_edge": env.build_url("api/v1/edges/{id}.json"),
+        "trigger_emergency": env.build_url("api/v1/emergency.json")
     }
 };
