@@ -60,6 +60,11 @@ security:
       anonymous: true
       methods: [POST]
 
+    emergency_trigger_api:
+      pattern: ^/api/v1/emergency
+      fos_oauth: true
+      stateless: true
+      anonymous: false
 
   access_control:
     - { path: ^/api/v1/(nodes|edges), roles: ROLE_USER }
