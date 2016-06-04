@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title "QR Generator - Wescape" %}
 
 {% block body %}
     <nav class="navigation-bar">
@@ -6,16 +7,38 @@
             <a class="brand" href="{{ path('homepage') }}"></a>
         </div>
     </nav>
-    <div class="container gr-generator">
+    <div class="container qr-generator">
         <h1>QR code generator</h1>
         <div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan rutrum dictum. Nunc volutpat egestas
-            ante non efficitur. Sed pellentesque vulputate scelerisque. Sed nec fringilla nunc. Morbi sollicitudin at
-            nibh dignissim vestibulum. Praesent et est diam. Proin vel pellentesque ex. Etiam ligula velit, sodales eget
-            nunc vitae, ultricies pulvinar elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
-            ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec tristique iaculis nulla,
-            id semper turpis rutrum ut. Donec quis iaculis nisl. Nulla facilisi. Maecenas efficitur pellentesque
-            finibus. Suspendisse volutpat lectus vitae auctor hendrerit.
+            <div class="col-md-7 form-section">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan rutrum dictum. Nunc volutpat
+                egestas
+                ante non efficitur. Sed pellentesque vulputate scelerisque. Sed nec fringilla nunc. Morbi sollicitudin
+                at
+                nibh dignissim vestibulum.
+
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_label(form.node) }}
+                    {{ form_errors(form.node) }}
+                    {{ form_widget(form.node) }}
+                </div>
+
+                {{ form_label(form.submit) }}
+
+                {{ form_end(form) }}
+            </div>
+            <div class="col-md-5 qr-code">
+                {% if message is not null %}
+                    {% set image =  qrcode_data_uri(message, { size: 200, padding: 10 }) %}
+                    <pre>{{ message }}</pre>
+                    <img class="qr-code-image"
+                         src="{{ image }}"/>
+                    <a href="{{ image }}"
+                       class="btn btn-wescape-red download" download="{{ node_name }}">Scarica QR</a>
+                {% endif %}
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 {% endblock %}
