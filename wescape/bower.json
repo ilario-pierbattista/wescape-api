@@ -1,0 +1,21 @@
+{
+  "name": "wescape",
+  "homepage": "https://github.com/ilario-pierbattista/wescape-api",
+  "authors": [
+    "toioski <toioski@hotmail.it>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

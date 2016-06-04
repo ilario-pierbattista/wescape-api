@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require("gulp");
-var plugins = require("gulp-load-plugins");
+var plugins = require("gulp-load-plugins")({lazy: false});
 var shell = require("gulp-shell");
 var gulpsync = require("gulp-sync")(gulp);
 
@@ -11,6 +11,14 @@ var DataLoader = require("./data/loader/data-loader");
 var env = require("./data/env");
 var authorization_provider = require("./data/loader/authorization-provider");
 var SensorsSimulator = require('./data/simulation/sensors');
+
+var config = {
+    path: {
+        public: "wescape/web/assets",
+        frontendAssets: "wescape/app/Resources/assets",
+        bower: "wescape/vendor/bower_components"
+    }
+};
 
 /**
  * Parsing dei dati
@@ -112,4 +120,25 @@ gulp.task('default', gulpsync.sync([
     ['parse', 'setup-db', 'clear-oauth'],
     'load'
 ]));
+
+gulp.task('styles', function () {
+    gulp.src([
+            config.path.bower + "/bootstrap/dist/css/bootstrap.min.css",
+            config.path.frontendAssets + "/scss/**/*.scss"
+        ])
+        .pipe(plugins.debug())
+        .pipe(plugins.sass())
+        .pipe(plugins.concat("index.css"))
+        .pipe(gulp.dest(config.path.public + "/css"))
+});
+
+gulp.task('images', function () {
+    gulp.src(config.path.frontendAssets + "/images/**")
+        .pipe(gulp.dest(config.path.public + "/images"))
+});
+
+gulp.task('watch', function () {
+    gulp.watch(config.path.frontendAssets + "/scss/**/*.scss", ['styles']);
+});
+
 

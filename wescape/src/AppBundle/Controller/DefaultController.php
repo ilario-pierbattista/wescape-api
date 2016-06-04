@@ -14,8 +14,16 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+        return $this->render('default/homepage.html.twig');
+    }
+
+    /**
+     * @Route("/qr-generator", name="qr_generator")
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function codeGeneratorAction(Request $request) {
+        return $this->render('default/qr-generator.html.twig');
     }
 }
