@@ -1,6 +1,9 @@
 @import "vars";
 @import "functions";
 
+body {
+    font-family: "Proxima Nova", Helvetica, Arial, sans-serif;
+}
 
 .navigation-bar {
     padding: 20px;
@@ -100,6 +103,4 @@
     }
 
 }
-
-
 

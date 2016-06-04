@@ -113,14 +113,6 @@ gulp.task('emergency', function () {
     });
 });
 
-/**
- * Setup complessivo del database
- */
-gulp.task('default', gulpsync.sync([
-    ['parse', 'setup-db', 'clear-oauth'],
-    'load'
-]));
-
 gulp.task('styles', function () {
     gulp.src([
             config.path.bower + "/bootstrap/dist/css/bootstrap.min.css",
@@ -141,4 +133,14 @@ gulp.task('watch', function () {
     gulp.watch(config.path.frontendAssets + "/scss/**/*.scss", ['styles']);
 });
 
+
+gulp.task('web', ['styles', 'images']);
+
+/**
+ * Setup complessivo del database
+ */
+gulp.task('default', gulpsync.sync([
+    ['parse', 'setup-db', 'clear-oauth', 'web'],
+    'load'
+]));
 
