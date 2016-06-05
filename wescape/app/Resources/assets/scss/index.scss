@@ -1,8 +1,10 @@
 @import "vars";
 @import "functions";
+@import "custom-bootstrap";
 
 body {
     font-family: "Proxima Nova", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 .navigation-bar {
@@ -70,12 +72,13 @@ body {
 }
 
 .documentation {
-    padding-top: 120px;
+    padding-top: 160px;
     padding-bottom: 60px;
 
     .box {
         border-radius: 3px;
-        border: 2px solid $color-bordo;
+        //border: 2px solid $color-bordo;
+        box-shadow: 0 0 42px rgba(0,0,0,.15);
         padding: 30px;
         height: 300px;
         text-align: center;
@@ -96,11 +99,40 @@ body {
 
     .box-link {
         text-align: left;
+        font-size: 16px;
     }
 
     .box-button {
         margin-top: 15px;
     }
 
+}
+
+.qr-generator {
+    .qr-code-image {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .form-section {
+        padding-left: 0;
+    }
+
+    .form-description {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .dettagli {
+        padding: 0 30px;
+    }
+
+    .qr-code {
+        text-align: center;
+        .download {
+            margin-top: 20px;
+        }
+    }
 }
 

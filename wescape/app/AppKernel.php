@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Wescape\CoreBundle\CoreBundle(),
             new Wescape\ApiBundle\ApiBundle(),
             new Wescape\StaticBundle\StaticBundle(),
+            new Endroid\Bundle\QrCodeBundle\EndroidQrCodeBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

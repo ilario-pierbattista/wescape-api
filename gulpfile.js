@@ -134,13 +134,13 @@ gulp.task('watch', function () {
 });
 
 
-gulp.task('web', ['styles', 'images']);
+gulp.task('frontend', ['styles', 'images']);
 
 /**
- * Setup complessivo del database
+ * Setup complessivo
  */
 gulp.task('default', gulpsync.sync([
-    ['parse', 'setup-db', 'clear-oauth', 'web'],
+    ['parse', 'setup-db', 'clear-oauth', 'frontend'],
     'load'
 ]));
 

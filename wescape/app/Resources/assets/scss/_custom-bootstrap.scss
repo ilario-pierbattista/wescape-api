@@ -1,0 +1,45 @@
+.btn-wescape-red {
+    color: #FFFFFF;
+    background-color: #E53935;
+    border-color: #C41512;
+}
+
+.btn-wescape-red:hover,
+.btn-wescape-red:focus,
+.btn-wescape-red:active,
+.btn-wescape-red.active,
+.open .dropdown-toggle.btn-wescape-red {
+    color: #FFFFFF;
+    background-color: #D42D2A;
+    border-color: #C41512;
+}
+
+.btn-wescape-red:active,
+.btn-wescape-red.active,
+.open .dropdown-toggle.btn-wescape-red {
+    background-image: none;
+}
+
+.btn-wescape-red.disabled,
+.btn-wescape-red[disabled],
+fieldset[disabled] .btn-wescape-red,
+.btn-wescape-red.disabled:hover,
+.btn-wescape-red[disabled]:hover,
+fieldset[disabled] .btn-wescape-red:hover,
+.btn-wescape-red.disabled:focus,
+.btn-wescape-red[disabled]:focus,
+fieldset[disabled] .btn-wescape-red:focus,
+.btn-wescape-red.disabled:active,
+.btn-wescape-red[disabled]:active,
+fieldset[disabled] .btn-wescape-red:active,
+.btn-wescape-red.disabled.active,
+.btn-wescape-red[disabled].active,
+fieldset[disabled] .btn-wescape-red.active {
+    background-color: #E53935;
+    border-color: #C41512;
+}
+
+.btn-wescape-red .badge {
+    color: #E53935;
+    background-color: #FFFFFF;
+}
