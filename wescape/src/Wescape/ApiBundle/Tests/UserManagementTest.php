@@ -4,6 +4,7 @@ namespace Wescape\ApiBundle\Tests;
 
 
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DependencyInjection\Tests\LazyProxy\Instantiator\RealServiceInstantiatorTest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Wescape\CoreBundle\DataFixtures\ORM\LoadOAuthClientTests;
@@ -93,6 +94,19 @@ class UserManagementTest extends WebTestCase
             "reset_password_token" => PasswordResetUsersTest::TEST_VALID_TOKEN
         ];
         $this->client->request("POST", "/api/v1/users/password/reset", $validUser);
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+    }
+
+    public function testWhoamiAction() {
+        $this->client->request('GET', '/api/v1/user/whoami');
+        $this->assertStatusCode(Response::HTTP_UNAUTHORIZED, $this->client);
+
+        $this->client = $this->getAuthenticatedUser();
+        $this->client->request('GET', '/api/v1/user/whoami');
+        $this->assertStatusCode(Response::HTTP_OK, $this->client);
+
+        $this->client = $this->getAuthenticatedAdmin();
+        $this->client->request('GET', '/api/v1/user/whoami');
         $this->assertStatusCode(Response::HTTP_OK, $this->client);
     }
 

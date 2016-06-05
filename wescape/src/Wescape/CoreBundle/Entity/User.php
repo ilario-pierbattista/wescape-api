@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @package Wescape\CoreBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="user")
- * @TODO    Escludere al serializzatore alcune informazioni
+ * @Serializer\ExclusionPolicy("all")
  */
 class User extends \FOS\UserBundle\Model\User
 {
@@ -20,8 +20,21 @@ class User extends \FOS\UserBundle\Model\User
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Expose()
      */
     protected $id;
+
+    /**
+     * @var string
+     * @Serializer\Expose()
+     */
+    protected $email;
+
+    /**
+     * @var string
+     * @Serializer\Expose()
+     */
+    protected $username;
 
     /**
      * @var string
@@ -34,6 +47,15 @@ class User extends \FOS\UserBundle\Model\User
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $resetTokenExpiresAt = null;
+
+    /**
+     * Identificativo del dispositivo usato dell'utente
+     *
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     * @Serializer\Expose()
+     */
+    private $deviceKey = null;
 
     /**
      * @return int
@@ -74,5 +96,27 @@ class User extends \FOS\UserBundle\Model\User
     public function setResetTokenExpiresAt($resetTokenExpiresAt) {
         $this->resetTokenExpiresAt = $resetTokenExpiresAt;
         return $this;
+    }
+
+    /**
+     * Set deviceKey
+     *
+     * @param string $deviceKey
+     *
+     * @return User
+     */
+    public function setDeviceKey($deviceKey) {
+        $this->deviceKey = $deviceKey;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceKey
+     *
+     * @return string
+     */
+    public function getDeviceKey() {
+        return $this->deviceKey;
     }
 }

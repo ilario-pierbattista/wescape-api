@@ -47,6 +47,7 @@ class LoadOAuthUsersTests extends AbstractFixture implements OrderedFixtureInter
             ->setPlainPassword("test2")
             ->setRoles(['ROLE_USER'])
             ->setEnabled(true);
+        $user2->setDeviceKey("esI6c895NAI:APA91bFlKWKmyFf0n8cIqSTmQw3h0-qMS-NpM28FN_qMErA2MmircpLcrQ8QKty30BLhL1pGqmxG6Fqz3uwLrRHxGgEMcX9xgSmIRIBt5Ti2UUhK3sDgDYIa9aBNOoQlnvGWNlQnhQoD");
 
         /** @var User $user3 */
         $user3 = $userManager->createUser()

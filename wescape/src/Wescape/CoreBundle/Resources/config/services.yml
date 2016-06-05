@@ -18,6 +18,12 @@ services:
     arguments:
      - "@doctrine.orm.entity_manager"
 
+  core.emergency_dispatcher:
+    class: Wescape\CoreBundle\Service\EmergencyDispatcher
+    arguments:
+      - "@doctrine.orm.entity_manager"
+      - "@service_container"
+
   core.user_voter:
     class: Wescape\CoreBundle\Security\UserVoter
     tags:

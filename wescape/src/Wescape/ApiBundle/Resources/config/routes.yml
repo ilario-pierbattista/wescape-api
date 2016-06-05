@@ -21,3 +21,9 @@ wescape_api_Position:
   parent: wescape_api_User
   resource: Wescape\ApiBundle\Controller\PositionController
   name_prefix: api_1_
+
+wescape_api_Emergency:
+  type: rest
+  prefix: /v1
+  resource: Wescape\ApiBundle\Controller\EmergencyController
+  name_prefix: api_1_

@@ -2,7 +2,6 @@
 
 namespace Wescape\StaticBundle\Controller;
 
-
 use FOS\RestBundle\Controller\Annotations\NamePrefix;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +38,7 @@ class MapController extends Controller
             ];
             $response = new Response($image, 200, $headers);
         } else {
-            $response = new Response(null, 404);
+            $response = new Response(NULL, 404);
         }
         return $response;
     }

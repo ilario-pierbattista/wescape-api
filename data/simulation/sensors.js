@@ -49,6 +49,21 @@ SensorsSimulator.prototype.updateAllEdges = function () {
 };
 
 /**
+ * Attiva la condizione di emergenza mandando le notifiche a tutti i dispositivi
+ */
+SensorsSimulator.prototype.triggerEmergency = function () {
+    var $this = this;
+    
+    $this.mutex.take(function () {
+        $this.client.get($this.endpoints.trigger_emergency)
+            .on('complete', function (data) {
+                console.log(data);
+                $this.mutex.leave();
+            });
+    });
+};
+
+/**
  * 
  * @param $this
  * @param edge

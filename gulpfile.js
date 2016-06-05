@@ -84,12 +84,24 @@ gulp.task('sensors-simulate', function () {
 
 /**
  * Simulazione continua ogni 60 secondi
+ * @TODO Aggiungere altri eventi per la simulazione, come l'attivazione dell'emergenza
  */
 gulp.task('simulation', function () {
     authorization_provider.getBearer(function ($this) {
         var simulator = new SensorsSimulator($this.accessToken);
         $this.mutex.leave();
         simulator.continuousSimulation(60);
+    });
+});
+
+/**
+ * Attiva la condizione di emergenza
+ */
+gulp.task('emergency', function () {
+    authorization_provider.getBearer(function (authorizer) {
+        var trigger = new SensorsSimulator(authorizer.accessToken);
+        authorizer.mutex.leave();
+        trigger.triggerEmergency();
     });
 });
 
