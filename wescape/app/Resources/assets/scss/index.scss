@@ -65,7 +65,7 @@ body {
     .hero-image {
         position: absolute;
         @include breakpoint(desktop) {
-            right: -160px;
+            right: -130px;
             top: -70px;
         }
     }
