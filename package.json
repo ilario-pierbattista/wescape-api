@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "excel": "^0.1.4",
+    "excel": "^0.1.5",
     "exit": "^0.1.2",
     "gm": "^1.22.0",
     "gulp": "^3.9.1",
