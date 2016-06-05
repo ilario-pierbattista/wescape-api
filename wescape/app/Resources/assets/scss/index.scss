@@ -99,6 +99,7 @@ body {
 
     .box-link {
         text-align: left;
+        font-size: 16px;
     }
 
     .box-button {
@@ -111,10 +112,20 @@ body {
     .qr-code-image {
         display: block;
         margin: 0 auto;
+        max-width: 100%;
     }
 
     .form-section {
         padding-left: 0;
+    }
+
+    .form-description {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .dettagli {
+        padding: 0 30px;
     }
 
     .qr-code {

@@ -17,7 +17,7 @@ class DefaultController extends Controller
         // replace this example code with whatever you need
         return $this->render('default/homepage.html.twig');
     }
-
+    
     /**
      * @Route("/qr-generator", name="qr_generator")
      * @param Request $request
@@ -25,23 +25,31 @@ class DefaultController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function codeGeneratorAction(Request $request) {
-        //$em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
         /** @var Node $node */
-        //$nodo = $em->getRepository("CoreBundle:Node")->findOneBy(['id' => 1]);
+        $node = $em->getRepository("CoreBundle:Node")->findOneBy(['id' => 1]);
         $form = $this->createForm(QRCodeType::class);
-
+        
         $form->handleRequest($request);
-        $message = NULL;
+        $config = [
+            'message' => NULL,
+            'size' => 200,
+            'padding' => 10,
+            'extension' => 'png'
+        ];
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Node $node */
             $node = $form->get('node')->getData();
-            $message = $node->getId() . "_" . base64_encode(random_bytes(6));
+            $config['size'] = $form->get('size')->getData();
+            $config['extension'] = $form->get('extension')->getData();
+            $config['padding'] = $form->get('padding')->getData();
+            $config['message'] = $node->getId() . "_" . base64_encode(random_bytes(6));
         }
-
+        
         return $this->render('default/qr-generator.html.twig', [
-            'form'      => $form->createView(),
-            'message' => $message,
-            'node_name' => ""
+            'form'    => $form->createView(),
+            'node'    => $node,
+            'config' => $config,
         ]);
     }
 }

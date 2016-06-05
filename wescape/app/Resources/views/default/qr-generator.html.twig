@@ -8,14 +8,16 @@
         </div>
     </nav>
     <div class="container qr-generator">
-        <h1>QR code generator</h1>
+        <h1>Generatore codici QR</h1>
         <div class="content">
             <div class="col-md-7 form-section">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan rutrum dictum. Nunc volutpat
-                egestas
-                ante non efficitur. Sed pellentesque vulputate scelerisque. Sed nec fringilla nunc. Morbi sollicitudin
-                at
-                nibh dignissim vestibulum.
+                <div class="form-description">
+                    Il seguente tool permette di generare i codici QR che Wescape sfrutta per determinare la posizione
+                    di un utente all'interno di un edificio. <br>
+                    All'interno del QR verrà codificata la stanza
+                    dell'edificio selezionata tramite l'apposito menù a tendina.
+                </div>
+
 
                 {{ form_start(form) }}
                 <div class="form-group">
@@ -23,19 +25,40 @@
                     {{ form_errors(form.node) }}
                     {{ form_widget(form.node) }}
                 </div>
+                <div class="form-group">
+                    {{ form_label(form.extension) }}
+                    {{ form_errors(form.extension) }}
+                    {{ form_widget(form.extension) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.size) }}
+                    {{ form_errors(form.size) }}
+                    {{ form_widget(form.size) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.padding) }}
+                    {{ form_errors(form.padding) }}
+                    {{ form_widget(form.padding) }}
+                </div>
 
                 {{ form_label(form.submit) }}
 
                 {{ form_end(form) }}
             </div>
             <div class="col-md-5 qr-code">
-                {% if message is not null %}
-                    {% set image =  qrcode_data_uri(message, { size: 200, padding: 10 }) %}
-                    <pre>{{ message }}</pre>
-                    <img class="qr-code-image"
-                         src="{{ image }}"/>
-                    <a href="{{ image }}"
-                       class="btn btn-wescape-red download" download="{{ node_name }}">Scarica QR</a>
+                {% if config.message is not null %}
+                    <div class="dettagli text-left">
+                        <div><strong>String codificata:</strong>
+                            <mark>{{ config.message }}</mark>
+                        </div>
+                        <div><strong>Estensione:</strong> <span>{{ config.extension | upper }}</span></div>
+                        <div><strong>Dimensione:</strong> {{ config.size }}px x {{ config.size }}px</div>
+                        <div><strong>Margini interni:</strong> {{ config.padding }}px</div>
+                    </div>
+                    {% set image =  qrcode_data_uri(config.message, { size: config.size, padding: config.padding, extension: config.extension }) %}
+                    <img class="qr-code-image" src="{{ image }}"/>
+
+                    <a href="{{ image }}" class="btn btn-wescape-red download" download="">Scarica QR</a>
                 {% endif %}
             </div>
             <div class="clearfix"></div>
