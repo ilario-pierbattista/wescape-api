@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="top-section">
+        <nav class="navigation-bar">
+            <div class="container">
+                <a class="brand" href="{{ path('homepage') }}"></a>
+            </div>
+        </nav>
+        <div class="container hero-container">
+            <div class="col-md-7 hero-text">
+                <h1 class="hero-title">An Android indoor navigation app</h1>
+                <h4 class="hero-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan rutrum dictum. Nunc volutpat
+                    egestas ante non efficitur. Sed pellentesque vulputate scelerisque. Sed nec fringilla nunc. Morbi
+                    sollicitudin at nibh dignissim vestibulum..</h4>
+                <a class="google-play-link" href="#"></a>
+            </div>
+            <div class="hero-image">
+                <img class="smartphone-screenshots" src="{{ asset('assets/images/smartphone-screen.png') }}">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <section class="documentation">
+        <div class="container">
+            <div class="col-md-5 box">
+                <div class="box-icon">
+                    <img class="icon" src="{{ asset('assets/images/documentation-icon.png') }}">
+                </div>
+                <div class="box-title">Documentazione</div>
+                <div class="box-link">
+                    <ul>
+                        <li><a href="#">Documentazione applicazione</a></li>
+                        <li><a href="#">Guida all'utilizzo</a></li>
+                        <li><a href="#">Presentazione</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-2 box">
+                <div class="box-icon">
+                    <img class="icon" src="{{ asset('assets/images/qr-icon.png') }}">
+                </div>
+                <div class="box-title">Generatore QR</div>
+                <div class="box-description">
+                    Generatore di codici QR da appendere nelle stanze
+                </div>
+                <a href="{{ path('qr_generator') }}" class="box-button btn btn-lg btn-wescape-red">Vai al generatore</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+{% endblock %}

@@ -15,6 +15,7 @@
 /var
 /vendor/
 /web/bundles/
+/web/assets/
 
 app/config/secret_parameters.yml
 

@@ -5,7 +5,6 @@ namespace Wescape\CoreBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Wescape\CoreBundle\Entity\Edge;
 use Wescape\CoreBundle\Entity\User;
 
 class EmergencyDispatcher
@@ -44,6 +43,7 @@ class EmergencyDispatcher
             'successes' => 0,
             'failures' => 0
         ];
+        
         foreach ($users as $user) {
             $response = $this->sendPushNotification($user->getDeviceKey());
             if ($response['success']) {

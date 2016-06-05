@@ -1,0 +1,138 @@
+@import "vars";
+@import "functions";
+@import "custom-bootstrap";
+
+body {
+    font-family: "Proxima Nova", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.navigation-bar {
+    padding: 20px;
+    border-bottom: 1px solid $color-bordo;
+
+    .brand {
+        display: block;
+        width: 160px;
+        height: 80px;
+        background-size: cover;
+        background-image: imagePath("wescape-brand-color.png");
+    }
+}
+
+.top-section {
+    background-color: $color-primary-red;
+    padding-bottom: 90px;
+
+    & .navigation-bar {
+        border:  0;
+    }
+    .brand {
+        background-image: imagePath("wescape-brand.png");
+    }
+
+    .hero-container {
+        position: relative;
+    }
+
+    .hero-title {
+        color: #fff;
+        font-size: 50px;
+    }
+
+    .hero-description {
+        margin-top: 25px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: normal;
+        line-height: 26px;
+    }
+
+    .hero-text {
+        padding-left: 0;
+        padding-top: 50px;
+    }
+
+    .google-play-link {
+        display: block;
+        margin-top: 20px;
+        background-image: imagePath('google-play-badge.png');
+        background-size: cover;
+        width: 189px;
+        height: 57px;
+    }
+
+    .hero-image {
+        position: absolute;
+        @include breakpoint(desktop) {
+            right: -160px;
+            top: -70px;
+        }
+    }
+}
+
+.documentation {
+    padding-top: 160px;
+    padding-bottom: 60px;
+
+    .box {
+        border-radius: 3px;
+        //border: 2px solid $color-bordo;
+        box-shadow: 0 0 42px rgba(0,0,0,.15);
+        padding: 30px;
+        height: 300px;
+        text-align: center;
+
+    }
+
+    .box-icon .icon {
+        display: block;
+        margin: 0 auto;
+    }
+
+    .box-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .box-link {
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .box-button {
+        margin-top: 15px;
+    }
+
+}
+
+.qr-generator {
+    .qr-code-image {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .form-section {
+        padding-left: 0;
+    }
+
+    .form-description {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .dettagli {
+        padding: 0 30px;
+    }
+
+    .qr-code {
+        text-align: center;
+        .download {
+            margin-top: 20px;
+        }
+    }
+}
+
