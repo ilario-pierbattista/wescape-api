@@ -129,6 +129,11 @@ gulp.task('images', function () {
         .pipe(gulp.dest(config.path.public + "/images"))
 });
 
+gulp.task('documentation', function () {
+    gulp.src(config.path.frontendAssets + "/data/**")
+        .pipe(gulp.dest(config.path.public + "/data"))
+});
+
 gulp.task('watch', function () {
     gulp.watch(config.path.frontendAssets + "/scss/**/*.scss", ['styles']);
 });
