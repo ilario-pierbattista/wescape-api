@@ -22,7 +22,12 @@ body {
 
 .top-section {
     background-color: $color-primary-red;
-    padding-bottom: 90px;
+    padding-bottom: 330px;
+    overflow: hidden;
+    @include breakpoint(tablet) {
+        overflow: visible;
+        padding-bottom: 90px;
+    }
 
     & .navigation-bar {
         border:  0;
@@ -33,24 +38,35 @@ body {
 
     .hero-container {
         position: relative;
+        padding: 0 25px;
+        @include breakpoint(tablet) {
+        }
     }
 
     .hero-title {
         color: #fff;
-        font-size: 50px;
+        font-size: 40px;
+        @include breakpoint(desktop) {
+            font-size: 50px;
+        }
     }
 
     .hero-description {
         margin-top: 25px;
         color: #fff;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: normal;
         line-height: 26px;
+        @include breakpoint(tablet) {
+            font-size: 20px;
+        }
     }
 
     .hero-text {
         padding-left: 0;
-        padding-top: 50px;
+        @include breakpoint(tablet) {
+            padding-top: 50px;
+        }
     }
 
     .google-play-link {
@@ -64,23 +80,35 @@ body {
 
     .hero-image {
         position: absolute;
+        .smartphone-screenshots {
+            width: 100%;
+        }
+        @include breakpoint(tablet) {
+            right: -160px;
+        }
         @include breakpoint(desktop) {
             right: -130px;
             top: -70px;
+            .smartphone-screenshots {
+                width: auto;
+            }
         }
     }
 }
 
 .documentation {
-    padding-top: 160px;
-    padding-bottom: 60px;
+    padding: 60px 0 30px 0;
+    @include breakpoint(tablet) {
+        padding: 160px 0 60px 0;
+    }
 
     .box {
         border-radius: 3px;
-        //border: 2px solid $color-bordo;
+        max-width: 400px;
         box-shadow: 0 0 42px rgba(0,0,0,.15);
         padding: 30px;
         height: 300px;
+        margin-bottom: 35px;
         text-align: center;
 
     }
