@@ -2,8 +2,8 @@ Wescape RESTful service
 =======================
 
 # Current Status
-* master [![Build Status](https://travis-ci.com/ilario-pierbattista/wescape-api.svg?token=894qm4cv3JJJRkA24pJY&branch=master)](https://travis-ci.com/ilario-pierbattista/wescape-api)
-* dev [![Build Status](https://travis-ci.com/ilario-pierbattista/wescape-api.svg?token=894qm4cv3JJJRkA24pJY&branch=dev)](https://travis-ci.com/ilario-pierbattista/wescape-api)
+* master [![Build Status](https://travis-ci.org/ilario-pierbattista/wescape-api.svg?branch=master)](https://travis-ci.org/ilario-pierbattista/wescape-api)
+* dev [![Build Status](https://travis-ci.org/ilario-pierbattista/wescape-api.svg?branch=dev)](https://travis-ci.org/ilario-pierbattista/wescape-api)
 
 # Panoramica delle tecnologie utilizzate
 Il servizio è scritto in *PHP* utilizzando il framework *Symfony*, che aggrega le funzionalità offerte dai vari *Bundle* sviluppati dalla comunity.
