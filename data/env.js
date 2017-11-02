@@ -11,7 +11,10 @@ module.exports = {
     },
     images_src_path: path.normalize(__dirname + "/maps/"),
     images_dst_path: path.normalize(__dirname + "/maps/graph/"),
-    host_name: "wescape.dev",
+    //host_name: "wescape.dev",
+    host_name: "localhost",
+    //port: 80
+    port: 8000,
     dev_path_prefix: "app_dev.php/",
     environment: "dev",
     client_id: "1_d9d9322ad1a46e889e8102aa9072ea2fc87b525652a114b335d21542cc528bee",
@@ -24,6 +27,7 @@ module.exports = {
         return url.format({
             protocol: "http",
             hostname: module.exports.host_name,
+            port: module.exports.port,
             pathname: path
         })
     }
