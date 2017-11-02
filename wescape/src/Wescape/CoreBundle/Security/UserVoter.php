@@ -5,6 +5,7 @@ namespace Wescape\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\TraceableAccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Wescape\CoreBundle\Entity\User;
 
@@ -19,7 +20,7 @@ class UserVoter extends Voter
     ];
     private $decisionManager;
 
-    public function __construct(AccessDecisionManager $decisionManager) {
+    public function __construct(TraceableAccessDecisionManager $decisionManager) {
         $this->decisionManager = $decisionManager;
     }
 

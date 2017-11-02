@@ -55,7 +55,7 @@
                         <div><strong>Dimensione:</strong> {{ config.size }}px x {{ config.size }}px</div>
                         <div><strong>Margini interni:</strong> {{ config.padding }}px</div>
                     </div>
-                    {% set image =  qrcode_data_uri(config.message, { size: config.size, padding: config.padding, extension: config.extension }) %}
+                    {% set image =  qrcode_data_uri(config.message, { size: config.size }) %}
                     <img class="qr-code-image" src="{{ image }}"/>
 
                     <a href="{{ image }}" class="btn btn-wescape-red download" download="">Scarica QR</a>
