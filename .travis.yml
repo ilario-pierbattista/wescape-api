@@ -41,6 +41,8 @@ before_install:
   - cd ..
 
 script:
+  - mv data/env.js data/env.dev.js
+  - mv data/env.travis.js data/env.js
   - cd wescape
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - phpunit
