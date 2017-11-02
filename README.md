@@ -12,3 +12,4 @@ Sono inclusi anche parecchi script per l'estrazione e la manipolazione dei dati,
 Tali script sono scritti in *javascript*, eseguibili all'interno dell'ambiente *Node.js*.
 
 È fornita, inoltre, un'estensiva suite di test funzionali, scritti appositamente per il collaudo delle API offerte.
+
