@@ -37,8 +37,8 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose up -d
   - docker-compose ps
-  - cd wescape
   - phpenv config-add travis.php.ini
+  - cd wescape
   - composer update
   - cd ..
 
